@@ -1,0 +1,10 @@
+@font-face {
+	font-family: 'SealEuroStileLT';
+	src: url(https://hullseals.space/fonts/SealEuroStileLT.woff2) format('woff2');
+	font-weight: normal;	
+}
+@font-face {
+	font-family: 'Eurostyle LT';
+	src: url(https://hullseals.space/fonts/Eurostile_LT_Medium.ttf) format('ttf');
+	font-weight: normal;	
+}

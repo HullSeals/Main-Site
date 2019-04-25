@@ -1,0 +1,28 @@
+.flex-box {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.selection {
+  text-align: center;
+  padding: 0.5rem;
+  border-radius: 15px;
+  background-color: rgba(20, 20, 20, 0.7);
+  box-shadow: 0 2px 1px rgba(0,0,0,0.16);
+  margin-bottom: 5px;
+}
+
+.selection h3 {
+  margin-top: 0;
+}
+
+.custom_amount {
+  font-family: Helvetica, Arial, sans-serif;
+  max-width: 148px;
+  height: 30px;
+  padding: 0 12px;
+  border-radius: 5px;
+  margin-right: 7px;
+  text-align: right;
+}
