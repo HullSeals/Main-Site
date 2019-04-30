@@ -6,13 +6,15 @@
  * Time: 13:43
  */
 
+use App\Factory\FrontierAuth;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
+use League\OAuth2\Client\Provider\GenericProvider;
 
 require '../vendor/autoload.php';
 require 'Provider.php';
 session_start();
-/* @var $provider \League\OAuth2\Client\Provider\GenericProvider */
-$factory = new \App\Factory\FrontierAuth();
+/* @var $provider GenericProvider */
+$factory = new FrontierAuth();
 $provider = $factory->create();
 try {
     $accessToken = $provider->getAccessToken('authorization_code', [
