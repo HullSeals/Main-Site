@@ -17,7 +17,7 @@ class FrontierAuth
 
     private const AUTH_API = 'https://auth.frontierstore.net';
 
-    private const CALLBACK_URL = 'http://development.localhost/backend/2.php';
+    private const CALLBACK_URL = 'http://development.localhost/backend/Callback.php'; //TODO Change to the callback of the actual application
 
     /**
      * @return GenericProvider
