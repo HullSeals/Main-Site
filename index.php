@@ -75,7 +75,7 @@
         </header>
         <section class="introduction">
             <article>
-                <h1>Hull Seals CMDR Information Pull</h1>
+                <h1>Hull Seals Information Collection Limpet</h1>
                 <p>Click this button to retrieve the info requested by Seal Dispatch. You will likely be redirected to Frontier for authentication and then presented with the necessary data.</p>
                 <a href="backend/Redirect.php" class="btn btn-success btn-lg">Start</a> </article>
             <div class="clearfix"></div>
@@ -114,4 +114,3 @@
 </body>
 
 </html>
-
