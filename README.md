@@ -13,7 +13,7 @@ This repository houses all of the files required to build and host your own vers
 - A Web server software such as Apache2 or NGIX.
 
 ## Usage
-To install, download the latest [release](https://gitlab.com/hull-seals-cyberseals/code/active-projects/journal-reader/tags/latest) from our repository. Upload and extract the files to the directory or subdirectory you wish to install from, and run the composer install and update commands.
+To install, download the latest [release](https://gitlab.com/hull-seals-cyberseals/code/active-projects/journal-reader/tags) from our repository. Upload and extract the files to the directory or subdirectory you wish to install from, and run the composer install and update commands.
 
 ## Troubleshooting
 - Upon installation, be sure to replace the CLIENT_ID, CLIENT_SECRET, CALLBACK_URL in your Provider.php to match your own details.
