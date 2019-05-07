@@ -19,7 +19,7 @@
 </head>
 <body>
 
-<h1>HullSeals Tracker</h1>
+<h1>Hull Seals Journal Pull</h1>
 <p>Click this button to retrieve the info requested by Seal Dispatch.  You will likely be redirected to Frontier for authentication and then presented with the necessary data.</p>
 <a href="backend/Redirect.php" class="btn btn-success btn-lg">Start</a>
 
