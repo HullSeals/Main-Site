@@ -50,7 +50,7 @@
     <div id="home">
         <header>
             <nav class="navbar container navbar-expand-lg navbar-expand-md navbar-dark" role="navigation">
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand" href="../index.html">
                     <img src="../images/emblem_scaled.png" height="30" class="d-inline-block align-top" alt="Logo" /> Hull Seals</a>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
