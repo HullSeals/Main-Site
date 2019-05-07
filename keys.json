@@ -1,4 +1,4 @@
 {
-   "Client": "CLIENT_ID"
+   "Client": "CLIENT_ID",
    "Secret": "OAUTH Secret"
 }
