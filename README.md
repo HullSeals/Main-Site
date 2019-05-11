@@ -11,6 +11,7 @@ This repository houses all of the files required to build and host your own vers
 - [Composer](https://getcomposer.org/)
 - [Oauth2 Client by League](league/oauth2-client) (Installed by Composer if not present)
 - A Web server software such as Apache2 or NGIX.
+- A JavaScript-enabled browser.
 
 ## Usage
 To install, download the latest [release](https://gitlab.com/hull-seals-cyberseals/code/active-projects/journal-reader/tags) from our repository. Upload and extract the files to the directory or subdirectory you wish to install from, and run the composer install and update commands.
@@ -42,4 +43,4 @@ Layout design by [Wolfii Namakura](https://gitlab.com/wolfii1), implemented by [
 This project is governed under the [GNU General Public License v3.0](LICENSE) license.
 
 # Project Status
-This project is in it's ALPHA release phase. Mind the dust - this is being updated frequently.
+This project is in it's BETA release phase. Mind the dust - this is being updated frequently.
