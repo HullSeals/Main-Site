@@ -59,6 +59,7 @@
 				<h1>Journal Reader Results</h1><br>
 				<h2>Copy and paste the following into the chat as requested by dispatch</h2><br>
 				<div align="center">
+					<span id="journalresults">
 					<h3>Ship info</h3>
 					<?php
 						/**
@@ -87,7 +88,26 @@
 						
 						// Commenting out the debug dump - HW
 						// var_dump($_SESSION['debug']);
-					?>					
+					?>
+					</span>
+					<button id="copyResults" class="btn btn-success btn-lg" onclick="copyJournal()">Click to Copy</button>
+					<script>
+						function copyJournal() {
+							var journalText = document.createElement("textarea")
+							journalText.value = document.getElementById("journalresults").innerHTML;
+							document.body.appendChild(journalText);
+							journalText.value = journalText.value.replace(/\t/g,"");
+							journalText.value = journalText.value.replace(/<h3>/g,"");
+							journalText.value = journalText.value.replace(/<\/h3>/g,"\n");
+							journalText.value = journalText.value.replace(/<p>/g,"");
+							journalText.value = journalText.value.replace(/<\/p>/g,"\n");
+							journalText.value = journalText.value.replace(/<p class="critical\d">/g,"");
+							journalText.focus();
+							journalText.select();
+							document.execCommand('copy');
+							document.body.removeChild(journalText);
+						}
+					</script>
 				</div>
 			</article>
 			<div class="clearfix"></div>
