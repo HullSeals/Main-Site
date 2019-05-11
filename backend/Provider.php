@@ -16,7 +16,7 @@ class FrontierAuth
     private const AUTH_API = 'https://auth.frontierstore.net';
 
     //changed url to work in my directory system, adjust as necessary for actual site - HW
-	private const CALLBACK_URL = 'http://development.localhost/journal-reader/backend/Callback.php';//TODO Change to the callback of the actual application
+	private const CALLBACK_URL = 'https://hullseals.space/journal/backend/Callback.php';//TODO Change to the callback of the actual application
 
     /**
      * FrontierAuth constructor.
