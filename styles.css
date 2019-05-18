@@ -67,7 +67,7 @@ header {
 .navbar ul.navbar-nav li.nav-item.active a.nav-link:hover {
     color: #ffffff;
     font-weight: bold;
-    background: #bd9851;
+    background: #F5921F;
     text-decoration: none;
 }
 
@@ -156,7 +156,7 @@ header {
     .navbar-brand {
         display: initial;
     }
-    
+
     .introduction h1 {
         font-size: 3.5em;
     }
