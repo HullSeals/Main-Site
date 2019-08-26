@@ -1,0 +1,5 @@
+# Deny access to keys.json
+<Files keys.json>
+Order allow,deny
+Deny from all
+</Files>
