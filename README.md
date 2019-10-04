@@ -14,7 +14,7 @@ This repository houses all of the files required to build and host your own vers
 - A JavaScript-enabled browser.
 
 ## Usage
-To install, download the latest [release](https://gitlab.com/hull-seals-cyberseals/code/active-projects/journal-reader/tags) from our repository. Upload and extract the files to the directory or subdirectory you wish to install from, and run the composer install and update commands.Then, change the information in keys.json and your callback URL in /backend/Provider.php to match.
+To install, download the latest [release](https://gitlab.com/hull-seals-cyberseals/code/active-projects/journal-reader/tags) from our repository. Upload and extract the files to the directory or subdirectory you wish to install from, and run the composer install and update commands. Then, change the information in keys.json and your callback URL in /backend/Provider.php to match. It is important that in some way, access is denied to the general public for the keys.json file. In the files provided, a .htaccess file is used.
 
 ## Troubleshooting
 - Upon installation, be sure to replace the CLIENT_ID and CLIENT_SECRET in your keys.json to match your own details.
