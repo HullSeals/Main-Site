@@ -1,3 +1,55 @@
+<?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+$db = include 'db.php';
+$mysqli = new mysqli($db['server'], $db['user'], $db['pass'], $db['db'], $db['port']);
+$platformList = [];
+$res = $mysqli->query('SELECT * FROM platform_lu ORDER BY platform_id');
+while ($row = $res->fetch_assoc()) {
+    $platformList[$row['platform_id']] = $row['platform_name'];
+}
+
+$validationErrors = [];
+$data = [];
+if (isset($_GET['send'])) {
+    foreach ($_REQUEST as $key => $value) {
+        $data[$key] = strip_tags(stripslashes(str_replace(["'", '"'], '', $value)));
+    }
+
+    if (strlen($data['cmdr_name']) > 50) {
+        $validationErrors[] = 'commander name too long';
+    }
+    if (strlen($data['system']) > 100) {
+        $validationErrors[] = 'system too long';
+    }
+
+    $data['hull'] = (int) $data['hull'];
+    if ($data['hull'] > 100 || $data['hull'] < 1) {
+        $validationErrors[] = 'invalid hull';
+    }
+    $data['canopy_breached'] = isset($data['canopy_breached']);
+    $data['can_synth'] = isset($data['can_synth']);
+    if ($data['o2_timer'] != '' && !preg_match('~[0-9]{1,2}:[0-9]{1,2}~i', $data['o2_timer'])) {
+        $validationErrors[] = 'invalid O2 timer';
+    }
+
+    if (!isset($platformList[$data['platform']])) {
+        $validationErrors[] = 'invalid platform';
+    }
+
+    if (!count($validationErrors)) {
+        $stmt = $mysqli->prepare('CALL spCreateHSCaseCleaner(?,?,?,?,?,?,?,?)');
+        $stmt->bind_param('sissiisi', $data['cmdr_name'], $data['canopy_breached'], $data['o2_timer'], $data['system'], $data['platform'], $data['hull'], $data['description'], $data['can_synth']);
+        $stmt->execute();
+        foreach ($stmt->error_list as $error) {
+            $validationErrors[] = 'DB: ' . $error['error'];
+        }
+        $stmt->close();
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -45,6 +97,11 @@
                 })
             });
         </script>
+        <style>
+            .input-group-prepend input[type="checkbox"] {
+                margin-right: 5px;
+            }
+        </style>
     </head>
 
     <body>
@@ -84,27 +141,49 @@
             <section class="introduction">
                 <article>
                     <h1>Request Repairs</h1>
-                    <p>
-                        <strong>
-                            Do you see a countdown timer?
-                        </strong>
-                        <br />
-                        <em>
-                            If so, log out to the menu immediately
-                        </em>
-                        <br />
-                        <br />
-                        Do you need repairs or Code Black canopy breach services?
-                        <br />
-                        <a href="case.php" class="btn btn-success btn-lg">Yes, I Need Repairs</a>
-                        <br />
-                        <br />
-                        Just want to talk or join up?
-                        <br />
-                        <a href="#" class="btn btn-secondary btn-lg">Just Chatting!</a>                  
-                    </p>
+                    <?php
+                    if (count($validationErrors)) {
+                        foreach ($validationErrors as $error) {
+                            echo '<div class="alert alert-danger">' . $error . '</div>';
+                        }
+                        echo '<br>';
+                    }
+                    ?>
+                    <form action="?send" method="post">
+                        <div class="input-group mb-3">
+                            <input type="text" name="cmdr_name" value="<?= $data['cmdr_name'] ?? '' ?>" class="form-control" placeholder="Commander Name" aria-label="Commander Name" required>
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="text" name="system" value="<?= $data['system'] ?? '' ?>" class="form-control" placeholder="System" aria-label="System" required>
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="number" min="1" max="100" name="hull" value="<?= $data['hull'] ?? '' ?>" class="form-control" placeholder="Hull %" aria-label="Hull %" required>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text text-danger"><input type="checkbox" value="1" name="canopy_breached" aria-label="Canopy breached"<?= isset($data['canopy_breached']) && $data['canopy_breached'] == 1 ? ' checked' : '' ?>> Canopy breached ?</label>
+                                <label class="input-group-text"><input type="checkbox" name="can_synth" value="1" aria-label="O2 Synth"<?= isset($data['can_synth']) && $data['can_synth'] == 1 ? ' checked' : '' ?>>O2 Synth</label>
+                            </div>
+                            <input type="text" name="o2_timer" value="<?= $data['o2_timer'] ?? '' ?>" class="form-control" pattern="[0-9]{1,2}:[0-9]{1,2}" placeholder="O2 Timer (nn:nn)" aria-label="O2 Timer (nn:nn)">
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Platform</span>
+                            </div>
+                            <select name="platform" class="custom-select" id="inputGroupSelect01" placeholder="Test" required>
+                                <?php
+                                foreach ($platformList as $platformId => $platformName) {
+                                    echo '<option value="' . $platformId . '"' . ($data['platform'] == $platformId ? ' checked' : '') . '>' . $platformName . '</option>';
+                                }
+                                ?>
+                            </select>
+                        </div>
+                        <div class="input-group mb-3">
+                            <textarea name="description" class="form-control" placeholder="How did you take damage (optional)" aria-label="How did you take damage (optional)" rows="4"><?= $data['description'] ?? '' ?></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
                 </article>
-                <div class="clearfix"></div>
             </section>
         </div>
         <footer class="page-footer font-small">
@@ -132,4 +211,5 @@
             </div>
         </footer>
     </body>
+
 </html>
