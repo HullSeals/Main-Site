@@ -2,11 +2,34 @@
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+
+function get_ip_address() {
+    foreach (['REMOTE_ADDR', 'HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR', 'HTTP_X_FORWARDED', 'HTTP_X_CLUSTER_CLIENT_IP', 'HTTP_FORWARDED_FOR', 'HTTP_FORWARDED'] as $key) {
+        if (array_key_exists($key, $_SERVER) === true) {
+            foreach (explode(',', $_SERVER[$key]) as $ip) {
+                $ip = trim($ip);
+
+                if (filter_var($ip, FILTER_VALIDATE_IP,
+                                FILTER_FLAG_IPV4 |
+                                FILTER_FLAG_IPV6 |
+                                FILTER_FLAG_NO_PRIV_RANGE |
+                                FILTER_FLAG_NO_RES_RANGE) !== false) {
+                    return $ip;
+                }
+            }
+        }
+    }
+    return '';
+}
+
 $db = include 'db.php';
 $mysqli = new mysqli($db['server'], $db['user'], $db['pass'], $db['db'], $db['port']);
 $platformList = [];
 $res = $mysqli->query('SELECT * FROM platform_lu ORDER BY platform_id');
 while ($row = $res->fetch_assoc()) {
+    if ($row['platform_name'] == 'ERR') {
+        continue;
+    }
     $platformList[$row['platform_id']] = $row['platform_name'];
 }
 
@@ -39,8 +62,8 @@ if (isset($_GET['send'])) {
     }
 
     if (!count($validationErrors)) {
-        $stmt = $mysqli->prepare('CALL spCreateHSCaseCleaner(?,?,?,?,?,?,?,?)');
-        $stmt->bind_param('sissiisi', $data['cmdr_name'], $data['canopy_breached'], $data['o2_timer'], $data['system'], $data['platform'], $data['hull'], $data['description'], $data['can_synth']);
+        $stmt = $mysqli->prepare('CALL spCreateHSCaseCleaner(?,?,?,?,?,?,?,?,?)');
+        $stmt->bind_param('sissiisis', $data['cmdr_name'], $data['canopy_breached'], $data['o2_timer'], $data['system'], $data['platform'], $data['hull'], $data['description'], $data['can_synth'], get_ip_address());
         $stmt->execute();
         foreach ($stmt->error_list as $error) {
             $validationErrors[] = 'DB: ' . $error['error'];
@@ -94,12 +117,27 @@ if (isset($_GET['send'])) {
                     "content": {
                         "href": "https://hullseals.space/knowledge/books/important-information/page/cookie-policy"
                     }
-                })
+                });
+            });
+            $(document).ready(function () {
+                $('#canopy_breached').click(function () {
+                    if ($('#canopy_breached input[name="canopy_breached"]').is(':checked')) {
+                        $('.toggleVissibility').removeClass('invisible');
+                        $('.toggleDisplay').removeClass('d-none');
+                    } else {
+                        $('.toggleVissibility').addClass('invisible');
+                        $('.toggleDisplay').addClass('d-none');
+                    }
+
+                });
             });
         </script>
         <style>
             .input-group-prepend input[type="checkbox"] {
                 margin-right: 5px;
+            }
+            label {
+                user-select: none;
             }
         </style>
     </head>
@@ -159,13 +197,14 @@ if (isset($_GET['send'])) {
                         <div class="input-group mb-3">
                             <input type="number" min="1" max="100" name="hull" value="<?= $data['hull'] ?? '' ?>" class="form-control" placeholder="Hull %" aria-label="Hull %" required>
                         </div>
-                        <div class="input-group mb-3">
+                        <div class="input-group mb-3 canopy_row">
                             <div class="input-group-prepend">
-                                <label class="input-group-text text-danger"><input type="checkbox" value="1" name="canopy_breached" aria-label="Canopy breached"<?= isset($data['canopy_breached']) && $data['canopy_breached'] == 1 ? ' checked' : '' ?>> Canopy breached ?</label>
-                                <label class="input-group-text"><input type="checkbox" name="can_synth" value="1" aria-label="O2 Synth"<?= isset($data['can_synth']) && $data['can_synth'] == 1 ? ' checked' : '' ?>>O2 Synth</label>
+                                <label id="canopy_breached" class="input-group-text text-danger"><input type="checkbox" value="1" name="canopy_breached" aria-label="Canopy breached"<?= isset($data['canopy_breached']) && $data['canopy_breached'] == 1 ? ' checked' : '' ?>> Canopy breached ?</label>
+                                <label class="input-group-text toggleVissibility<?= isset($data['canopy_breached']) && $data['canopy_breached'] == 1 ? '' : ' invisible' ?>"><input type="checkbox" name="can_synth" value="1" aria-label="O2 Synth"<?= isset($data['can_synth']) && $data['can_synth'] == 1 ? ' checked' : '' ?>>O2 Synth</label>
                             </div>
-                            <input type="text" name="o2_timer" value="<?= $data['o2_timer'] ?? '' ?>" class="form-control" pattern="[0-9]{1,2}:[0-9]{1,2}" placeholder="O2 Timer (nn:nn)" aria-label="O2 Timer (nn:nn)">
+                            <input type="text" name="o2_timer" value="<?= $data['o2_timer'] ?? '' ?>" class="form-control toggleVissibility<?= isset($data['canopy_breached']) && $data['canopy_breached'] == 1 ? '' : ' invisible' ?>" pattern="[0-9]{1,2}:[0-9]{1,2}" placeholder="O2 Timer (nn:nn)" aria-label="O2 Timer (nn:nn)">
                         </div>
+                        <div class="alert alert-danger toggleDisplay<?= isset($data['canopy_breached']) && $data['canopy_breached'] == 1 ? '' : ' d-none' ?>">If you haven't already LOG OUT IMMEDIATELY</div>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">Platform</span>
@@ -207,7 +246,7 @@ if (isset($_GET['send'])) {
                 </div>
             </div>
             <div class="footer-copyright">
-                Site content copyright © 2019, The Hull Seals. All Rights Reserved. Elite Dangerous and all related marks are trademarks of Frontier Developments Inc.
+                Site content copyright © 2019, The Hull Seals. All Rights Reserved. Elite Dangerous and all related marks are trademarks of Frontier Developments Inc. <span class="float-right pr-3" title="Your IP might be logged for security reasons"><img src="ip-icon.png" witdh="16" height="16" alt="IP"/> Logged</span>
             </div>
         </footer>
     </body>
