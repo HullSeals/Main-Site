@@ -2,22 +2,63 @@
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-
-/* function get_ip_address(){
-    foreach (array('HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR', 'HTTP_X_FORWARDED', 'HTTP_X_CLUSTER_CLIENT_IP', 'HTTP_FORWARDED_FOR', 'HTTP_FORWARDED', 'REMOTE_ADDR') as $key){
-        if (array_key_exists($key, $_SERVER) === true){
-            foreach (explode(',', $_SERVER[$key]) as $ip){
-                $ip = trim($ip); // just to be safe
-
-                if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) !== false){
-                    return $ip;
-                }
-            }
+$ip='Unable To Log';
+$cloudflareIPRanges = array(
+    '204.93.240.0/24',
+    '204.93.177.0/24',
+    '199.27.128.0/21',
+    '173.245.48.0/20',
+    '103.21.244.0/22',
+    '103.22.200.0/22',
+    '103.31.4.0/22',
+    '141.101.64.0/18',
+    '108.162.192.0/18',
+    '190.93.240.0/20',
+    '188.114.96.0/20',
+    '197.234.240.0/22',
+    '198.41.128.0/17',
+    '162.158.0.0/15'
+);
+ 
+//NA by default.
+$ip = 'NA';
+ 
+//Check to see if the CF-Connecting-IP header exists.
+if(isset($_SERVER["HTTP_CF_CONNECTING_IP"])){
+    
+    //Assume that the request is invalid unless proven otherwise.
+    $validCFRequest = false;
+    
+    //Make sure that the request came via Cloudflare.
+    foreach($cloudflareIPRanges as $range){
+        //Use the ip_in_range function from Joomla.
+        if(ip_in_range($_SERVER['REMOTE_ADDR'], $range)) {
+            //IP is valid. Belongs to Cloudflare.
+            $validCFRequest = true;
+            break;
         }
     }
-}*/
-$lgd_ip='notLogged';
-//$ip=$lgd_ip;
+    
+    //If it's a valid Cloudflare request
+    if($validCFRequest){
+        //Use the CF-Connecting-IP header.
+        $ip = $_SERVER["HTTP_CF_CONNECTING_IP"];
+    } else{
+        //If it isn't valid, then use REMOTE_ADDR. 
+        $ip = $_SERVER['REMOTE_ADDR'];
+    }
+    
+} else{
+    //Otherwise, use REMOTE_ADDR.
+    $ip = $_SERVER['REMOTE_ADDR'];
+}
+ 
+//Define it as a constant so that we can
+//reference it throughout the app.
+define('IP_ADDRESS', $ip);
+
+//$lgd_ip='notLogged';
+$lgd_ip=$ip;
 $db = include 'db.php';
 $mysqli = new mysqli($db['server'], $db['user'], $db['pass'], $db['db'], $db['port']);
 
@@ -60,14 +101,14 @@ if (isset($_GET['send'])) {
 	    if (strlen($data['client_nm']) > 45) {
         $validationErrors[] = 'commander name too long';
     }
-    if (strlen($data['system']) > 100) {
+    if (strlen($data['curr_sys']) > 100) {
         $validationErrors[] = 'system too long';
     }
     $data['hull'] = (int) $data['hull'];
     if ($data['hull'] > 100 || $data['hull'] < 1) {
         $validationErrors[] = 'invalid hull';
     }
-    $data['canopy_breached'] = isset($data['canopy_breached']);
+    $data['cb'] = isset($data['cb']);
     if (!isset($platformList[$data['platform']])) {
         $validationErrors[] = 'invalid platform';
     }
@@ -85,7 +126,7 @@ if (isset($_GET['send'])) {
 
     if (!count($validationErrors)) {
         $stmt = $mysqli->prepare('CALL spCreateRecCleaner(?,?,?,?,?,?,?,?,?,?,?,?)');
-        $stmt->bind_param('issiiissssss', $data['lead_seal'], $data['client_nm'], $data['curr_sys'], $data['hull'], $data['cb'], $data['platform'], $data['case_stat'], $data['dispatched'], $data['dispatcher'], $data['other_seals'], $data['notes'], $lgd_ip);
+        $stmt->bind_param('sssiiiiissss', $data['lead_seal'], $data['client_nm'], $data['curr_sys'], $data['hull'], $data['cb'], $data['platform'], $data['case_stat'], $data['dispatched'], $data['dispatcher'], $data['other_seals'], $data['notes'], $lgd_ip);
         $stmt->execute();
         foreach ($stmt->error_list as $error) {
             $validationErrors[] = 'DB: ' . $error['error'];
@@ -206,13 +247,13 @@ if (isset($_GET['send'])) {
                             <input type="text" name="client_nm" value="<?= $data['client_nm'] ?? '' ?>" class="form-control" placeholder="Client Name" aria-label="Client Name" required>
                         </div>
 						<div class="input-group mb-3">
-                            <input type="text" name="system" value="<?= $data['curr_sys'] ?? '' ?>" class="form-control" placeholder="System" aria-label="System" required>
+                            <input type="text" name="curr_sys" value="<?= $data['curr_sys'] ?? '' ?>" class="form-control" placeholder="System" aria-label="System" required>
                         </div>
                         <div class="input-group mb-3">
                             <input type="number" min="1" max="100" name="hull" value="<?= $data['hull'] ?? '' ?>" class="form-control" placeholder="Starting Hull %" aria-label="Starting Hull %" required>
                         </div>
                         <div class="input-group mb-3">
-                                <label id="canopy_breached" class="input-group-text text-danger"><input type="checkbox" value="1" name="canopy_breached" aria-label=" Canopy breached"<?= isset($data['cb']) && $data['cb'] == 1 ? ' checked' : '' ?>>  Canopy breached ?</label>
+                                <label id="cb" class="input-group-text text-danger"><input type="checkbox" value="1" name="cb" aria-label="Canopy Breached?"<?= isset($data['cb']) && $data['cb'] == 1 ? ' checked' : '' ?>>Canopy Breached?</label>
                         </div>
 						<div class="input-group mb-3">
                             <div class="input-group-prepend">
@@ -252,14 +293,14 @@ if (isset($_GET['send'])) {
                         </div>
 
                         <div class="input-group mb-3">
-                            <input type="text" name="dispatcher" value="<?= $data['dispatcher'] ?? '' ?>" class="form-control" placeholder="Who was Dispatching? (If None, Leave Blank)" aria-label="Dispatching">
+                            <input type="text" name="dispatcher" value="<?= $data['dispatcher'] ?? '' ?>" class="form-control" placeholder="Who was Dispatching? (If None, Leave Blank)" aria-label="Who was Dispatching?">
                         </div>
                         <div class="input-group mb-3">
-                            <input type="text" name="others" value="<?= $data['other_seals'] ?? '' ?>" class="form-control" placeholder="Any other Seals on the Case? (If None, Leave Blank)" aria-label="Others">
+                            <input type="text" name="other_seals" value="<?= $data['other_seals'] ?? '' ?>" class="form-control" placeholder="Any other Seals on the Case? (If None, Leave Blank)" aria-label="Others">
                         </div>
 
 						<div class="input-group mb-3">
-                            <textarea name="description" value="<?= $data['notes'] ?? '' ?>" class="form-control" placeholder="Notes (optional)" aria-label="Notes (optional)" rows="4"><?= $data['notes'] ?? '' ?></textarea>
+                            <textarea name="notes" value="<?= $data['notes'] ?? '' ?>" class="form-control" placeholder="Notes (optional)" aria-label="Notes (optional)" rows="4"><?= $data['notes'] ?? '' ?></textarea>
                         </div>
 
 
@@ -289,7 +330,7 @@ if (isset($_GET['send'])) {
                 </div>
             </div>
             <div class="footer-copyright">
-                Site content copyright © 2019, The Hull Seals. All Rights Reserved. Elite Dangerous and all related marks are trademarks of Frontier Developments Inc. <span class="float-right pr-3" title="Your IP might be logged for security reasons"><img src="ip-icon.png" witdh="16" height="16" alt="IP"/> Logged</span>
+                Site content copyright © 2019, The Hull Seals. All Rights Reserved. Elite Dangerous and all related marks are trademarks of Frontier Developments Inc. <span class="float-right pr-3" title="Your IP might be logged for security reasons"><img src="ip-icon.png" witdh="16" height="16" alt="IP"/> Logged - <?php echo $ip ?></span>
             </div>
         </footer>
     </body>
