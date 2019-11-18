@@ -140,18 +140,6 @@ if (isset($_GET['send'])) {
                     }
                 });
             });
-            $(document).ready(function () {
-                $('#canopy_breached').click(function () {
-                    if ($('#canopy_breached input[name="canopy_breached"]').is(':checked')) {
-                        $('.toggleVissibility').removeClass('invisible');
-                        $('.toggleDisplay').removeClass('d-none');
-                    } else {
-                        $('.toggleVissibility').addClass('invisible');
-                        $('.toggleDisplay').addClass('d-none');
-                    }
-
-                });
-            });
         </script>
         <style>
             .input-group-prepend input[type="checkbox"] {
