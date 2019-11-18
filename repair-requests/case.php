@@ -3,24 +3,63 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-function get_ip_address() {
-    foreach (['REMOTE_ADDR', 'HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR', 'HTTP_X_FORWARDED', 'HTTP_X_CLUSTER_CLIENT_IP', 'HTTP_FORWARDED_FOR', 'HTTP_FORWARDED'] as $key) {
-        if (array_key_exists($key, $_SERVER) === true) {
-            foreach (explode(',', $_SERVER[$key]) as $ip) {
-                $ip = trim($ip);
-
-                if (filter_var($ip, FILTER_VALIDATE_IP,
-                                FILTER_FLAG_IPV4 |
-                                FILTER_FLAG_IPV6 |
-                                FILTER_FLAG_NO_PRIV_RANGE |
-                                FILTER_FLAG_NO_RES_RANGE) !== false) {
-                    return $ip;
-                }
-            }
+$ip='Unable To Log';
+$cloudflareIPRanges = array(
+    '204.93.240.0/24',
+    '204.93.177.0/24',
+    '199.27.128.0/21',
+    '173.245.48.0/20',
+    '103.21.244.0/22',
+    '103.22.200.0/22',
+    '103.31.4.0/22',
+    '141.101.64.0/18',
+    '108.162.192.0/18',
+    '190.93.240.0/20',
+    '188.114.96.0/20',
+    '197.234.240.0/22',
+    '198.41.128.0/17',
+    '162.158.0.0/15'
+);
+ 
+//NA by default.
+$ip = 'NA';
+ 
+//Check to see if the CF-Connecting-IP header exists.
+if(isset($_SERVER["HTTP_CF_CONNECTING_IP"])){
+    
+    //Assume that the request is invalid unless proven otherwise.
+    $validCFRequest = false;
+    
+    //Make sure that the request came via Cloudflare.
+    foreach($cloudflareIPRanges as $range){
+        //Use the ip_in_range function from Joomla.
+        if(ip_in_range($_SERVER['REMOTE_ADDR'], $range)) {
+            //IP is valid. Belongs to Cloudflare.
+            $validCFRequest = true;
+            break;
         }
     }
-    return '';
+    
+    //If it's a valid Cloudflare request
+    if($validCFRequest){
+        //Use the CF-Connecting-IP header.
+        $ip = $_SERVER["HTTP_CF_CONNECTING_IP"];
+    } else{
+        //If it isn't valid, then use REMOTE_ADDR. 
+        $ip = $_SERVER['REMOTE_ADDR'];
+    }
+    
+} else{
+    //Otherwise, use REMOTE_ADDR.
+    $ip = $_SERVER['REMOTE_ADDR'];
 }
+ 
+//Define it as a constant so that we can
+//reference it throughout the app.
+define('IP_ADDRESS', $ip);
+
+//$lgd_ip='notLogged';
+$lgd_ip=$ip;
 
 $db = include 'db.php';
 $mysqli = new mysqli($db['server'], $db['user'], $db['pass'], $db['db'], $db['port']);
@@ -63,7 +102,7 @@ if (isset($_GET['send'])) {
 
     if (!count($validationErrors)) {
         $stmt = $mysqli->prepare('CALL spCreateHSCaseCleaner(?,?,?,?,?,?,?,?,?)');
-        $stmt->bind_param('sissiisis', $data['cmdr_name'], $data['canopy_breached'], $data['o2_timer'], $data['system'], $data['platform'], $data['hull'], $data['description'], $data['can_synth'], get_ip_address());
+        $stmt->bind_param('sissiisis', $data['cmdr_name'], $data['canopy_breached'], $data['o2_timer'], $data['system'], $data['platform'], $data['hull'], $data['description'], $data['can_synth'], $lgd_ip);
         $stmt->execute();
         foreach ($stmt->error_list as $error) {
             $validationErrors[] = 'DB: ' . $error['error'];
@@ -246,7 +285,7 @@ if (isset($_GET['send'])) {
                 </div>
             </div>
             <div class="footer-copyright">
-                Site content copyright © 2019, The Hull Seals. All Rights Reserved. Elite Dangerous and all related marks are trademarks of Frontier Developments Inc. <span class="float-right pr-3" title="Your IP might be logged for security reasons"><img src="ip-icon.png" witdh="16" height="16" alt="IP"/> Logged</span>
+                Site content copyright © 2019, The Hull Seals. All Rights Reserved. Elite Dangerous and all related marks are trademarks of Frontier Developments Inc. <span class="float-right pr-3" title="Your IP might be logged for security reasons"><img src="ip-icon.png" witdh="16" height="16" alt="IP"/> Logged - <?php echo $ip ?></span>
             </div>
         </footer>
     </body>
