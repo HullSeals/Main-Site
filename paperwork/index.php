@@ -3,27 +3,24 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-function get_ip_address() {
-    foreach (['REMOTE_ADDR', 'HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR', 'HTTP_X_FORWARDED', 'HTTP_X_CLUSTER_CLIENT_IP', 'HTTP_FORWARDED_FOR', 'HTTP_FORWARDED'] as $key) {
-        if (array_key_exists($key, $_SERVER) === true) {
-            foreach (explode(',', $_SERVER[$key]) as $ip) {
-                $ip = trim($ip);
+function get_ip_address(){
+    foreach (array('HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR', 'HTTP_X_FORWARDED', 'HTTP_X_CLUSTER_CLIENT_IP', 'HTTP_FORWARDED_FOR', 'HTTP_FORWARDED', 'REMOTE_ADDR') as $key){
+        if (array_key_exists($key, $_SERVER) === true){
+            foreach (explode(',', $_SERVER[$key]) as $ip){
+                $ip = trim($ip); // just to be safe
 
-                if (filter_var($ip, FILTER_VALIDATE_IP,
-                                FILTER_FLAG_IPV4 |
-                                FILTER_FLAG_IPV6 |
-                                FILTER_FLAG_NO_PRIV_RANGE |
-                                FILTER_FLAG_NO_RES_RANGE) !== false) {
+                if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) !== false){
                     return $ip;
                 }
             }
         }
     }
-    return '';
 }
-
+$lgd_ip=null;
+$ip=$lgd_ip;
 $db = include 'db.php';
 $mysqli = new mysqli($db['server'], $db['user'], $db['pass'], $db['db'], $db['port']);
+
 $platformList = [];
 $res = $mysqli->query('SELECT * FROM platform_lu ORDER BY platform_id');
 while ($row = $res->fetch_assoc()) {
@@ -33,34 +30,59 @@ while ($row = $res->fetch_assoc()) {
     $platformList[$row['platform_id']] = $row['platform_name'];
 }
 
+$statusList = [];
+$res = $mysqli->query('SELECT * FROM succ_lu ORDER BY succ_id');
+while ($row = $res->fetch_assoc()) {
+    if ($row['success_name'] == 'ERR') {
+        continue;
+    }
+    $statusList[$row['succ_id']] = $row['success_name'];
+}
+
+$dispatchList = [];
+$res = $mysqli->query('SELECT * FROM dispatched_lu ORDER BY dispatch_id');
+while ($row = $res->fetch_assoc()) {
+    if ($row['dispatched_name'] == 'ERR') {
+        continue;
+    }
+    $dispatchList[$row['dispatch_id']] = $row['dispatched_name'];
+}
+
 $validationErrors = [];
 $data = [];
 if (isset($_GET['send'])) {
     foreach ($_REQUEST as $key => $value) {
         $data[$key] = strip_tags(stripslashes(str_replace(["'", '"'], '', $value)));
     }
-
-    if (strlen($data['cmdr_name']) > 50) {
+    if (strlen($data['lead_seal']) > 45) {
+        $validationErrors[] = 'commander name too long';
+    }
+	    if (strlen($data['client_nm']) > 45) {
         $validationErrors[] = 'commander name too long';
     }
     if (strlen($data['system']) > 100) {
         $validationErrors[] = 'system too long';
     }
-
     $data['hull'] = (int) $data['hull'];
     if ($data['hull'] > 100 || $data['hull'] < 1) {
         $validationErrors[] = 'invalid hull';
     }
     $data['canopy_breached'] = isset($data['canopy_breached']);
-    $data['can_synth'] = isset($data['can_synth']);
-
     if (!isset($platformList[$data['platform']])) {
         $validationErrors[] = 'invalid platform';
     }
+	    if (!isset($platformList[$data['case_stat']])) {
+        $validationErrors[] = 'invalid status';
+    }
+    if (!isset($platformList[$data['dispatched']])) {
+        $validationErrors[] = 'invalid dispatching type';
+    }
+
+	
 
     if (!count($validationErrors)) {
-        $stmt = $mysqli->prepare('CALL spCreateHSCaseCleaner(?,?,?,?,?,?,?,?,?)');
-        $stmt->bind_param('sissiisis', $data['cmdr_name'], $data['canopy_breached'], $data['o2_timer'], $data['system'], $data['platform'], $data['hull'], $data['description'], $data['can_synth'], get_ip_address());
+        $stmt = $mysqli->prepare('CALL spCreateRecCleaner(?,?,?,?,?,?,?,?,?,?,?,?)');
+        $stmt->bind_param('issiiissssss', $data['lead_seal'], $data['client_nm'], $data['curr_sys'], $data['hull'], $data['cb'], $data['platform'], $data['case_stat'], $data['dispatched'], $data['dispatcher'], $data['other_seals'], $data['notes'], $lgd_ip);
         $stmt->execute();
         foreach ($stmt->error_list as $error) {
             $validationErrors[] = 'DB: ' . $error['error'];
@@ -69,7 +91,6 @@ if (isset($_GET['send'])) {
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -80,7 +101,7 @@ if (isset($_GET['send'])) {
         <meta content="hull seals, elite dangerous, distant worlds, seal team fix, mechanics, dw2" name="keywords">
         <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0" name="viewport">
         <meta content="Welcome to the Hull Seals, Elite Dangerous's Premier Hull Repair Specialists!" name="description">
-        <title>Repair Requests | The Hull Seals</title>
+        <title>Paperwork | The Hull Seals</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
 
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -188,19 +209,19 @@ if (isset($_GET['send'])) {
                     ?>
                     <form action="?send" method="post">
                         <div class="input-group mb-3">
-                            <input type="text" name="seal_name" class="form-control" placeholder="Lead Seal Name" aria-label="Lead Seal Name" required>
+                            <input type="text" name="lead_seal" value="<?= $data['lead_seal'] ?? '' ?>" class="form-control" placeholder="Lead Seal Name" aria-label="Lead Seal Name" required>
                         </div>
                         <div class="input-group mb-3">
-                            <input type="text" name="client_name" class="form-control" placeholder="Client Name" aria-label="Client Name" required>
+                            <input type="text" name="client_nm" value="<?= $data['client_nm'] ?? '' ?>" class="form-control" placeholder="Client Name" aria-label="Client Name" required>
                         </div>
 						<div class="input-group mb-3">
-                            <input type="text" name="system" value="<?= $data['system'] ?? '' ?>" class="form-control" placeholder="System" aria-label="System" required>
+                            <input type="text" name="system" value="<?= $data['curr_sys'] ?? '' ?>" class="form-control" placeholder="System" aria-label="System" required>
                         </div>
                         <div class="input-group mb-3">
-                            <input type="number" min="1" max="100" name="hull" class="form-control" placeholder="Starting Hull %" aria-label="Starting Hull %" required>
+                            <input type="number" min="1" max="100" name="hull" value="<?= $data['hull'] ?? '' ?>" class="form-control" placeholder="Starting Hull %" aria-label="Starting Hull %" required>
                         </div>
                         <div class="input-group mb-3">
-                                <label id="canopy_breached" class="input-group-text text-danger"><input type="checkbox" value="1" name="canopy_breached" aria-label=" Canopy breached"<?= isset($data['canopy_breached']) && $data['canopy_breached'] == 1 ? ' checked' : '' ?>>  Canopy breached ?</label>
+                                <label id="canopy_breached" class="input-group-text text-danger"><input type="checkbox" value="1" name="canopy_breached" aria-label=" Canopy breached"<?= isset($data['cb']) && $data['cb'] == 1 ? ' checked' : '' ?>>  Canopy breached ?</label>
                         </div>
 						<div class="input-group mb-3">
                             <div class="input-group-prepend">
@@ -214,30 +235,40 @@ if (isset($_GET['send'])) {
                                 ?>
                             </select>
                         </div>
-					<div class="input-group mb-3">
-						<select class="custom-select" id="inputGroupSelect02">
-							<option selected>Case Successful?  (Choose One)</option>
-							<option value="1">Yes</option>
-							<option value="2">No</option>
-							<option value="3">Other (Reason in Notes)</option>
-						</select>
-					</div>
-					<div class="input-group mb-3">
-						<select class="custom-select" id="inputGroupSelect02">
-							<option selected>Was this case Dispatched?  (Choose One)</option>
-							<option value="1">Yes</option>
-							<option value="2">No</option>
-						</select>
-					</div>
+						<div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Was the Case Successful?</span>
+                            </div>
+                            <select name="case_stat" class="custom-select" id="inputGroupSelect01" placeholder="Test" required>
+                                <?php
+                                foreach ($statusList as $statusId => $statusName) {
+                                    echo '<option value="' . $statusId . '"' . ($data['case_stat'] == $statusId ? ' checked' : '') . '>' . $statusName . '</option>';
+                                }
+                                ?>
+                            </select>
+                        </div>
+						<div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Was the Case Dispatched?</span>
+                            </div>
+                            <select name="dispatched" class="custom-select" id="inputGroupSelect01" placeholder="Test" required>
+                                <?php
+                                foreach ($dispatchList as $dispatchId => $dispatchName) {
+                                    echo '<option value="' . $dispatchId . '"' . ($data['dispatched'] == $dispatchId ? ' checked' : '') . '>' . $dispatchName . '</option>';
+                                }
+                                ?>
+                            </select>
+                        </div>
+
                         <div class="input-group mb-3">
-                            <input type="text" name="dispatcher" class="form-control" placeholder="Who was Dispatching? (If None, Leave Blank)" aria-label="Dispatching">
+                            <input type="text" name="dispatcher" value="<?= $data['dispatcher'] ?? '' ?>" class="form-control" placeholder="Who was Dispatching? (If None, Leave Blank)" aria-label="Dispatching">
                         </div>
                         <div class="input-group mb-3">
-                            <input type="text" name="others" class="form-control" placeholder="Any other Seals on the Case? (If None, Leave Blank)" aria-label="Others">
+                            <input type="text" name="others" value="<?= $data['other_seals'] ?? '' ?>" class="form-control" placeholder="Any other Seals on the Case? (If None, Leave Blank)" aria-label="Others">
                         </div>
 
 						<div class="input-group mb-3">
-                            <textarea name="description" class="form-control" placeholder="Notes (optional)" aria-label="Notes (optional)" rows="4"><?= $data['notes'] ?? '' ?></textarea>
+                            <textarea name="description" value="<?= $data['notes'] ?? '' ?>" class="form-control" placeholder="Notes (optional)" aria-label="Notes (optional)" rows="4"><?= $data['notes'] ?? '' ?></textarea>
                         </div>
 
 
