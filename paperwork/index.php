@@ -3,7 +3,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-function get_ip_address(){
+/* function get_ip_address(){
     foreach (array('HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR', 'HTTP_X_FORWARDED', 'HTTP_X_CLUSTER_CLIENT_IP', 'HTTP_FORWARDED_FOR', 'HTTP_FORWARDED', 'REMOTE_ADDR') as $key){
         if (array_key_exists($key, $_SERVER) === true){
             foreach (explode(',', $_SERVER[$key]) as $ip){
@@ -15,9 +15,9 @@ function get_ip_address(){
             }
         }
     }
-}
-$lgd_ip=null;
-$ip=$lgd_ip;
+}*/
+$lgd_ip='notLogged';
+//$ip=$lgd_ip;
 $db = include 'db.php';
 $mysqli = new mysqli($db['server'], $db['user'], $db['pass'], $db['db'], $db['port']);
 
@@ -71,13 +71,16 @@ if (isset($_GET['send'])) {
     if (!isset($platformList[$data['platform']])) {
         $validationErrors[] = 'invalid platform';
     }
-	    if (!isset($platformList[$data['case_stat']])) {
+	    if (!isset($statusList[$data['case_stat']])) {
         $validationErrors[] = 'invalid status';
     }
-    if (!isset($platformList[$data['dispatched']])) {
+    if (!isset($dispatchList[$data['dispatched']])) {
         $validationErrors[] = 'invalid dispatching type';
     }
-
+    if (!isset($lgd_ip)) {
+        $validationErrors[] = 'invalid IP Address';
+    }
+	
 	
 
     if (!count($validationErrors)) {
