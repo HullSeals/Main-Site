@@ -70,7 +70,7 @@ $lgd_ip=$ip;
         <meta content="hull seals, elite dangerous, distant worlds, seal team fix, mechanics, dw2" name="keywords">
         <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0" name="viewport">
         <meta content="Welcome to the Hull Seals, Elite Dangerous's Premier Hull Repair Specialists!" name="description">
-        <title>Paperwork | The Hull Seals</title>
+        <title>Kingfisher Paperwork | The Hull Seals</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
 
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -153,13 +153,8 @@ $lgd_ip=$ip;
             </header>
             <section class="introduction">
                 <article>
-                    <h1>Case Paperwork</h1>
-					<h5>Please choose the Correct Form.</h5>
-					<hr />
-					<p>
-					<a href="seals" class="btn btn-primary btn-lg">Hull Seals</a>     
-					<a href="fishers" class="btn btn-info btn-lg">Kingfishers</a>
-					</p>
+                    <h1>Kingfisher Case Paperwork</h1>
+					<h5 class="text-success">Thank you for submitting your paperwork, Fisher! You may now close the tab.</h5>
                 </article>
             </section>
         </div>

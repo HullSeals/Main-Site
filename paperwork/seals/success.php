@@ -154,8 +154,7 @@ $lgd_ip=$ip;
             <section class="introduction">
                 <article>
                     <h1>Seal Case Paperwork</h1>
-					<h4>Thank you for submitting your paperwork, Seal! You may now close the tab.</h4>
-					<hr />
+					<h5 class="text-success">Thank you for submitting your paperwork, Seal! You may now close the tab.</h5>
                 </article>
             </section>
         </div>
