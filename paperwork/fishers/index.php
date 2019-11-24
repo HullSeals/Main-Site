@@ -115,7 +115,7 @@ if (isset($_GET['send'])) {
 	    if (strlen($data['curr_planet']) > 10) {
         $validationErrors[] = 'planet too long';
     }
-    if (strlen($data['curr_coord']) > 10) {
+    if (strlen($data['curr_coord']) > 20) {
         $validationErrors[] = 'coordinates too long';
     }
 	if (!isset($statusList[$data['case_stat']])) {
@@ -138,7 +138,7 @@ if (isset($_GET['send'])) {
             $validationErrors[] = 'DB: ' . $error['error'];
         }
         $stmt->close();
-		header("Location: kfsuccess.php");
+		header("Location: success.php");
     }
 }
 ?>
@@ -259,7 +259,7 @@ if (isset($_GET['send'])) {
                             <input type="text" name="curr_planet" value="<?= $data['curr_planet'] ?? '' ?>" class="form-control" placeholder="Planet" aria-label="Planet" required>
                         </div>
 						<div class="input-group mb-3">
-                            <input type="text" name="curr_coord" value="<?= $data['curr_coord'] ?? '' ?>" class="form-control" placeholder="Coordinates" aria-label="Coordinates" required>
+                            <input type="text" name="curr_coord" value="<?= $data['curr_coord'] ?? '' ?>" class="form-control" placeholder="Coordinates (+/-000.000, +/-000.000)" aria-label="Coordinates" required>
                         </div>
 						<div class="input-group mb-3">
                             <div class="input-group-prepend">
