@@ -2,6 +2,9 @@
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+require_once '../users/init.php';  //make sure this path is correct!
+if (!securePage($_SERVER['PHP_SELF'])){die();} 
+
 $ip='Unable To Log';
 $cloudflareIPRanges = array(
     '204.93.240.0/24',
@@ -145,7 +148,7 @@ $lgd_ip=$ip;
                                 <a class="nav-link" href="../contact">Contact</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Login/Register</a>
+                                <a class="nav-link" href="https://hullseals.space/users/">Login/Register</a>
                             </li>
                         </ul>
                     </div>

@@ -2,6 +2,8 @@
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+require_once '../../users/init.php';  //make sure this path is correct!
+if (!securePage($_SERVER['PHP_SELF'])){die();}
 $ip='Unable To Log';
 $cloudflareIPRanges = array(
     '204.93.240.0/24',
@@ -19,16 +21,16 @@ $cloudflareIPRanges = array(
     '198.41.128.0/17',
     '162.158.0.0/15'
 );
- 
+
 //NA by default.
 $ip = 'NA';
- 
+
 //Check to see if the CF-Connecting-IP header exists.
 if(isset($_SERVER["HTTP_CF_CONNECTING_IP"])){
-    
+
     //Assume that the request is invalid unless proven otherwise.
     $validCFRequest = false;
-    
+
     //Make sure that the request came via Cloudflare.
     foreach($cloudflareIPRanges as $range){
         //Use the ip_in_range function from Joomla.
@@ -38,21 +40,21 @@ if(isset($_SERVER["HTTP_CF_CONNECTING_IP"])){
             break;
         }
     }
-    
+
     //If it's a valid Cloudflare request
     if($validCFRequest){
         //Use the CF-Connecting-IP header.
         $ip = $_SERVER["HTTP_CF_CONNECTING_IP"];
     } else{
-        //If it isn't valid, then use REMOTE_ADDR. 
+        //If it isn't valid, then use REMOTE_ADDR.
         $ip = $_SERVER['REMOTE_ADDR'];
     }
-    
+
 } else{
     //Otherwise, use REMOTE_ADDR.
     $ip = $_SERVER['REMOTE_ADDR'];
 }
- 
+
 //Define it as a constant so that we can
 //reference it throughout the app.
 define('IP_ADDRESS', $ip);
@@ -127,8 +129,8 @@ if (isset($_GET['send'])) {
     if (!isset($lgd_ip)) {
         $validationErrors[] = 'invalid IP Address';
     }
-	
-	
+
+
 
     if (!count($validationErrors)) {
         $stmt = $mysqli->prepare('CALL spCreateRecCleanerKF(?,?,?,?,?,?,?,?,?,?,?,?,?)');
@@ -145,8 +147,8 @@ if (isset($_GET['send'])) {
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <link href="../../favicon.ico" rel="icon" type="image/x-icon">
-        <link href="../../favicon.ico" rel="shortcut icon" type="image/x-icon">
+        <link href="../favicon.ico" rel="icon" type="image/x-icon">
+        <link href="../favicon.ico" rel="shortcut icon" type="image/x-icon">
         <meta charset="UTF-8">
         <meta content="Wolfii Namakura" name="author">
         <meta content="hull seals, elite dangerous, distant worlds, seal team fix, mechanics, dw2" name="keywords">
@@ -160,7 +162,7 @@ if (isset($_GET['send'])) {
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-        <link href="../../styles.css" rel="stylesheet" type="text/css">
+        <link href="../styles.css" rel="stylesheet" type="text/css">
         <link rel="stylesheet" type="text/css" href="//cdnpub.websitepolicies.com/lib/cookieconsent/1.0.2/cookieconsent.min.css" />
         <script src="//cdnpub.websitepolicies.com/lib/cookieconsent/1.0.2/cookieconsent.min.js"></script>
         <script>
@@ -203,7 +205,7 @@ if (isset($_GET['send'])) {
         <div id="home">
             <header>
                 <nav class="navbar container navbar-expand-lg navbar-expand-md navbar-dark" role="navigation">
-                    <a class="navbar-brand" href="../../"><img src="../../images/emblem_scaled.png" height="30" class="d-inline-block align-top" alt="Logo"> Hull Seals</a>
+                    <a class="navbar-brand" href="../"><img src="../images/emblem_scaled.png" height="30" class="d-inline-block align-top" alt="Logo"> Hull Seals</a>
 
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
@@ -212,22 +214,22 @@ if (isset($_GET['send'])) {
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <ul class="navbar-nav">
                             <li class="nav-item">
-                                <a class="nav-link" href="../../">Home</a>
+                                <a class="nav-link" href="../">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="../../knowledge">Knowledge Base</a>
+                                <a class="nav-link" href="../knowledge">Knowledge Base</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="../../journal">Journal Reader</a>
+                                <a class="nav-link" href="../journal">Journal Reader</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="../../about">About</a>
+                                <a class="nav-link" href="../about">About</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="../../contact">Contact</a>
+                                <a class="nav-link" href="../contact">Contact</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Login/Register</a>
+                                <a class="nav-link" href="https://hullseals.space/users/">Login/Register</a>
                             </li>
                         </ul>
                     </div>
@@ -339,7 +341,7 @@ if (isset($_GET['send'])) {
                         <h5 class="text-uppercase">Links</h5>
 
                         <ul class="list-unstyled">
-                            <li><a href="https://twitter.com/HullSeals" target="_blank"><img alt="Twitter" height="20" src="../../images/twitter_loss.png" width="20"></a> <a href="https://reddit.com/r/HullSeals" target="_blank"><img alt="Reddit" height="20" src="../../images/reddit.png" width="20"></a> <a href="https://www.youtube.com/channel/UCwKysCkGU_C6V8F2inD8wGQ" target="_blank"><img alt="Youtube" height="20" src="../../images/youtube.png" width="20"></a> <a href="https://www.twitch.tv/hullseals" target="_blank"><img alt="Twitch" height="20" src="../../images/twitch.png" width="20"></a> <a href="https://gitlab.com/hull-seals-cyberseals" target="_blank"><img alt="GitLab" height="20" src="../../images/gitlab.png" width="20"></a></li>
+                            <li><a href="https://twitter.com/HullSeals" target="_blank"><img alt="Twitter" height="20" src="../images/twitter_loss.png" width="20"></a> <a href="https://reddit.com/r/HullSeals" target="_blank"><img alt="Reddit" height="20" src="../images/reddit.png" width="20"></a> <a href="https://www.youtube.com/channel/UCwKysCkGU_C6V8F2inD8wGQ" target="_blank"><img alt="Youtube" height="20" src="../images/youtube.png" width="20"></a> <a href="https://www.twitch.tv/hullseals" target="_blank"><img alt="Twitch" height="20" src="../images/twitch.png" width="20"></a> <a href="https://gitlab.com/hull-seals-cyberseals" target="_blank"><img alt="GitLab" height="20" src="../images/gitlab.png" width="20"></a></li>
                             <li><a href="/donate">Donate</a></li>
                             <li><a href="https://hullseals.space/knowledge/books/important-information/page/privacy-policy">Privacy & Cookies Policy</a></li>
                         </ul>
