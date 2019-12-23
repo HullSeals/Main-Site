@@ -23,7 +23,7 @@ class FrontierAuth
      */
     public function __construct()
     {
-        $json = json_decode(file_get_contents(__DIR__."/../keys.json"));
+        $json = json_decode(file_get_contents(__DIR__."../keys.json"));
         $this->client_id = $json->Client;
         $this->client_secret = $json->Secret;
     }
