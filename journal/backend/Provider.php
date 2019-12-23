@@ -23,6 +23,7 @@ class FrontierAuth
      */
     public function __construct()
     {
+        // TODO If after the session_start change it still does not work put a / in front of the ../ (Stupid file systems)
         $json = json_decode(file_get_contents(__DIR__."../keys.json"));
         $this->client_id = $json->Client;
         $this->client_secret = $json->Secret;
