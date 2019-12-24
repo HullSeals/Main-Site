@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html  lang="en">
 <head>
@@ -103,7 +106,6 @@
 						* Date: 30/03/2019
 						* Time: 14:48
 						*/
-						session_start();
 						$info = $_SESSION['info'];
 						// added echo formatting - HW
 						echo "<p>Current Location: ".$info['system']."</p>";
