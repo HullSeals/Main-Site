@@ -100,7 +100,7 @@
             <br />
             Don't risk it. Make the call.
             <br />
-            <button type="button" class="btn btn-danger">I need repairs!</button>
+            <a href="../repair-requests" class="btn btn-danger">I need repairs!</a>
             <br />
             <br />
              We'll see you out there, CMDR.</p></article>

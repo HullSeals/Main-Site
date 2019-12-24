@@ -92,7 +92,7 @@
                 <br />
                 <strong>Social</strong> - Join our community, or Join the Seals!
                 <br />
-                Want to join, or talk with our on-duty seals? Jump in our <a href="#" class="btn btn-dark btn-sm">IRC Chat</a><br />
+                Want to join, or talk with our on-duty seals? Jump in our <a href="#" class="btn btn-dark btn-sm">IRC Chat (Currently Offline)</a><br />
 		We currently use Fleetcomm Discord as our chat solution. <a href="https://discordapp.com/invite/0hKG2qb9ODixa7Iz" class="btn btn-dark btn-sm">Join Us There</a><br />
                 <br />
                 <br />

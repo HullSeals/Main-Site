@@ -92,7 +92,7 @@
 <p>
 This server refuses to provide fuel rescues, because we are Hull Seals. <br /><br />
 Please attempt to connect to this page using HTCPCP in order to diagnose the issue. <br /><br />
-Looking for Fuel? Contact the <a href="https://fuelrats.com" style="color: #FFFFFF;">Fuel Rats</a>  </p>
+Looking for Fuel? Contact the <strong><a href="https://fuelrats.com" style="color: #FFFFFF;">Fuel Rats</a></strong>  </p>
 </article>
 </section>
 </div>

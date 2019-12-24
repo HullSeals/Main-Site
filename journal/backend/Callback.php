@@ -86,7 +86,7 @@ try {
         "lifesupport" => $lifesupport
     );
     //TODO IRC/web hook
-    header("Location: ../result.php");
+   header("Location: ../result.php");
 } catch (IdentityProviderException $e) {
 }
 function str_slice($str, $start, $end = FALSE)
