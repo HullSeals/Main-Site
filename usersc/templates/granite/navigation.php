@@ -59,6 +59,7 @@ if ($navstyle == 'Default') {
     </div>
   </div>
 </nav>
+<p>&nbsp;</p>
 <?php
 
 } elseif ($navstyle == 'Left Side') {
