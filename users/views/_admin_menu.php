@@ -111,7 +111,7 @@ function activeDropdown($View, $dropId, $Area = false){
         <a class="navbar-brand" href="<?=$us_url_root?>index.php"><img src="images/logo.png" alt="Logo"></a>
         <a class="navbar-brand hidden" href="./"><img src="images/logo2.png" alt="Logo"></a>
       </div>
-
+      <br>
       <div id="main-menu" class="main-menu collapse navbar-collapse">
         <ul class="nav navbar-nav">
          <li <?=($view) ? '' : 'class="active"' ;?>>
