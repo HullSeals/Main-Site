@@ -1,0 +1,17 @@
+stages:
+  - test
+  - deploy
+
+deploy-dev:
+  stage: test
+  script:
+    - echo "deploying to dev.hullseals.space"
+  only:
+    - beta
+
+deploy-production:
+  stage: deploy
+  script:
+    - echo "deploying to hullseals.space"
+  only:
+    - master
