@@ -96,6 +96,7 @@ session_start();
             <article>
 				<h1>Journal Reader Results</h1><br>
 				<h2>Copy and paste the following into the chat as requested by dispatch</h2><br>
+				<h3>PLEASE NOTE the Synth Counter may be inaccurate</h3>
 				<div align="center">
 					<span id="journalresults">
 					<h3>Ship info</h3>

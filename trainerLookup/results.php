@@ -18,9 +18,10 @@ $counter = 0;
     </body>
 </html>
 <?php
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 $db = include 'db.php';
 $mysqli = new mysqli($db['server'], $db['user'], $db['pass'], $db['db'], $db['port']);
-$stmt = $mysqli->prepare("SELECT c.*, hull_stat, how_damaged, o2_synth, status_name, color_name, ca.dispatch, notes, sys_notes
+$stmt = $mysqli->prepare("SELECT c.*, hull_stat, how_damaged, o2_synth, status_name, color_name, ca.dispatch, notes
 FROM cases AS c
     INNER JOIN case_seal AS cs ON cs.case_ID = c.case_ID
     INNER JOIN case_history AS ch ON ch.case_ID = c.case_ID
