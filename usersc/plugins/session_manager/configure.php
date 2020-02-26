@@ -126,11 +126,11 @@ if (!empty($_POST)) {
               <?=$session->UserSessionBrowser?> on <?=$session->UserSessionOS?> <?php if($session->kUserSessionID==$_SESSION['kUserSessionID']) {?><sup>Current Session</sup><?php } ?><br>
               <?php if($session->UserSessionIP!='::1') {
                 $geo = json_decode(file_get_contents("http://extreme-ip-lookup.com/json/$session->UserSessionIP"));
-//                $country = $geo->country;
-//                $city = $geo->city;
-//                $ipType = $geo->ipType;
-//                $businessName = $geo->businessName;
-//                $businessWebsite = $geo->businessWebsite;
+                $country = $geo->country;
+                $city = $geo->city;
+                $ipType = $geo->ipType;
+                $businessName = $geo->businessName;
+                $businessWebsite = $geo->businessWebsite;
 
                 echo "Location of $session->UserSessionIP: $city, $country\n";
               } ?>

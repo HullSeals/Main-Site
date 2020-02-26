@@ -73,8 +73,8 @@ html{
     position:relative;
 }
 body{
-    height:100%; /* force the BODY element to match the height of the HTML element */
-margin-bottom: 2.5rem;
+    height:100%;
+    margin-bottom: 2.5rem; /* force the BODY element to match the height of the HTML element */
 }
 
 
@@ -291,6 +291,12 @@ margin-bottom: 2.5rem;
   padding-left: 40px;
 }
 
+#footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 2.5rem;            /* Footer height */
+}
 @media (max-width:767px) {
 
     #sidebarLeft {
@@ -332,10 +338,4 @@ margin-bottom: 2.5rem;
         display:none;
     }
 }
-#footer {
-  position: absolute;
-    bottom: 0;
-      width: 100%;
-        height: 2.5rem;            /* Footer height */
-        }
 </style>

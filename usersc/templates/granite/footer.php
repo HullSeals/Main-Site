@@ -26,7 +26,7 @@ $hamburger.on("click", function(e) {
 // r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
 // ga('create','UA-XXXXX-X','auto');ga('send','pageview');
 </script>
-<footer id="footer">
+<footer>
 <p align="center">&copy; <?php echo date("Y"); ?> <?=$settings->copyright; ?></p>
 </footer>
 <?php require_once($abs_us_root.$us_url_root.'users/includes/html_footer.php');?>
