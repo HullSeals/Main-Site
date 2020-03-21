@@ -1,0 +1,2 @@
+<?php if(count(get_included_files()) ==1) die(); //Direct Access Not Permitted Leave this line in place?>
+<a class="btn btn-primary btn-lg btn-block" href="#" role="button">Seal Links</a>
