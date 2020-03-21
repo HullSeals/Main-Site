@@ -113,7 +113,8 @@ $logged_in = $user->data();
 
                 </p>
                 <h3>Public Links</h3>
-                <p>
+	 	<h4>Be aware: Journal Mat Count is Wrong.</h4>
+		<p>
                 <a href="../journal" class="btn btn-primary btn-lg">Journal Reader</a> <a href="https://hullseals.space/bugreport" class="btn btn-success btn-lg">Bug Reports</a> <a href="https://hullse.al/issuetrack" class="btn btn-primary btn-lg">Issue Tracker</a> <a href="https://hullse.al/FantasticShortlinksAndWhereTheyLead" class="btn btn-success btn-lg">Shortlink List</a>
                 <br /><br />
                 <a href="#" class="btn btn-secondary btn-lg disabled">IRC</a> <a href="../donate" class="btn btn-success btn-lg">Donate</a> <a href="../knowledge" class="btn btn-primary btn-lg">Knowledge Base</a>
@@ -135,7 +136,7 @@ $logged_in = $user->data();
                 <?php if(hasPerm([8,9],$user->data()->id)){?>
                 <h3>CyberSeal Links</h3>
                 <p>
-                <a href="../users/admin.php" class="btn btn-primary btn-lg">User Management</a> <a href="hullseals.space" class="btn btn-success btn-lg">Beta Site</a> <a href="https://gitlab.com/hull-seals-cyberseals" class="btn btn-primary btn-lg">GitLab</a> <a href="../passwords" class="btn btn-success btn-lg">Password Manager</a> <a href="#" class="btn btn-secondary btn-lg disabled">Backup Site</a>
+                <a href="../users/admin.php" class="btn btn-primary btn-lg">User Management</a> <a href="https://dev.hullseals.space" class="btn btn-success btn-lg">Beta Site</a> <a href="https://gitlab.com/hull-seals-cyberseals" class="btn btn-primary btn-lg">GitLab</a> <a href="#" class="btn btn-success btn-lg disabled">Password Manager</a> <a href="#" class="btn btn-secondary btn-lg disabled">Backup Site</a>
                 </p>
             <?php }?>
               </div>
