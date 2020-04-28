@@ -19,6 +19,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <link href="styles.css" rel="stylesheet" type="text/css">
 	<link rel="stylesheet" type="text/css" href="//cdnpub.websitepolicies.com/lib/cookieconsent/1.0.2/cookieconsent.min.css"/><script src="//cdnpub.websitepolicies.com/lib/cookieconsent/1.0.2/cookieconsent.min.js"></script><script>window.addEventListener("load", function(){window.wpcc.init({"colors":{"popup":{"background":"#222222","text":"#ffffff","border":"#bd9851"},"button":{"background":"#bd9851","text":"#000000"}},"border":"thin","corners":"small","padding":"small","margin":"small","transparency":"25","fontsize":"small","content":{"href":"https://hullseals.space/knowledge/books/important-information/page/cookie-policy"}})});</script>
+<script src="analytics.js" integrity="sQ5iQ+pZL1pA+HmogA5zwKv1PlVO655lwRotWmio44OT8EogxXkT9nxKLtPXgFuN" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -57,7 +58,7 @@
         </header>
 
         <section class="introduction">
-            <article>
+	    <article id="intro3">
                 <h1>Welcome to the <em>Hull Seals</em><span class="hidden-xs">, your premier hull repair specialists</span>.</h1>
                 <br /><br />
                 <a href="repair-requests" class="btn btn-success btn-lg active" >Request a Repair</a>

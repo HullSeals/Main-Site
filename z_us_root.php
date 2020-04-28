@@ -1,5 +1,5 @@
 <?php
-$path=['','users/','usersc/','/','seal-links/'];
+$path=['','users/','usersc/','/','seal-links/','paperwork/','paperwork/seals/','paperwork/fishers/','trainerLookup/'];
 $abs_us_root=$_SERVER['DOCUMENT_ROOT'];
 
 $self_path=explode("/", $_SERVER['PHP_SELF']);

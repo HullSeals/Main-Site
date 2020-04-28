@@ -1,5 +1,5 @@
 // Set the date we're counting down to
-var countDownDate = new Date("April 24, 3306 08:00:00").getTime();
+var countDownDate = new Date("April 24, 2020 08:00:00").getTime();
 
 // Update the count down every 1 second
 var x = setInterval(function() {
@@ -24,7 +24,7 @@ var x = setInterval(function() {
   if (distance < 0) {
     clearInterval(x);
     document.getElementById("Expeditionary Timer").innerHTML = "Stand By for Informational Dump...";
-    window.location.replace('index.php');
+    window.location.replace('TheLongArf.php');
 
   }
 }, 1000);
