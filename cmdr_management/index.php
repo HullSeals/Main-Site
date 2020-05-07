@@ -158,7 +158,7 @@ if (isset($_SESSION['2ndrun'])) {
                       } elseif ($field3name=="3") {
                         echo "PlayStation";
                       } elseif ($field3name=="4") {
-                        echo "Needs Updated";
+                        echo "Needs Updating";
                       }
                       echo '</td>
                       <td><a href="edit_alias.php?cne='.$field2name.'" class="btn btn-warning active">Edit</a></td>

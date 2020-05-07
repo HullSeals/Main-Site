@@ -144,7 +144,7 @@ if (isset($_GET['send'])) {
                 <article>
                     <h1>Register a New Alias</h1>
                     <br />
-					<h5>Please enter the alias. Please substitute spaces with underscores, or remove them entirely. <br /><br /> Special characters are also not valid, and must be removed.</h5>
+					<h5>Please enter the alias. Please replace spaces with other characters, or remove them entirely. <br /><br /> Special characters are also not valid, and must be removed.</h5>
 					<hr />
                     <?php
                     if (count($validationErrors)) {
