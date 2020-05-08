@@ -4,6 +4,7 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 require_once '../../users/init.php';  //make sure this path is correct!
 if (!securePage($_SERVER['PHP_SELF'])){die();}
+$logged_in = $user->data();
 $ip='Unable To Log';
 $cloudflareIPRanges = array(
     '204.93.240.0/24',
@@ -133,8 +134,8 @@ if (isset($_GET['send'])) {
 
 
     if (!count($validationErrors)) {
-        $stmt = $mysqli->prepare('CALL spCreateRecCleanerKF(?,?,?,?,?,?,?,?,?,?,?,?,?)');
-        $stmt->bind_param('sssssiiiissss', $data['lead_kf'], $data['client_nm'], $data['curr_sys'], $data['curr_planet'], $data['curr_coord'], $data['platform'], $data['case_stat'], $data['case_type'], $data['dispatched'], $data['dispatcher'], $data['other_kf'], $data['notes'], $lgd_ip);
+        $stmt = $mysqli->prepare('CALL spCreateRecCleanerKF(?,?,?,?,?,?,?,?,?,?,?,?,?,?)');
+        $stmt->bind_param('sssssiiiissssi', $data['lead_kf'], $data['client_nm'], $data['curr_sys'], $data['curr_planet'], $data['curr_coord'], $data['platform'], $data['case_stat'], $data['case_type'], $data['dispatched'], $data['dispatcher'], $data['other_kf'], $data['notes'], $lgd_ip, $user->data()->id);
         $stmt->execute();
         foreach ($stmt->error_list as $error) {
             $validationErrors[] = 'DB: ' . $error['error'];
@@ -311,6 +312,7 @@ if (isset($_GET['send'])) {
                                 ?>
                             </select>
                         </div>
+                        <input type="hidden" name="sealID" value="<?php echo $user->data()->id; ?>" required>
                         <div class="input-group mb-3">
                             <input type="text" name="dispatcher" value="<?= $data['dispatcher'] ?? '' ?>" class="form-control" placeholder="Who was Dispatching? (If None, Leave Blank)" aria-label="Who was Dispatching?">
                         </div>

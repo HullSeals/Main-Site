@@ -4,6 +4,7 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 require_once '../../users/init.php';  //make sure this path is correct!
 if (!securePage($_SERVER['PHP_SELF'])){die();}
+$logged_in = $user->data();
 $ip='Unable To Log';
 $cloudflareIPRanges = array(
     '204.93.240.0/24',
@@ -21,16 +22,16 @@ $cloudflareIPRanges = array(
     '198.41.128.0/17',
     '162.158.0.0/15'
 );
- 
+
 //NA by default.
 $ip = 'NA';
- 
+
 //Check to see if the CF-Connecting-IP header exists.
 if(isset($_SERVER["HTTP_CF_CONNECTING_IP"])){
-    
+
     //Assume that the request is invalid unless proven otherwise.
     $validCFRequest = false;
-    
+
     //Make sure that the request came via Cloudflare.
     foreach($cloudflareIPRanges as $range){
         //Use the ip_in_range function from Joomla.
@@ -40,21 +41,21 @@ if(isset($_SERVER["HTTP_CF_CONNECTING_IP"])){
             break;
         }
     }
-    
+
     //If it's a valid Cloudflare request
     if($validCFRequest){
         //Use the CF-Connecting-IP header.
         $ip = $_SERVER["HTTP_CF_CONNECTING_IP"];
     } else{
-        //If it isn't valid, then use REMOTE_ADDR. 
+        //If it isn't valid, then use REMOTE_ADDR.
         $ip = $_SERVER['REMOTE_ADDR'];
     }
-    
+
 } else{
     //Otherwise, use REMOTE_ADDR.
     $ip = $_SERVER['REMOTE_ADDR'];
 }
- 
+
 //Define it as a constant so that we can
 //reference it throughout the app.
 define('IP_ADDRESS', $ip);
@@ -122,12 +123,12 @@ if (isset($_GET['send'])) {
     if (!isset($lgd_ip)) {
         $validationErrors[] = 'invalid IP Address';
     }
-	
-	
+
+
 
     if (!count($validationErrors)) {
-        $stmt = $mysqli->prepare('CALL spCreateRecCleaner(?,?,?,?,?,?,?,?,?,?,?,?)');
-        $stmt->bind_param('sssiiiiissss', $data['lead_seal'], $data['client_nm'], $data['curr_sys'], $data['hull'], $data['cb'], $data['platform'], $data['case_stat'], $data['dispatched'], $data['dispatcher'], $data['other_seals'], $data['notes'], $lgd_ip);
+        $stmt = $mysqli->prepare('CALL spCreateRecCleaner(?,?,?,?,?,?,?,?,?,?,?,?,?)');
+        $stmt->bind_param('sssiiiiissssi', $data['lead_seal'], $data['client_nm'], $data['curr_sys'], $data['hull'], $data['cb'], $data['platform'], $data['case_stat'], $data['dispatched'], $data['dispatcher'], $data['other_seals'], $data['notes'], $lgd_ip, $user->data()->id);
         $stmt->execute();
         foreach ($stmt->error_list as $error) {
             $validationErrors[] = 'DB: ' . $error['error'];
@@ -293,7 +294,7 @@ if (isset($_GET['send'])) {
                                 ?>
                             </select>
                         </div>
-
+                        <input type="hidden" name="sealID" value="<?php echo $user->data()->id; ?>" required>
                         <div class="input-group mb-3">
                             <input type="text" name="dispatcher" value="<?= $data['dispatcher'] ?? '' ?>" class="form-control" placeholder="Who was Dispatching? (If None, Leave Blank)" aria-label="Who was Dispatching?">
                         </div>
