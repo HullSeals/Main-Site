@@ -94,7 +94,7 @@ if (isset($_SESSION['2ndrun'])) {
   <section class="introduction">
   <article>
     <h1>CMDR Management</h1>
-    <p>You may register up to 10 different 'Aliases' or CMDR Names. These are the names you will use in IRC as well as on paperwork. These do not affect your login username.</p>
+    <p>You may register up to 15 different 'Aliases' or CMDR Names. These are the names you will use in IRC as well as on paperwork. These do not affect your login username.</p>
     <?php
     mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
     $db = include 'db.php';
@@ -170,7 +170,7 @@ if (isset($_SESSION['2ndrun'])) {
         $result->free();
         echo "Number of Aliases: ";
         echo $counter;
-        echo nl2br ("/10\n");
+        echo nl2br ("/15\n");
     ?>
     <br />
     <a href="new_alias.php" class="btn btn-success btn-lg active" >Register a New CMDR</a>

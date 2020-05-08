@@ -34,7 +34,7 @@ if (isset($_GET['send'])) {
     if (!isset($platformList[$lore['platform']])) {
         $validationErrors[] = 'invalid platform';
     }
-    if ($numAlias->num_rows+1 > 10) {
+    if ($numAlias->num_rows+1 > 15) {
       $validationErrors[] = 'You have Too Many Registered Aliases. Remove some first!';
     }
     if (!count($validationErrors)) {
@@ -208,7 +208,7 @@ if (isset($_GET['send'])) {
     echo $numAlias->num_rows+1;
 	  echo " under the username ";
     echo echousername($user->data()->id);
-    echo nl2br (" out of a maximum of 10</h4>");
+    echo nl2br (" out of a maximum of 15</h4>");
     ?>
                 </article>
             </section>
