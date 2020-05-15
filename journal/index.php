@@ -85,7 +85,7 @@
         <section class="introduction">
             <article>
                 <h1>Hull Seals Information Collection Limpet</h1>
-                <p>Click this button to retrieve the info requested by Seal Dispatch. You will likely be redirected to Frontier for authentication and then presented with the necessary data.</p>
+                <p>Click this button to retrieve the info requested by Seal Dispatch. You will be redirected to Frontier for authentication.</p>
                 <a href="backend/Redirect.php" class="btn btn-success btn-lg">Start</a> </article>
             <div class="clearfix"></div>
         </section>

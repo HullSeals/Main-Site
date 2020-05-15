@@ -96,7 +96,6 @@ session_start();
             <article>
 				<h1>Journal Reader Results</h1><br>
 				<h2>Copy and paste the following into the chat as requested by dispatch</h2><br>
-				<h3>PLEASE NOTE the Synth Counter may be inaccurate</h3>
 				<div align="center">
 					<span id="journalresults">
 					<h3>Ship info</h3>
@@ -123,14 +122,13 @@ session_start();
 							echo "<p>Life support synth count: ".$info['lifesupport']."</p>";
 						}
 
-
 						/** TODO - add lines for SRV Data - HW
 						*  echo "<h3>SRV Coordinates</h3>";
 						*
 						*/
 
 						// Commenting out the debug dump - HW
-						// var_dump($_SESSION['debug']);
+						//var_dump($_SESSION['debug']);
 					?>
 					</span>
 					<button id="copyResults" class="btn btn-success btn-lg" onclick="copyJournal()">Click to Copy</button>
