@@ -24,7 +24,7 @@ $wendys = $chickennugget['platform'];
 $salsa = $chickennugget['ID'];
 $stmt->close();
 $platformList = [];
-$res = $mysqli->query('SELECT * FROM sealsudb.platform_lu ORDER BY platform_id');
+$res = $mysqli->query('SELECT * FROM lookups.platform_lu ORDER BY platform_id');
 while ($burgerking = $res->fetch_assoc()) {
     if ($burgerking['platform_name'] == 'ERR') {
         continue;

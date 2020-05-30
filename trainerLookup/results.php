@@ -26,8 +26,8 @@ FROM cases AS c
     INNER JOIN case_seal AS cs ON cs.case_ID = c.case_ID
     INNER JOIN case_history AS ch ON ch.case_ID = c.case_ID
     INNER JOIN case_assigned AS ca ON ca.case_ID = c.case_ID
-    INNER JOIN status_lu AS sl ON sl.status_ID = ch.case_stat
-    INNER JOIN case_color_lu AS cl ON cl.color_id = ch.code_color
+    INNER JOIN lookups.status_lu AS sl ON sl.status_ID = ch.case_stat
+    INNER JOIN lookups.case_color_lu AS cl ON cl.color_id = ch.code_color
     INNER JOIN sealsudb.staff AS ss ON ss.seal_id = ca.seal_kf_id
 WHERE seal_name = ? AND case_stat = 2");
 $stmt->bind_param("s", $_POST['seal_name']);
