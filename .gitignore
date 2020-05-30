@@ -12,3 +12,5 @@ cmdr_management/db.php
 paperwork/seals/db.php
 paperwork/db.php
 paperwork/fishers/db.php
+paperwork/fishers/fetch.php
+paperwork/seals/fetch.php
