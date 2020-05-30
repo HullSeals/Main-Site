@@ -153,12 +153,12 @@ if (isset($_GET['send']))
         $disparray = explode(", ", $data['dispatcher']);
         foreach ($disparray as $dispNM)
         {
+          $thenumber1 = 1;
             $stmt2 = $mysqli->prepare('CALL spCreateCaseAssigned(?,?,?,?)');
-            $thenumber1 = 1;
             $stmt2->bind_param('isii', $extractArray, $dispNM, $thenumber1, $thenumber1);
             $stmt2->execute();
+            $stmt2->close();
         }
-        $stmt2->close();
         $osarray = explode(", ", $data['other_seals']);
         foreach ($osarray as $osNM)
         {
@@ -167,8 +167,8 @@ if (isset($_GET['send']))
             $thenumber2 = 2;
             $stmt3->bind_param('isii', $extractArray, $osNM, $thenumber1, $thenumber2);
             $stmt3->execute();
+            $stmt3->close();
         }
-        $stmt3->close();
         header("Location: success.php");
     }
 }
