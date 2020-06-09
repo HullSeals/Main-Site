@@ -1,7 +1,0 @@
-{
-  "require": {
-    "league/oauth2-client" : "^2.4",
-    "ext-curl": "^7.2",
-    "ext-json": "^1.6"
-  }
-}
