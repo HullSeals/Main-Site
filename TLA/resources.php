@@ -77,7 +77,7 @@
             <a href="https://hullseals.space/TLA/events.php" class="btn btn-outline-success btn-lg btn-block"><b>Events</b></a>
             <a href="https://hullseals.space/TLA/maps.php" class="btn btn-outline-success btn-lg btn-block"><b>Maps</b></a>
             <a href="https://hullseals.space/TLA/route.php" class="btn btn-outline-success btn-lg btn-block"><b>Route</b></a>
-            <a href="https://hullseals.space/TLA/waypoint1.php" class="btn btn-outline-success btn-lg btn-block"><b>Waypoint 1</b></a>
+            <a href="https://hullseals.space/TLA/week1.php" class="btn btn-outline-success btn-lg btn-block"><b>Week 1</b></a>
           </p>
       </article>
   </section>

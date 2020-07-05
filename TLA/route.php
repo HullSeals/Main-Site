@@ -51,8 +51,40 @@
   </header>
   <section class="introduction">
   <article>
-    <h1>The Route - Coming Soon </h1>
+    <h1>The Route</h1>
     <br>
+    <table class="table table-dark table-striped table-bordered table-hover table-responsive-md">
+          <tr>
+              <td>Week Number</td>
+              <td>Status</td>
+              <td>Weekly Page</td>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>In Progress</td>
+            <td><a href="week1.php" class="btn btn-success active">Go There</a></td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Upcoming</td>
+            <td><a href="week1.php" class="btn btn-secondary disabled">Stay Tuned!</a></td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>Upcoming</td>
+            <td><a href="week1.php" class="btn btn-secondary disabled">Stay Tuned!</a></td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>Upcomings</td>
+            <td><a href="week1.php" class="btn btn-secondary disabled">Stay Tuned!</a></td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>Upcoming</td>
+            <td><a href="week1.php" class="btn btn-secondary disabled">Stay Tuned!</a></td>
+          </tr>
+    </table>
   </article>
   <div class="clearfix"></div>
   </section>

@@ -8,7 +8,7 @@
 <meta content="hull seals, elite dangerous, distant worlds, seal team fix, mechanics, dw2" name="keywords">
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0" name="viewport">
 <meta content="Events for The Long Arf" name="description">
-<title>TLA - Waypoint 1 | The Hull Seals</title>
+<title>TLA - Week 1 | The Hull Seals</title>
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
 <link rel="stylesheet" type="text/css" href="https://hullseals.space/assets/css/allPages.css" />
 <script src="https://hullseals.space/assets/javascript/allPages.js" integrity="sha384-PsQdnKGi+BdHoxLI6v+pi6WowfGtnraU6GlDD4Uh5Qw2ZFiDD4eWNTNG9+bHL3kf" crossorigin="anonymous"></script>
@@ -39,7 +39,7 @@
     <li class="nav-item">
     <a class="nav-link" href="about.php">About TLA</a>
     </li>
-    <li class="nav-item">
+    <li class="nav-item active">
     <a class="nav-link" href="route.php">Route</a>
     </li>
     <li class="nav-item">
@@ -51,8 +51,98 @@
   </header>
   <section class="introduction">
   <article>
-    <h1>Coming Soon</h1>
+    <h1>Week 1</h1>
     <br>
+    <p><b>Week 1: Colonia to Subway Alpha</b><p>
+      <p>The inagural leg: The Limpet's Call explores systems of interest, testing her wings before she flies.</p>
+      <img src="images/maps/1WBW.png" alt="The First Week's Route" width="300" style="float: right;"/>
+      <p>The Waypoints:</p>
+      <ol>
+        <li>Six Sisters</li>
+        <li>Secadu</li>
+        <li>Subway Alpha</li>
+      </ol>
+      <p>You should arrive in Subway Alpha on the 12th of July.</p>
+      <p>Basecamps, if present, will be announced in Discord.</p>
+      <br>
+      <p>The Route:</p>
+      <table class="table table-dark table-striped table-bordered table-hover table-responsive-md">
+        <tr>
+          <td>System</td>
+          <td>&Delta; Start</td>
+          <td>&Delta; Last</td>
+          <td>&Delta; End</td>
+          <td>Carrier Location</td>
+          <td>EDSM Link</td>
+          <td>Arrival Date</td>
+        </tr>
+        <tr>
+          <td>Eol Prou KW-M d7-2351<br>(Six Sisters)</td>
+          <td>493 LY</td>
+          <td>493 LY</td>
+          <td>16,450 LY</td>
+          <td>Eol Prou XN-U b32-23</td>
+          <td><a href="https://www.edsm.net/en/system/id/31413775/name/Eol+Prou+KW-M+d7-2351" class="btn btn-secondary active">EDSM</a></td>
+          <td>6 July</td>
+        </tr>
+        <tr>
+          <td>Eoch Pruae EL-J b52-1</td>
+          <td>965 LY</td>
+          <td>488 LY</td>
+          <td>15,961 LY</td>
+          <td></td>
+          <td><a href="https://www.edsm.net/en/system/bodies/id/50945437/name/Eoch+Pruae+EL-J+b52-1" class="btn btn-secondary active">EDSM</a></td>
+          <td>8 July</td>
+        </tr>
+        <tr>
+          <td>Eoch Pruae EG-Y g1769<br>(Secadu)</td>
+          <td>1,230 LY</td>
+          <td>478 LY</td>
+          <td>15,867 LY</td>
+          <td>Eoch Pruae GE-M c22-274</td>
+          <td><a href="https://www.edsm.net/en/system/id/5935007/name/Eoch+Pruae+EG-Y+g1769" class="btn btn-secondary active">EDSM</a></td>
+          <td>9 July</td>
+        </tr>
+        <tr>
+          <td>Kyloall JE-W b4-4</td>
+          <td>1,667 LY</td>
+          <td>492 LY</td>
+          <td>15,376 LY</td>
+          <td></td>
+          <td><a href="https://www.edsm.net/en/system/id/50976164/name/Kyloall+JE-W+b4-4" class="btn btn-secondary active">EDSM</a></td>
+          <td>11 July</td>
+        </tr>
+        <tr>
+          <td>Kyloall GF-J b25-5</td>
+          <td>2,117 LY</td>
+          <td>490 LY</td>
+          <td>14,886 LY</td>
+          <td></td>
+          <td><a href="https://www.edsm.net/en/system/id/50977592/name/Kyloall+GF-J+b25-5" class="btn btn-secondary active">EDSM</a></td>
+          <td>11 July</td>
+        </tr>
+        <tr>
+          <td>Kyloarph UY-L c22-239</td>
+          <td>2,594 LY</td>
+          <td>497 LY</td>
+          <td>14,388 LY</td>
+          <td></td>
+          <td><a href="https://www.edsm.net/en/system/id/50980118/name/Kyloarph+UY-L+c22-239" class="btn btn-secondary active">EDSM</a></td>
+          <td>11 July</td>
+        </tr>
+        <tr>
+          <td>Schee Flyuae UO-A e5581<br>(Subway Alpha)</td>
+          <td>2,865 LY</td>
+          <td>368 LY</td>
+          <td>14,073 LY</td>
+          <td>Agnaiz BJ-Z b2-1</td>
+          <td><a href="https://www.edsm.net/en/system/id/2638521/name/Schee+Flyuae+UO-A+e5581" class="btn btn-secondary active">EDSM</a></td>
+          <td>12 July</td>
+        </tr>
+      </table>
+      <h3>Next Week's Route will be released on the 12th of July.</h3>
+      <br>
+      <p>Your ship's navigational computer has been updated with the route.<br> Check it on <a href="https://www.edsm.net/en/expeditions/summary/id/99/name/The+Long+Arf" class="btn btn-lg btn-primary active">EDSM</a>
   </article>
   <div class="clearfix"></div>
   </section>
