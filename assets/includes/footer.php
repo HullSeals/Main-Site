@@ -19,6 +19,6 @@
         </div>
     </div>
     <div class="footer-copyright">
-        Site content copyright © 2019, The Hull Seals. All Rights Reserved. Elite Dangerous and all related marks are trademarks of Frontier Developments Inc.
+        Site content copyright © 2020, The Hull Seals. All Rights Reserved. Elite Dangerous and all related marks are trademarks of Frontier Developments Inc.
     </div>
 </footer>
