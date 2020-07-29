@@ -8,14 +8,13 @@
 <meta content="hull seals, elite dangerous, distant worlds, seal team fix, mechanics, dw2" name="keywords">
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0" name="viewport">
 <meta content="Events for The Long Arf" name="description">
-<title>TLA - Route | The Hull Seals</title>
+<title>TLA - Week 4 | The Hull Seals</title>
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-<link rel="stylesheet" type="text/css" href="https://hullseals.space/assets/css/allPages.css" />
 <script src="https://hullseals.space/assets/javascript/allPages.js" integrity="sha384-PsQdnKGi+BdHoxLI6v+pi6WowfGtnraU6GlDD4Uh5Qw2ZFiDD4eWNTNG9+bHL3kf" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js" integrity="sha384-1CmrxMRARb6aLqgBO7yyAxTOQE2AKb9GfXnEo760AUcUmFx3ibVJJAzGytlQcNXd" crossorigin="anonymous"></script>
-<link href="stylesTLA.css" rel="stylesheet" type="text/css">
+<link href="https://hullseals.space/assets/css/Centercss.css" rel="stylesheet" type="text/css">
   </head>
   <body>
   <div id="home">
@@ -49,42 +48,83 @@
     </div>
     </nav>
   </header>
-  <section class="introduction">
+  <section class="introduction container">
   <article>
-    <h1>The Route</h1>
+    <h1>Week 4</h1>
     <br>
-    <table class="table table-dark table-striped table-bordered table-hover table-responsive-md">
-          <tr>
-              <td>Week Number</td>
-              <td>Status</td>
-              <td>Weekly Page</td>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td>Complete</td>
-            <td><a href="week1.php" class="btn btn-success active">Go There</a></td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Complete</td>
-            <td><a href="week2.php" class="btn btn-success active">Go There</a></td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>In Progress</td>
-            <td><a href="week3.php" class="btn btn-success">Go There</a></td>
-          </tr>
-          <tr>
-            <td>4</td>
-            <td>Upcomings</td>
-            <td><a href="week4.php" class="btn btn-success">Go There</a></td>
-          </tr>
-          <tr>
-            <td>5</td>
-            <td>Upcoming</td>
-            <td><a href="week1.php" class="btn btn-secondary disabled">Stay Tuned!</a></td>
-          </tr>
-    </table>
+    <p><b>Week 4: Drop Zone to The Freezer</b><p>
+      <p>The fourth leg: The Limpet's Call prepares for her deployment, closing in on the final stretch.</p>
+      <img src="images/maps/4WBW.png" alt="The Third Week's Route" width="300" style="float: right;"/>
+      <p>The Waypoints:</p>
+      <ol>
+        <li>Janus' Vision</li>
+        <li>The Freezer</li>
+      </ol>
+      <p>You should arrive at the The Freezer on the 3rd of August.</p>
+      <p>Basecamps, if present, will be announced in Discord.</p>
+      <br>
+      <p>The Route:</p>
+      <table class="table table-dark table-striped table-bordered table-hover table-responsive-md">
+        <thead>
+        <tr>
+          <th>System</td>
+          <th>&Delta; Start</th>
+          <th>&Delta; Last</th>
+          <th>&Delta; End</th>
+          <th>Carrier Location</th>
+          <th>EDSM Link</th>
+          <th>Arrival Date</th>
+        </tr>
+      </thead>
+      <tr>
+        <td>Eok Gree AB-X b30-7</td>
+        <td>12,645 LY</td>
+        <td>432 LY</td>
+        <td>4,303 LY</td>
+        <td></td>
+        <td><a href="https://www.edsm.net/en/system/id/51193329/name/Eok+Gree+AB-X+b30-7" class="btn btn-secondary active">EDSM</a></td>
+        <td>29 July</td>
+      </tr>
+      <tr>
+        <td>Eok Gree EG-Y g1846<br>Janus' Vision</td>
+        <td>13,107 LY</td>
+        <td>463 LY</td>
+        <td>3,853 LY</td>
+        <td>Eok Gree KD-R b47-1</td>
+        <td><a href="https://www.edsm.net/en/system/id/23052542/name/Eok+Gree+EG-Y+g1846" class="btn btn-secondary active">EDSM</a></td>
+        <td>30 July</td>
+      </tr>
+      <tr>
+        <td>Braireau YN-A c1-1694</td>
+        <td>13,562 LY</td>
+        <td>489 LY</td>
+        <td>3,430 LY</td>
+        <td></td>
+        <td><a href="https://www.edsm.net/en/system/id/51200046/name/Braireau+YN-A+c1-1694" class="btn btn-secondary active">EDSM</a></td>
+        <td>1 Aug</td>
+      </tr>
+      <tr>
+        <td>Braireau NH-J c10-48</td>
+        <td>13,975 LY</td>
+        <td>423 LY</td>
+        <td>3,022 LY</td>
+        <td></td>
+        <td><a href="https://www.edsm.net/en/system/id/51201334/name/Braireau+NH-J+c10-48" class="btn btn-secondary active">EDSM</a></td>
+        <td>2 Aug</td>
+      </tr>
+      <tr>
+        <td>Braireau EX-J b39-15<br>The Freezer</td>
+        <td>14,401 LY</td>
+        <td>441 LY</td>
+        <td>2,596 LY</td>
+        <td></td>
+        <td><a href="https://www.edsm.net/en/system/id/51202620/name/Braireau+EX-J+b39-15" class="btn btn-secondary active">EDSM</a></td>
+        <td>3 Aug</td>
+      </tr>
+      </table>
+      <h3>Next Week's Route will be released on the 2nd of August.</h3>
+      <br>
+      <p>Your ship's navigational computer has been updated with the route.<br> Check it on <a href="https://www.edsm.net/en/expeditions/summary/id/99/name/The+Long+Arf" class="btn btn-lg btn-primary active">EDSM</a>
   </article>
   <div class="clearfix"></div>
   </section>
@@ -146,3 +186,4 @@
   <![endif]-->
   </footer></body>
   </html>
+
