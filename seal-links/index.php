@@ -72,7 +72,7 @@ if (!securePage($_SERVER['PHP_SELF'])){die();}?>
                   <br>
                   <br>
                   <div class="btn-group btn-group-lg d-flex mx-auto" role="group" style="max-width:85%;">
-                    <a href="https://hullseals.space/trainings/" class="btn btn-info">Training Portal</a>
+                    <a href="#" class="btn btn-info disabled" data-toggle="tooltip" title="Coming Soon!">Training Portal</a>
                     <a href="https://hullse.al/FantasticShortlinksAndWhereTheyLead" class="btn btn-info">Shortlink List</a>
                     <a href="#" class="btn btn-info disabled" data-toggle="tooltip" title="Coming Soon!">Textbin</a>
                   </div>
