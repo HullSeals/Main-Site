@@ -17,6 +17,7 @@ $activePage = 'home';
     <meta content="Welcome to the Hull Seals, Elite Dangerous's Premier Hull Repair Specialists!" name="description">
     <title>Home | The Hull Seals</title>
     <?php include 'assets/includes/header.php'; ?>
+    <script src="analytics.js" integrity="sQ5iQ+pZL1pA+HmogA5zwKv1PlVO655lwRotWmio44OT8EogxXkT9nxKLtPXgFuN" crossorigin="anonymous"></script>
 </head>
 <body>
     <div id="home">
