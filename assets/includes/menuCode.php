@@ -1,3 +1,8 @@
+<?php
+if (!isset($activePage)) {
+  $activePage="notmainpage";
+}
+ ?>
 <header>
     <nav class="navbar container navbar-expand-lg navbar-expand-md navbar-dark" role="navigation">
         <a class="navbar-brand" href="https://hullseals.space"><img src="https://hullseals.space/images/emblem_scaled.png" height="30" class="d-inline-block align-top" alt="Logo"> Hull Seals</a>
