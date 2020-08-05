@@ -8,14 +8,13 @@
 <meta content="hull seals, elite dangerous, distant worlds, seal team fix, mechanics, dw2" name="keywords">
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0" name="viewport">
 <meta content="Events for The Long Arf" name="description">
-<title>TLA - Route | The Hull Seals</title>
+<title>TLA - Week 5 | The Hull Seals</title>
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-<link rel="stylesheet" type="text/css" href="https://hullseals.space/assets/css/allPages.css" />
 <script src="https://hullseals.space/assets/javascript/allPages.js" integrity="sha384-PsQdnKGi+BdHoxLI6v+pi6WowfGtnraU6GlDD4Uh5Qw2ZFiDD4eWNTNG9+bHL3kf" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js" integrity="sha384-1CmrxMRARb6aLqgBO7yyAxTOQE2AKb9GfXnEo760AUcUmFx3ibVJJAzGytlQcNXd" crossorigin="anonymous"></script>
-<link href="stylesTLA.css" rel="stylesheet" type="text/css">
+<link href="https://hullseals.space/assets/css/Centercss.css" rel="stylesheet" type="text/css">
   </head>
   <body>
   <div id="home">
@@ -49,42 +48,83 @@
     </div>
     </nav>
   </header>
-  <section class="introduction">
+  <section class="introduction container">
   <article>
-    <h1>The Route</h1>
+    <h1>Week 5</h1>
     <br>
-    <table class="table table-dark table-striped table-bordered table-hover table-responsive-md">
-          <tr>
-              <td>Week Number</td>
-              <td>Status</td>
-              <td>Weekly Page</td>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td>Complete</td>
-            <td><a href="week1.php" class="btn btn-success">Go There</a></td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Complete</td>
-            <td><a href="week2.php" class="btn btn-success">Go There</a></td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>Complete</td>
-            <td><a href="week3.php" class="btn btn-success">Go There</a></td>
-          </tr>
-          <tr>
-            <td>4</td>
-            <td>Complete</td>
-            <td><a href="week4.php" class="btn btn-success">Go There</a></td>
-          </tr>
-          <tr>
-            <td>5</td>
-            <td>In Progress</td>
-            <td><a href="week5.php" class="btn btn-success">Go There</a></td>
-          </tr>
-    </table>
+    <p><b>Week 5: The Freezer to the Final Jump</b><p>
+      <p>The fifth leg: The Limpet's Call begins to prepare for her long stop, in her final jumps for a long time.</p>
+      <img src="images/maps/5WBW.png" alt="The Fifth Week's Route" width="300" style="float: right;"/>
+      <p>The Waypoints:</p>
+      <ol>
+        <li>Dances with Giants</li>
+        <li>"Dry Camp"</li>
+      </ol>
+      <p>You should arrive at the Dry Camp on the 8rd of August.</p>
+      <p>Basecamps, if present, will be announced in Discord.</p>
+      <br>
+      <p>The Route:</p>
+      <table class="table table-dark table-striped table-bordered table-hover table-responsive-md">
+        <thead>
+        <tr>
+          <th>System</td>
+          <th>&Delta; Start</th>
+          <th>&Delta; Last</th>
+          <th>&Delta; End</th>
+          <th>Carrier Location</th>
+          <th>EDSM Link</th>
+          <th>Arrival Date</th>
+        </tr>
+      </thead>
+      <tr>
+        <td>Hypoe Bluae SF-D c806</td>
+        <td>14,890 LY</td>
+        <td>499 LY</td>
+        <td>2,121 LY</td>
+        <td></td>
+        <td><a href="https://www.edsm.net/en/system/id/51204809/name/Hypoe+Bluae+SF-D+c806" class="btn btn-secondary active">EDSM</a></td>
+        <td>5 August</td>
+      </tr>
+      <tr>
+        <td>Hypoe Bluae MF-K c10-26</td>
+        <td>15,378 LY</td>
+        <td>494 LY</td>
+        <td>1,669 LY</td>
+        <td></td>
+        <td><a href="https://www.edsm.net/en/system/id/51205337/name/Hypoe+Bluae+MF-K+c10-26" class="btn btn-secondary active">EDSM</a></td>
+        <td>5 August</td>
+      </tr>
+      <tr>
+        <td>Hypoe Bluae WS-U c18-673</td>
+        <td>15,767 LY</td>
+        <td>398 LY</td>
+        <td>1,332 LY</td>
+        <td></td>
+        <td><a href="https://www.edsm.net/en/system/id/51205911/name/Hypoe+Bluae+WS-U+c18-673" class="btn btn-secondary active">EDSM</a></td>
+        <td>6 Aug</td>
+      </tr>
+      <tr>
+        <td>Hypoe Bluae YJ-F b57-11<br>"Dances with Giants"</td>
+        <td>16,244 LY</td>
+        <td>484 LY</td>
+        <td>969 LY</td>
+        <td></td>
+        <td><a href="https://www.edsm.net/en/system/id/51206378/name/Hypoe+Bluae+YJ-F+b57-11" class="btn btn-secondary active">EDSM</a></td>
+        <td>6 Aug</td>
+      </tr>
+      <tr>
+        <td>Phroi Bluae HS-D b15-1<br>"Dry Camp"</td>
+        <td>16,566 LY</td>
+        <td>494 LY</td>
+        <td>476 LY</td>
+        <td></td>
+        <td><a href="https://www.edsm.net/en/system/id/51207340/name/Phroi+Bluae+HS-D+b15-1" class="btn btn-secondary active">EDSM</a></td>
+        <td>8 Aug</td>
+      </tr>
+      </table>
+      <h3>The final jump will take place on the 9th of August. Stay Tuned for Details in Discord!</h3>
+      <br>
+      <p>Your ship's navigational computer has been updated with the route.<br> Check it on <a href="https://www.edsm.net/en/expeditions/summary/id/99/name/The+Long+Arf" class="btn btn-lg btn-primary active">EDSM</a>
   </article>
   <div class="clearfix"></div>
   </section>
