@@ -22,6 +22,13 @@ while ($row = $res->fetch_assoc()) {
     $platformList[$row['platform_id']] = $row['platform_name'];
 }
 
+//Type of Case. For KFs, only take KF cases (8-11)
+$typeList = [];
+$res = $mysqli->query('SELECT * FROM lookups.case_color_lu WHERE color_id IN (8, 9 , 10, 11)');
+while ($trow = $res->fetch_assoc()) {
+    $typeList[$trow['color_id']] = $trow['color_desc'];
+}
+
 $validationErrors = [];
 $data = [];
 if (isset($_GET['send'])) {
@@ -34,37 +41,23 @@ if (isset($_GET['send'])) {
     if (strlen($data['system']) > 100) {
         $validationErrors[] = 'system too long';
     }
-
-    $data['hull'] = (int) $data['hull'];
-    if ($data['hull'] > 100 || $data['hull'] < 0) {
-        $validationErrors[] = 'invalid hull';
+    if (strlen($data['planet']) > 100) {
+        $validationErrors[] = 'planet too long';
     }
-    $data['canopy_breached'] = isset($data['canopy_breached']);
-    $data['can_synth'] = isset($data['can_synth']);
-    if ($data['o2_timer'] != '' && !preg_match('~[0-9]{1,2}:[0-9]{1,2}~i', $data['o2_timer'])) {
-        $validationErrors[] = 'invalid O2 timer';
+    if (strlen($data['curr_coord']) > 20) {
+        $validationErrors[] = 'coordinates too long';
     }
-
     if (!isset($platformList[$data['platform']])) {
         $validationErrors[] = 'invalid platform';
     }
     if (!count($validationErrors)) {
       $_SESSION['cmdr_name'] = $_POST['cmdr_name'];
-      $_SESSION['canopy_breached'] = $_POST['canopy_breached'];
-      $_SESSION['o2_timer'] = $_POST['o2_timer'];
       $_SESSION['system'] = $_POST['system'];
+      $_SESSION['planet'] = $_POST['planet'];
       $_SESSION['platform'] = $_POST['platform'];
-      $_SESSION['hull'] = $_POST['hull'];
-      $_SESSION['can_synth'] = $_POST['can_synth'];
-
-        //$stmt = $mysqli->prepare('CALL spCreateHSCaseCleaner(?,?,?,?,?,?,?,?)');
-        //$stmt->bind_param('sissiiis', $data['cmdr_name'], $data['canopy_breached'], $data['o2_timer'], $data['system'], $data['platform'], $data['hull'], $data['can_synth'], $lgd_ip);
-        //$stmt->execute();
-        //foreach ($stmt->error_list as $error) {
-        //    $validationErrors[] = 'DB: ' . $error['error'];
-        //}
-        //$stmt->close();
-        header("Location: irc.php");
+      $_SESSION['curr_coord'] = $_POST['curr_coord'];
+      $_SESSION['case_type'] = $_POST['case_type'];
+      header("Location: fisherirc.php");
     }
 }
 ?>
@@ -75,8 +68,6 @@ if (isset($_GET['send'])) {
     <meta content="New Repair Case" name="description">
     <title>New Case | The Hull Seals</title>
     <?php include '../assets/includes/headerCenter.php'; ?>
-    <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js" integrity="sha384-Q9RsZ4GMzjlu4FFkJw4No9Hvvm958HqHmXI9nqo5Np2dA/uOVBvKVxAvlBQrDhk4" crossorigin="anonymous"></script>
 </head>
 
 </head>
@@ -105,19 +96,10 @@ if (isset($_GET['send'])) {
                 <input type="text" name="system" value="<?= $data['system'] ?? '' ?>" class="form-control" placeholder="System" aria-label="System" required>
             </div>
             <div class="input-group mb-3">
-                <input type="number" min="0" max="100" name="hull" value="<?= $data['hull'] ?? '' ?>" class="form-control" placeholder="Hull %" aria-label="Hull %" required>
+                <input type="text" name="planet" value="<?= $data['planet'] ?? '' ?>" class="form-control" placeholder="Planet" aria-label="Planet" required>
             </div>
             <div class="input-group mb-3">
-            		<label id="canopy_breached" class="input-group-text text-primary"><input type="checkbox" id="canopy_breached2" value="1" name="canopy_breached" data-toggle="toggle" data-on="Canopy Breached" data-off="Canopy Not Breached" data-onstyle="danger" data-offstyle="success">  </label>
-              </div>
-            <div id="ifBreached" class="input-group mb-3">
-              <label class="input-group-text text-primary"><input type="checkbox" name="can_synth" value="1" data-toggle="toggle" data-on="Synths Not Available" data-off="Synths Available" data-onstyle="danger" data-offstyle="success"></label>
-            </div>
-            <div id="ifBreached2" class="input-group mb-3">
-              <input type="text" name="o2_timer" value="<?= $data['o2_timer'] ?? '' ?>" class="form-control" pattern="[0-9]{1,2}:[0-9]{1,2}" placeholder="O2 Timer (nn:nn)" aria-label="O2 Timer (nn:nn)">
-            </div>
-            <div class="alert alert-danger" id="ifBreached3" role="alert">
-              LOG OUT IMMEDIATELY if you have not already done so.
+              <input type="text" name="curr_coord" value="<?= $data['curr_coord'] ?? '' ?>" class="form-control" placeholder="Coordinates (+/-000.000, +/-000.000)" aria-label="Coordinates" pattern="(\+?|-)\d{1,3}\.\d{3}\,(\+?|-)\d{1,3}\.\d{3}" required>
             </div>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
@@ -131,6 +113,18 @@ if (isset($_GET['send'])) {
                     ?>
                 </select>
             </div>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text">What's Wrong?</span>
+              </div>
+              <select name="case_type" class="custom-select" id="inputGroupSelect01" placeholder="Test" required>
+                <?php
+                  foreach ($typeList as $typeId => $typeName) {
+                    echo '<option value="' . $typeId . '"' . ($trow['case_type'] == $typeId ? ' checked' : '') . '>' . $typeName . '</option>';
+                  }
+                ?>
+              </select>
+            </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
       </div>
@@ -141,31 +135,3 @@ if (isset($_GET['send'])) {
 <?php include '../assets/includes/footer.php'; ?>
 </body>
 </html>
-<script>
-var ifBreachedBlock = $('#ifBreached');
-var ifBreachedBlock2 = $('#ifBreached2');
-var ifBreachedBlock3 = $('#ifBreached3');
-
-ifBreachedBlock.hide();
-ifBreachedBlock2.hide();
-ifBreachedBlock3.hide();
-
-
-  $(function() {
-    $('#canopy_breached2').change(function() {
-      if ($(this).prop('checked')) {
-        ifBreachedBlock.show();
-        ifBreachedBlock2.show();
-        ifBreachedBlock3.show();
-        $("[data-toggle='toggle']").bootstrapToggle('destroy')
-        $("[data-toggle='toggle']").bootstrapToggle();
-      } else {
-        ifBreachedBlock.hide();
-        ifBreachedBlock2.hide();
-        ifBreachedBlock3.hide();
-        $("[data-toggle='toggle']").bootstrapToggle('destroy')
-        $("[data-toggle='toggle']").bootstrapToggle();
-      }
-    })
-  })
-</script>
