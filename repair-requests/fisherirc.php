@@ -16,7 +16,7 @@ $case_type = $_SESSION['case_type'];
   if (isset($cdrn)) {
     $cdrn = preg_replace('/\s+/', '_', $cdrn);
     $cdrn = preg_replace('/^[@#]/i', '_', $cdrn);
-    $url = 'http://halpybot.hullseals.space:3141/newcase';
+    $url = 'http://halpybot.hullseals.space:3141/fishcase';
     $data = array("cmdr_name" => $cdrn,
                   "system" => $system,
                   "planet" => $planet,
