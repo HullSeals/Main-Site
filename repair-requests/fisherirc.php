@@ -19,7 +19,10 @@ $case_type = $_SESSION['case_type'];
     $url = 'http://halpybot.hullseals.space:3141/newcase';
     $data = array("cmdr_name" => $cdrn,
                   "system" => $system,
+                  "planet" => $planet,
                   "platform" => $platform,
+                  "curr_cord" => $curr_cord,
+                  "case_type" => $case_type,
                   );
 
     $postdata = json_encode($data);
