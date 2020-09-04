@@ -31,7 +31,7 @@ if (!isset($activePage)) {
                             <a class="nav-link" href="https://hullseals.space/users/login.php">Login</a>
                           </li>
                           <li class="nav-item">
-                            <a class="nav-link" href="https://hullseals.space/join.php">Register</a
+                            <a class="nav-link" href="https://hullseals.space/users/join.php">Register</a
                           </li>';
                   }
                   else {
