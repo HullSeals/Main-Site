@@ -13,6 +13,15 @@ $platform = $_SESSION['platform'];
 $curr_cord = $_SESSION['curr_coord'];
 $case_type = $_SESSION['case_type'];
 
+function startsWithNumber($cdrn) {
+    return preg_match('/^\d/', $cdrn) === 1;
+}
+if (startsWithNumber($cdrn) == 1)
+{
+  $addedchar = "CMDR_";
+  $cdrn = $addedchar . $cdrn;
+}
+
   if (isset($cdrn)) {
     $cdrn = preg_replace('/\s+/', '_', $cdrn);
     $cdrn = preg_replace('/^[@#]/i', '_', $cdrn);

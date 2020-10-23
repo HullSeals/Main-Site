@@ -14,6 +14,15 @@ $platform = $_SESSION['platform'];
 $hull = $_SESSION['hull'];
 $synth = $_SESSION['can_synth'];
 
+function startsWithNumber($cdrn) {
+    return preg_match('/^\d/', $cdrn) === 1;
+}
+if (startsWithNumber($cdrn) == 1)
+{
+  $addedchar = "CMDR_";
+  $cdrn = $addedchar . $cdrn;
+}
+
   if (isset($cdrn)) {
     $cdrn = preg_replace('/\s+/', '_', $cdrn);
     $cdrn = preg_replace('/^[@#]/i', '_', $cdrn);
