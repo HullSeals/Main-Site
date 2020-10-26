@@ -3,7 +3,8 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 session_start();
-if (!isset($_SESSION["cmdr_name"])) {
+if (!isset($_SESSION["cmdr_name"])) 
+{
   header("Location: https://hullseals.space/repair-requests/case.php");
 }
 $cdrn = $_SESSION['cmdr_name'];
@@ -13,16 +14,29 @@ $platform = $_SESSION['platform'];
 $curr_cord = $_SESSION['curr_coord'];
 $case_type = $_SESSION['case_type'];
 
-function startsWithNumber($cdrn) {
+function startsWithNumber($cdrn)
+{
     return preg_match('/^\d/', $cdrn) === 1;
 }
+
 if (startsWithNumber($cdrn) == 1)
 {
   $addedchar = "CMDR_";
   $cdrn = $addedchar . $cdrn;
 }
 
-  if (isset($cdrn)) {
+function hasInvalidChars($cdrn)
+{
+  return preg_match("/[^a-zA-Z0-9]/", $cdrn) === 1;
+}
+
+if (hasInvalidChars($cdrn) == 1)
+{
+  $cdrn = preg_replace("/[^a-zA-Z0-9]/", "", $cdrn);
+}
+
+  if (isset($cdrn))
+  {
     $cdrn = preg_replace('/\s+/', '_', $cdrn);
     $cdrn = preg_replace('/^[@#]/i', '_', $cdrn);
     $url = 'http://halpybot.hullseals.space:3141/fishcase';
@@ -45,10 +59,11 @@ if (startsWithNumber($cdrn) == 1)
     $result = curl_exec($ch);
     curl_close($ch);
 
-
     header("Location: https://client.hullseals.space:8443/repair.html?nick=" . $cdrn);
     exit();
-  } else {
+  }
+  else
+  {
     echo "ERROR! Please contact the CyberSeals.";
     exit();
   }
