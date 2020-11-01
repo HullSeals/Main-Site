@@ -68,6 +68,14 @@ if (isset($_GET['send'])) {
     <meta content="New Repair Case" name="description">
     <title>New Case | The Hull Seals</title>
     <?php include '../assets/includes/headerCenter.php'; ?>
+    <style>
+      .center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      width: 50%;
+      }
+    </style>
 </head>
 
 </head>
@@ -99,8 +107,13 @@ if (isset($_GET['send'])) {
                 <input type="text" name="planet" value="<?= $data['planet'] ?? '' ?>" class="form-control" placeholder="Planet" aria-label="Planet" required>
             </div>
             <div class="input-group mb-3">
-              <input type="text" name="curr_coord" value="<?= $data['curr_coord'] ?? '' ?>" class="form-control" placeholder="Coordinates (+/-000.000, +/-000.000)" aria-label="Coordinates" pattern="(\+?|-)\d{1,3}\.\d{3}\,(\+?|-)\d{1,3}\.\d{3}" required>
-            </div>
+              <input type="text" name="curr_coord" value="<?= $data['curr_coord'] ?? '' ?>" class="form-control" placeholder="Coordinates (+/-000.000, +/-000.000)" aria-label="Coordinates" pattern="(\+?|-)\d{1,3}\.\d{3}\,(\+?|-)\d{1,3}\.\d{3}" aria-describedby="coord-help-button" required>
+              <div class="input-group-append">
+	               <button type="button" class="btn btn-outline-secondary" data-toggle="modal" id="coord-help-button" data-target="#coordsHelp">
+		                 How do I find this?
+	               </button>
+              </div>
+	           </div>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text">Platform</span>
@@ -126,7 +139,26 @@ if (isset($_GET['send'])) {
               </select>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
+	         </form>
+           <div class="modal fade" id="coordsHelp" tabindex="-1" aria-hidden="true" style="color:#323232">
+             <div class="modal-dialog modal-lg">
+               <div class="modal-content">
+                 <div class="modal-header">
+                   <h5 class="modal-title" id="coordsHelpLabel">How do I find my coordinates?</h5>
+                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                   </button>
+                 </div>
+                 <div class="modal-body">
+                   <p style="text-align: center;">Coordinates are found in the bottom right of your SRV's HUD.</p>
+                   <img alt="SRV HUD" src="../images/SRV_HUD.png" class="center">
+                 </div>
+                 <div class="modal-footer">
+                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                 </div>
+               </div>
+             </div>
+           </div>
       </div>
     </article>
 <div class="clearfix"></div>
