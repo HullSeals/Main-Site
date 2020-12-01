@@ -52,7 +52,7 @@ if (!securePage($_SERVER['PHP_SELF'])){die();}?>
                   <br>
                   <div class="btn-group btn-group-lg d-flex mx-auto" role="group" style="max-width:85%;">
                     <a href="https://hullseals.space/SuperSecretDiscordLink" class="btn btn-info">Social Discord</a>
-                    <a href="https://discordapp.com/invite/0hKG2qb9ODixa7Iz" class="btn btn-info">Fleetcomm Discord</a>
+                    <a href="https://hullseals.space/statistics" class="btn btn-info">Statistics Page</a>
                   </div>
                   <br>
                   <br>
