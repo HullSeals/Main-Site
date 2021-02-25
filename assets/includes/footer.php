@@ -12,7 +12,7 @@
 
                 <ul class="list-unstyled">
                     <li><img src="https://hullseals.space/images/css_sprites.png" usemap="#links"></li>
-                    <li><a href="https://hullseals.space/donate">Donate</a></li>
+                    <li><a href="https://hullseals.space/donate">Donate</a> | <a href="https://store.hullseals.space">Store</a></li>
                     <li><a href="https://hullseals.space/knowledge/books/important-information/page/privacy-policy">Privacy & Cookies Policy</a></li>
                 </ul>
             </div>
