@@ -14,11 +14,6 @@ if (!securePage($_SERVER['PHP_SELF'])){die();}?>
     <meta content="Your Resources for the Seals" name="description">
     <title>Seal Links | The Hull Seals</title>
     <?php include '../assets/includes/headerCenter.php'; ?>
-    <script>
-    $(function () {
-  $('[data-toggle="tooltip"]').tooltip()
-})
-</script>
 </head>
 <body>
     <div id="home">
@@ -34,84 +29,46 @@ if (!securePage($_SERVER['PHP_SELF'])){die();}?>
                 <p>This section contains several Seal internal links. <br />
                   Please do not share private links with non-seals.</p>
               </div>
-                <hr><br><h3>User and Profile Links</h3>
-                <p>
-                  <div class="btn-group btn-group-lg d-flex mx-auto" role="group" style="max-width:85%;">
-                    <a href="https://hullseals.space/users/account.php" class="btn btn-info">My Profile</a>
-                    <a href="https://hullseals.space/users/manage_sessions.php" class="btn btn-info">Session Management</a>
-                  </div>
-                </p>
                 <hr><br><h3>Public Links</h3>
 		            <p>
-                  <div class="btn-group btn-group-lg d-flex mx-auto" role="group" style="max-width:85%;">
-                    <a href="https://hullseals.space/bugreport" class="btn btn-info">Bug Reports</a>
-                    <a href="https://hullse.al/issuetrack" class="btn btn-info">Issue Tracker</a>
-                    <a href="https://hullseals.space/knowledge/" class="btn btn-info">Knowledge Base</a>
-                  </div>
-                  <br>
-                  <br>
-                  <div class="btn-group btn-group-lg d-flex mx-auto" role="group" style="max-width:85%;">
-                    <a href="https://hullseals.space/SuperSecretDiscordLink" class="btn btn-info">Social Discord</a>
-                    <a href="https://hullseals.space/statistics" class="btn btn-info">Statistics Page</a>
-                  </div>
-                  <br>
-                  <br>
-                  <div class="btn-group btn-group-lg d-flex mx-auto" role="group" style="max-width:85%;">
-                    <a href="https://hullseals.space/merch/" class="btn btn-info">Merch Store</a>
-                    <a href="https://hullseals.space/patch-store/" class="btn btn-info">Patches</a>
-                    <a href="https://hullseals.space/donate/" class="btn btn-info">Donations</a>
-                  </div>
+                  <ul class="list-group list-group-horizontal-sm">
+                    <a href="https://hullseals.space/knowledge/" class="list-group-item list-group-item-action">Wiki</a>
+                    <a href="https://hullseals.space/statistics" class="list-group-item list-group-item-action">Stats</a>
+                    <a href="https://store.hullseals.space" class="list-group-item list-group-item-action">Merch</a>
+                    <a href="https://hullseals.space/donate/" class="list-group-item list-group-item-action">Donations</a>
+                    <a href="https://client.hullseals.space" class="list-group-item list-group-item-action">IRC WebClient</a>
+                  </ul>
                 </p>
                 <hr><br><h3>Seal Links</h3>
                 <p>
-                  <div class="btn-group btn-group-lg d-flex mx-auto" role="group" style="max-width:85%;">
-                    <a href="https://hullseals.space/paperwork/" class="btn btn-info">Paperwork</a>
-                    <a href="https://hullseals.space/cmdr-management/" class="btn btn-info">CMDR Management</a>
-                    <a href="https://hullseals.space/vessel-registry/" class="btn btn-info">Vessel Registry</a>
-                  </div>
-                  <br>
-                  <br>
-                  <div class="btn-group btn-group-lg d-flex mx-auto" role="group" style="max-width:85%;">
-                    <a href="#" class="btn btn-info disabled" data-toggle="tooltip" title="Coming Soon!">Training Portal</a>
-                    <a href="https://hullse.al/FantasticShortlinksAndWhereTheyLead" class="btn btn-info">Shortlink List</a>
-                    <a href="#" class="btn btn-info disabled" data-toggle="tooltip" title="Coming Soon!">Textbin</a>
-                  </div>
+                  <ul class="list-group list-group-horizontal-sm">
+                    <a href="https://hullseals.space/cmdr-management/" class="list-group-item list-group-item-action">IRC and CMDR Name Management</a>
+                    <a href="https://hullseals.space/vessel-registry/ships/" class="list-group-item list-group-item-action">Vessel Registry</a>
+                    <a href="https://hullseals.space/paperwork/" class="list-group-item list-group-item-action">Paperwork</a>
+                    <a href="https://hullseals.space/trainings/scheduling/" class="list-group-item list-group-item-action">Training Requests</a>
+                    <a href="https://hullse.al/FantasticShortlinksAndWhereTheyLead" class="list-group-item list-group-item-action">Shortlink List</a>
+                  </ul>
                 </p>
                 <?php if(hasPerm([5,6],$user->data()->id)){?>
                 <hr><br><h3>Dispatch Links</h3>
                 <p>
-                  <div class="btn-group btn-group-lg d-flex mx-auto" role="group" style="max-width:85%;">
-                    <a href="#" class="btn btn-info disabled" data-toggle="tooltip" title="Coming Soon!">Dispatch Board</a>
-                    <a href="#" class="btn btn-info disabled" data-toggle="tooltip" title="Coming Soon!">Case Review</a>
-                  </div>
+                  <ul class="list-group list-group-horizontal-sm">
+                    <a href="https://hullseals.space/dispatch-tools/cases-list.php" class="list-group-item list-group-item-action">Case Review Portal</a>
+                    <a href="https://hullseals.space/dispatch-tools/delayed/" class="list-group-item list-group-item-action">Delayed Case Management</a>
+                  </ul>
                 </p>
               <?php }?>
               <?php if(hasPerm([4],$user->data()->id)){?>
                 <hr><br><h3>Trainer Links</h3>
                 <p>
-                  <div class="btn-group btn-group-lg d-flex mx-auto" role="group" style="max-width:85%;">
-                    <a href="https://hullseals.space/trainings/dashboard/" class="btn btn-info">Training Dashboard</a>
-                    <a href="https://hullseals.space/trainings/dashboard/manage.php" class="btn btn-info">Manage Pups</a>
-                    <a href="https://hullseals.space/trainer-lookup/" class="btn btn-info" data-toggle="tooltip" title="Depreciated. Please use Pup Management.">Old Trainer Lookup</a>
-                  </div>
+                  <ul class="list-group list-group-horizontal-sm">
+                    <a href="https://hullseals.space/trainings/scheduling/requests.php" class="list-group-item list-group-item-action">Scheduling System</a>
+                    <a href="https://hullseals.space/trainings/dashboard/manage.php" class="list-group-item list-group-item-action">Seal Management</a>
+                    <a href="https://hullseals.space/trainings/training-paperwork/" class="list-group-item list-group-item-action">Drill Paperwork</a>
+                    <a href="https://hullseals.space/trainings/dashboard/paperwork-list.php" class="list-group-item list-group-item-action">Drill Paperwork Review</a>
+                  </ul>
                 </p>
               <?php }?>
-                <?php if(hasPerm([8,9],$user->data()->id)){?>
-                <hr><br><h3>CyberSeal Links</h3>
-                <p>
-                  <div class="btn-group btn-group-lg d-flex mx-auto" role="group" style="max-width:85%;">
-                    <a href="https://gitlab.com/hull-seals-cybersealsh" class="btn btn-info">GitLab</a>
-                    <a href="hullseals.space/users/admin.php" class="btn btn-info">User Management</a>
-                    <a href="#" class="btn btn-info disabled">Beta Site</a>
-                  </div>
-                  <br>
-                  <br>
-                  <div class="btn-group btn-group-lg d-flex mx-auto" role="group" style="max-width:85%;">
-                    <a href="#" class="btn btn-info disabled">Password Manager</a>
-                    <a href="#" class="btn btn-info disabled">Fallback Site</a>
-                  </div>
-                </p>
-            <?php }?>
               </div>
             </article>
             <div class="clearfix"></div>
