@@ -28,24 +28,24 @@ if (isset($_GET['rejoin'])) {
 		<section class="introduction container">
 			<article id="intro3">
 				<h1>Request Repairs</h1>
-				<h2>Please choose an option below...</h2><br>
+				<h2>Please choose an option below...</h2>
 				<p><strong>Do you see a countdown timer?</strong><br>
 				<em style="color:red;">If so, log out to the menu immediately</em><br>
 				<br>
 				Do you need repairs or is your canopy broken?<br>
-				<a class="btn btn-success btn-lg" href="case.php">Yes, I Need Repairs</a><br>
+				<a class="btn btn-success" href="case.php">Yes, I Need Repairs</a><br>
 				<br>
 				Is your SRV Stuck?<br>
-				<a class="btn btn-success btn-lg" href="fishercase.php">Yes, I Need SRV Help</a><br>
+				<a class="btn btn-success" href="fishercase.php">Yes, I Need SRV Help</a><br>
 				<br>
 				Do you need Module Repairs?<br>
-				<button class="btn btn-success btn-lg" data-target="#coordsHelp" data-toggle="modal" id="coord-help-button" type="button">I need module repairs!</button><br>
+				<button class="btn btn-warning" data-target="#coordsHelp" data-toggle="modal" id="coord-help-button" type="button">I need module repairs!</button><br>
 				<br>
 				Disconnected from an Ongoing Case?<br>
-				<button class="btn btn-secondary btn-lg" data-target="#rejoinRepair" data-toggle="modal" id="coord-help-button" type="button">Rejoin the Chat</button><br>
+				<button class="btn btn-secondary" data-target="#rejoinRepair" data-toggle="modal" id="coord-help-button" type="button">Rejoin the Chat</button><br>
 				<br>
 				Just want to talk or join up?<br>
-				<a class="btn btn-secondary btn-lg" href="https://client.hullseals.space">Just Chatting!</a></p>
+				<a class="btn btn-secondary" href="https://client.hullseals.space">Just Chatting!</a></p>
 				<hr>
 				<p><strong>By connecting to our services, you agree to abide by our <a href="https://hullseals.space/knowledge/books/important-information">TOS and Privacy Policy</a></strong></p>
 				<div aria-hidden="true" class="modal fade" id="coordsHelp" style="color:#323232" tabindex="-1">
