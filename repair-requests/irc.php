@@ -8,6 +8,7 @@ if (!isset($_SESSION["cmdr_name"]))
   header("Location: https://hullseals.space/repair-requests/case.php");
 }
 $cdrn = $_SESSION["cmdr_name"];
+$truecdrn = $cdrn;
 $canopy_breached = $_SESSION['canopy_breached'];
 $o2t = $_SESSION['o2_timer'];
 $system = $_SESSION['system'];
@@ -51,7 +52,7 @@ if (hasInvalidChars($cdrn) == 1)
     $cdrn = preg_replace('/\s+/', '_', $cdrn);
     $cdrn = preg_replace('/^[@#]/i', '_', $cdrn);
     $url = 'http://halpybot.hullseals.space:3141/newcase';
-    $data = array("cmdr_name" => $cdrn,
+    $data = array("cmdr_name" => $truecdrn,
                   "canopy_breached" => $canopy_breached,
                   "o2_timer" => $o2t,
                   "system" => $system,
@@ -89,8 +90,13 @@ if (hasInvalidChars($cdrn) == 1)
                   "fields" => [
                       [
                           "name" => "CMDR Name:",
-                          "value" => $cdrn,
+                          "value" => $truecdrn,
                           "inline" => false
+                      ],
+                      [
+                          "name" => "IRC Name:",
+                          "value" => $cdrn,
+                          "inline" => true
                       ],
                       [
                           "name" => "Canopy Breached:",
@@ -147,8 +153,13 @@ if (hasInvalidChars($cdrn) == 1)
                   "fields" => [
                       [
                           "name" => "CMDR Name:",
-                          "value" => $cdrn,
+                          "value" => $truecdrn,
                           "inline" => false
+                      ],
+                      [
+                          "name" => "IRC Name:",
+                          "value" => $cdrn,
+                          "inline" => true
                       ],
                       [
                           "name" => "System:",

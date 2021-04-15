@@ -8,6 +8,7 @@ if (!isset($_SESSION["cmdr_name"]))
   header("Location: https://hullseals.space/repair-requests/case.php");
 }
 $cdrn = $_SESSION['cmdr_name'];
+$truecdrn = $cdrn;
 $system = $_SESSION['system'];
 $planet = $_SESSION['planet'];
 $platform = $_SESSION['platform'];
@@ -60,7 +61,7 @@ if (hasInvalidChars($cdrn) == 1)
     $cdrn = preg_replace('/\s+/', '_', $cdrn);
     $cdrn = preg_replace('/^[@#]/i', '_', $cdrn);
     $url = 'http://halpybot.hullseals.space:3141/fishcase';
-    $data = array("cmdr_name" => $cdrn,
+    $data = array("cmdr_name" => $truecdrn,
                   "system" => $system,
                   "planet" => $planet,
                   "platform" => $platform,
@@ -98,6 +99,11 @@ if (hasInvalidChars($cdrn) == 1)
                 "fields" => [
                     [
                         "name" => "CMDR Name:",
+                        "value" => $truecdrn,
+                        "inline" => false
+                    ],
+                    [
+                        "name" => "IRC Name:",
                         "value" => $cdrn,
                         "inline" => false
                     ],
