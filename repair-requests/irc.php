@@ -105,7 +105,7 @@ if (hasInvalidChars($cdrn) == 1)
                       ],
                       [
                           "name" => " O2 Timer:",
-                          "value" => $o2t;
+                          "value" => $o2t,
                           "inline" => true
                       ],
                       [
