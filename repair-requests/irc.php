@@ -22,13 +22,28 @@ else {
   $synthTrans = "Yes";
 }
 if ($platform == 1) {
-  $platformNew = "PC";
+  $platformNew = "PC - Odyssey";
 }
 elseif ($platform == 2) {
   $platformNew = "Xbox";
 }
 elseif ($platform == 3) {
   $platformNew = "PlayStation";
+}
+elseif ($platform == 4) {
+  $platformNew = "PC - Horizons";
+}
+if ($canopy_breached == 1) {
+	$image = "https://hullseals.space/images/CodeBlack.png";
+}
+elseif (($hull <= 100) && (50 <= $hull)) {
+	$image = "https://hullseals.space/images/CodeGreen.png";
+}
+elseif (($hull <= 49) && (11 <= $hull)) {
+	$image = "https://hullseals.space/images/CodeAmber.png";
+}
+else {
+	$image = "https://hullseals.space/images/CodeRed.png";
 }
 function startsWithNumber($cdrn)
 {
@@ -182,6 +197,22 @@ if (hasInvalidChars($cdrn) == 1)
 
       ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE );
     }
+$ch = curl_init( $webhookurl );
+curl_setopt( $ch, CURLOPT_HTTPHEADER, array('Content-type: application/json'));
+curl_setopt( $ch, CURLOPT_POST, 1);
+curl_setopt( $ch, CURLOPT_POSTFIELDS, $json_data);
+curl_setopt( $ch, CURLOPT_FOLLOWLOCATION, 1);
+curl_setopt( $ch, CURLOPT_HEADER, 0);
+curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1);
+$response = curl_exec( $ch );
+curl_close( $ch );
+
+      $json_data = json_encode([
+	  "content" => $image,
+	  "username" => "HalpyBOT",
+          "avatar_url" => "https://hullseals.space/images/emblem_mid.png",
+          "tts" => false,
+	], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE );
 $ch = curl_init( $webhookurl );
 curl_setopt( $ch, CURLOPT_HTTPHEADER, array('Content-type: application/json'));
 curl_setopt( $ch, CURLOPT_POST, 1);
