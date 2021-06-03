@@ -14,3 +14,4 @@ paperwork/db.php
 paperwork/fishers/db.php
 paperwork/fishers/fetch.php
 paperwork/seals/fetch.php
+repair-requests/auth.php
