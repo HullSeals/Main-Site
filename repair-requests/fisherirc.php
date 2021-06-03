@@ -7,6 +7,14 @@ if (!isset($_SESSION["cmdr_name"]))
 {
   header("Location: https://hullseals.space/repair-requests/case.php");
 }
+//Authenticaton Info
+$auth = require 'auth.php';
+$secret = $auth['auth'];
+$key = $auth['key'];
+$webhookurl = $auth['discord'];
+$url = $auth['url'];
+$auth = hash_hmac('sha256', $key, $secret);
+//Case Info
 $cdrn = $_SESSION['cmdr_name'];
 $truecdrn = $cdrn;
 $system = $_SESSION['system'];
@@ -14,8 +22,9 @@ $planet = $_SESSION['planet'];
 $platform = $_SESSION['platform'];
 $curr_cord = $_SESSION['curr_coord'];
 $case_type = $_SESSION['case_type'];
+//Platform Logic - TODO: replace with API.
 if ($platform == 1) {
-  $platformNew = "PC";
+  $platformNew = "PC - Odyssey";
 }
 elseif ($platform == 2) {
   $platformNew = "Xbox";
@@ -23,6 +32,10 @@ elseif ($platform == 2) {
 elseif ($platform == 3) {
   $platformNew = "PlayStation";
 }
+elseif ($platform == 4) {
+  $platformNew = "PC - Horizons";
+}
+//Case Type
 if ($case_type == 8) {
   $typeNew = "Lift";
 }
@@ -35,11 +48,12 @@ elseif ($case_type == 10) {
 elseif ($case_type == 11) {
   $typeNew = "Pick";
 }
+//Rename CMDR as needed
 function startsWithNumber($cdrn)
 {
     return preg_match('/^\d/', $cdrn) === 1;
 }
-
+//catch numbers
 if (startsWithNumber($cdrn) == 1)
 {
   $addedchar = "CMDR_";
@@ -55,31 +69,35 @@ if (hasInvalidChars($cdrn) == 1)
 {
   $cdrn = preg_replace("/[^a-zA-Z0-9]/", "", $cdrn);
 }
-
+//All that done, start formatting message.
   if (isset($cdrn))
   {
-    $cdrn = preg_replace('/\s+/', '_', $cdrn);
-    $cdrn = preg_replace('/^[@#]/i', '_', $cdrn);
-    $url = 'http://halpybot.hullseals.space:3141/fishcase';
-    $data = array("cmdr_name" => $truecdrn,
-                  "system" => $system,
-                  "planet" => $planet,
-                  "platform" => $platform,
-                  "curr_cord" => $curr_cord,
-                  "case_type" => $case_type,
-                  );
+    //IRC notif
+    $data = [
+      "type" => "KFCASE",
+    	"parameters" => [
+    		"Platform" => $platformNew,
+    		"CMDR" => $cdrn,
+    		"System" => $system,
+    		"KFType" => $typeNew,
+    		"Planet" => $planet,
+    	"Coords" => $curr_cord
+        ]
+      ];
+      $postdata = json_encode($data);
+      $ch = curl_init($url);
+      curl_setopt($ch, CURLOPT_POST, 1);
+      curl_setopt($ch, CURLOPT_POSTFIELDS, $postdata);
+      curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+      curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+      curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+        'Content-Type: application/json',
+        'hmac: '. $auth
+      ));
+      $result = curl_exec($ch);
+      curl_close($ch);
 
-    $postdata = json_encode($data);
-
-    $ch = curl_init($url);
-    curl_setopt($ch, CURLOPT_POST, 1);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $postdata);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-    $result = curl_exec($ch);
-    curl_close($ch);
-    $webhookurl = "";
+//Discord Notif
     $timestamp = date("c", strtotime("now"));
     $json_data = json_encode([
         "content" => "New Incoming Case - <@&744998165714829334>",
@@ -146,6 +164,10 @@ if (hasInvalidChars($cdrn) == 1)
     curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1);
     $response = curl_exec( $ch );
     curl_close( $ch );
+
+    //Send Client to Case Form
+    $cdrn = preg_replace('/\s+/', '_', $cdrn);
+    $cdrn = preg_replace('/^[@#]/i', '_', $cdrn);
     header("Location: https://client.hullseals.space:8443/repair.html?nick=" . $cdrn);
     exit();
   }

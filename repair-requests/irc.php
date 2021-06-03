@@ -7,6 +7,14 @@ if (!isset($_SESSION["cmdr_name"]))
 {
   header("Location: https://hullseals.space/repair-requests/case.php");
 }
+//Authenticaton Info
+$auth = require 'auth.php';
+$secret = $auth['auth'];
+$key = $auth['key'];
+$webhookurl = $auth['discord'];
+$url = $auth['url'];
+$auth = hash_hmac('sha256', $key, $secret);
+//Case Info
 $cdrn = $_SESSION["cmdr_name"];
 $truecdrn = $cdrn;
 $canopy_breached = $_SESSION['canopy_breached'];
@@ -15,12 +23,14 @@ $system = $_SESSION['system'];
 $platform = $_SESSION['platform'];
 $hull = $_SESSION['hull'];
 $synth = $_SESSION['can_synth'];
-if ($synth == 0) {
+//Synth Status
+if ($synth == 1) {
   $synthTrans = "No";
 }
 else {
   $synthTrans = "Yes";
 }
+//Platform Logic - TODO: replace with API.
 if ($platform == 1) {
   $platformNew = "PC - Odyssey";
 }
@@ -33,6 +43,7 @@ elseif ($platform == 3) {
 elseif ($platform == 4) {
   $platformNew = "PC - Horizons";
 }
+//Canopy Status
 if ($canopy_breached == 1) {
 	$image = "https://hullseals.space/images/CodeBlack.png";
 }
@@ -45,10 +56,12 @@ elseif (($hull <= 49) && (11 <= $hull)) {
 else {
 	$image = "https://hullseals.space/images/CodeRed.png";
 }
+//Rename CMDR as needed
 function startsWithNumber($cdrn)
 {
     return preg_match('/^\d/', $cdrn) === 1;
 }
+//Catch Numbers
 if (startsWithNumber($cdrn) == 1)
 {
   $addedchar = "CMDR_";
@@ -62,30 +75,61 @@ if (hasInvalidChars($cdrn) == 1)
 {
   $cdrn = preg_replace("/[^a-zA-Z0-9]/", "", $cdrn);
 }
+//All that done, start formatting message.
   if (isset($cdrn))
   {
-    $cdrn = preg_replace('/\s+/', '_', $cdrn);
-    $cdrn = preg_replace('/^[@#]/i', '_', $cdrn);
-    $url = 'http://halpybot.hullseals.space:3141/newcase';
-    $data = array("cmdr_name" => $truecdrn,
-                  "canopy_breached" => $canopy_breached,
-                  "o2_timer" => $o2t,
-                  "system" => $system,
-                  "platform" => $platform,
-                  "hull" => $hull,
-                  "can_synth" => $synth,
-                  );
-    $postdata = json_encode($data);
-    $ch = curl_init($url);
-    curl_setopt($ch, CURLOPT_POST, 1);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $postdata);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-    $result = curl_exec($ch);
-    curl_close($ch);
-    $webhookurl = "";
+    //IRC Notif
+    if ($canopy_breached == 1) {
+      $data = [
+	        "type" => "CODEBLACK",
+	        "parameters" => [
+		        "Platform" => $platformNew,
+		        "CMDR" => $cdrn,
+		        "System" => $system,
+		        "Hull" => $hull,
+		        "CanSynth" => $synthTrans,
+		        "Oxygen" => $o2t
+          ]
+		    ];
+        $postdata = json_encode($data);
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $postdata);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+          'Content-Type: application/json',
+	        'hmac: '. $auth
+        ));
+        $result = curl_exec($ch);
+        curl_close($ch);
+      }
+    else {
+      $data = [
+	        "type" => "SEALCASE",
+	        "parameters" => [
+		        "Platform" => $platformNew,
+		        "CMDR" => $cdrn,
+		        "System" => $system,
+		        "Hull" => $hull,
+          ]
+		    ];
+        $postdata = json_encode($data);
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $postdata);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+          'Content-Type: application/json',
+	        'hmac: '. $auth
+        ));
+        $result = curl_exec($ch);
+        curl_close($ch);    }
+
+    //Discord Notif
     $timestamp = date("c", strtotime("now"));
+    //FOR CB
     if ($canopy_breached == 1) {
       $json_data = json_encode([
           "content" => "New Incoming Case - <@&744998165714829334>",
@@ -150,6 +194,7 @@ if (hasInvalidChars($cdrn) == 1)
       ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE );
     }
     else {
+      //FOR STANDARD CASE
       $json_data = json_encode([
           "content" => "New Incoming Case - <@&744998165714829334>",
           "username" => "HalpyBOT",
@@ -206,7 +251,7 @@ curl_setopt( $ch, CURLOPT_HEADER, 0);
 curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1);
 $response = curl_exec( $ch );
 curl_close( $ch );
-
+//First Message Done, now send Color.
       $json_data = json_encode([
 	  "content" => $image,
 	  "username" => "HalpyBOT",
@@ -222,6 +267,11 @@ curl_setopt( $ch, CURLOPT_HEADER, 0);
 curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1);
 $response = curl_exec( $ch );
 curl_close( $ch );
+
+//Send Client to case form
+$cdrn = preg_replace('/\s+/', '_', $cdrn);
+$cdrn = preg_replace('/^[@#]/i', '_', $cdrn);
+
     header("Location: https://client.hullseals.space:8443/repair.html?nick=" . $cdrn);
     exit();
   }
