@@ -19,9 +19,6 @@ if (!isset($activePage)) {
                 <li class="nav-item">
                     <a class="nav-link" href="https://hullseals.space/knowledge">Knowledge Base</a>
                 </li>
-                <li class="nav-item <?php if ($activePage =='about') {?>active<?php }?>">
-                    <a class="nav-link" href="https://hullseals.space/about">About</a>
-                </li>
                 <li class="nav-item <?php if ($activePage =='contact') {?>active<?php }?>">
                     <a class="nav-link" href="https://hullseals.space/contact">Contact</a>
                 </li>
@@ -41,7 +38,16 @@ if (!isset($activePage)) {
                           <li class="nav-item">
                             <a class="nav-link" href="https://hullseals.space/users/logout.php">Log Out</a>
                           </li>';
-                  } ?>
+		  } ?>
+
+ <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Support the Seals!</a>
+    <div class="dropdown-menu">
+      <a class="dropdown-item" href="https://hullseals.space/donate">Donate</a>
+      <a class="dropdown-item" href="https://store.hullseals.space">Merch Store</a>
+    </div>
+  </li>
+
             </ul>
         </div>
     </nav>

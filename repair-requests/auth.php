@@ -2,5 +2,5 @@
     'secret' => '',
     'key' => '',
     'discord' => '',
-    'url' => '',
+    'url' => 'http://halpybot.hullseals.space:3141/announce',
 ];
