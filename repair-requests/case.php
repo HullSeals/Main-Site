@@ -3,12 +3,20 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+//Declare Title, Content, Author
+$pgAuthor = "David Sangrey";
+$pgContent = "New Repair Case";
+$useIP = 1; //1 if Yes, 0 if No.
+
+//If you have any custom scripts, CSS, etc, you MUST declare them here.
+//They will be inserted at the bottom of the <head> section.
+$customContent = '<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" integrity="sha384-yakM86Cz9KJ6CeFVbopALOEQGGvyBFdmA4oHMiYuHcd9L59pLkCEFSlr6M9m434E" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js" integrity="sha384-Q9RsZ4GMzjlu4FFkJw4No9Hvvm958HqHmXI9nqo5Np2dA/uOVBvKVxAvlBQrDhk4" crossorigin="anonymous"></script>';
+
 //UserSpice Required
 require_once '../users/init.php';  //make sure this path is correct!
+require_once $abs_us_root.$us_url_root.'users/includes/template/prep.php';
 if (!securePage($_SERVER['PHP_SELF'])){die();}
-
-//ipInfo
-require '../assets/includes/ipinfo.php';
 
 //DB stuff
 $db = include 'db.php';
@@ -68,24 +76,7 @@ if (isset($_GET['send'])) {
     }
 }
 ?>
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta content="New Repair Case" name="description">
-    <title>New Case | The Hull Seals</title>
-    <?php include '../assets/includes/headerCenter.php'; ?>
-    <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js" integrity="sha384-Q9RsZ4GMzjlu4FFkJw4No9Hvvm958HqHmXI9nqo5Np2dA/uOVBvKVxAvlBQrDhk4" crossorigin="anonymous"></script>
-</head>
-
-</head>
-<body>
-    <div id="home">
-      <?php include '../assets/includes/menuCode.php';?>
-        <section class="introduction container">
-	    <article id="intro3">
-        <h1>Request Repairs</h1>
+<h1>Request Repairs</h1>
         <br>
         <p>Welcome, CMDR. Please enter your details below...</p>
         <?php
@@ -134,13 +125,9 @@ if (isset($_GET['send'])) {
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
       </div>
-    </article>
-<div class="clearfix"></div>
-</section>
-</div>
-<?php include '../assets/includes/footer.php'; ?>
-</body>
-</html>
+<?php
+require_once $abs_us_root . $us_url_root . 'users/includes/html_footer.php';
+?>
 <script>
 var ifBreachedBlock = $('#ifBreached');
 var ifBreachedBlock2 = $('#ifBreached2');

@@ -3,12 +3,20 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+//Declare Title, Content, Author
+$pgAuthor = "David Sangrey";
+$pgContent = "New KingFisher Case";
+$useIP = 1; //1 if Yes, 0 if No.
+
+//If you have any custom scripts, CSS, etc, you MUST declare them here.
+//They will be inserted at the bottom of the <head> section.
+$customContent = '<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" integrity="sha384-yakM86Cz9KJ6CeFVbopALOEQGGvyBFdmA4oHMiYuHcd9L59pLkCEFSlr6M9m434E" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js" integrity="sha384-Q9RsZ4GMzjlu4FFkJw4No9Hvvm958HqHmXI9nqo5Np2dA/uOVBvKVxAvlBQrDhk4" crossorigin="anonymous"></script>';
+
 //UserSpice Required
 require_once '../users/init.php';  //make sure this path is correct!
+require_once $abs_us_root.$us_url_root.'users/includes/template/prep.php';
 if (!securePage($_SERVER['PHP_SELF'])){die();}
-
-//ipInfo
-require '../assets/includes/ipinfo.php';
 
 //DB stuff
 $db = include 'db.php';
@@ -61,30 +69,7 @@ if (isset($_GET['send'])) {
     }
 }
 ?>
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta content="New Repair Case" name="description">
-    <title>New Case | The Hull Seals</title>
-    <?php include '../assets/includes/headerCenter.php'; ?>
-    <style>
-      .center {
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-      width: 50%;
-      }
-    </style>
-</head>
-
-</head>
-<body>
-    <div id="home">
-      <?php include '../assets/includes/menuCode.php';?>
-        <section class="introduction container">
-	    <article id="intro3">
-        <h1>Request Repairs</h1>
+<h1>Request Repairs</h1>
         <br>
         <p>Welcome, CMDR. Please enter your details below...</p>
         <?php
@@ -140,18 +125,16 @@ if (isset($_GET['send'])) {
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
 	         </form>
-           <div class="modal fade" id="coordsHelp" tabindex="-1" aria-hidden="true" style="color:#323232">
+           	  <div class="modal fade" id="coordsHelp" tabindex="-1" style="color:#323232">
              <div class="modal-dialog modal-lg">
                <div class="modal-content">
                  <div class="modal-header">
                    <h5 class="modal-title" id="coordsHelpLabel">How do I find my coordinates?</h5>
-                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                     <span aria-hidden="true">&times;</span>
-                   </button>
+                   <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                  </div>
                  <div class="modal-body">
                    <p style="text-align: center;">Coordinates are found in the bottom right of your SRV's HUD.</p>
-                   <img alt="SRV HUD" src="../images/SRV_HUD.png" class="center">
+                   <img alt="SRV HUD" src="../images/SRV_HUD.png" class="centerMyImages">
                  </div>
                  <div class="modal-footer">
                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -160,10 +143,6 @@ if (isset($_GET['send'])) {
              </div>
            </div>
       </div>
-    </article>
-<div class="clearfix"></div>
-</section>
-</div>
-<?php include '../assets/includes/footer.php'; ?>
-</body>
-</html>
+<?php
+require_once $abs_us_root . $us_url_root . 'users/includes/html_footer.php';
+?>

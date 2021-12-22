@@ -3,31 +3,30 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+//Declare Title, Content, Author
+$pgAuthor = "David Sangrey";
+$pgContent = "Request a Repair";
+$useIP = 1; //1 if Yes, 0 if No.
+
+//If you have any custom scripts, CSS, etc, you MUST declare them here.
+//They will be inserted at the bottom of the <head> section.
+$customContent = '';
+
 //UserSpice Required
 require_once '../users/init.php';  //make sure this path is correct!
+require_once $abs_us_root.$us_url_root.'users/includes/template/prep.php';
 if (!securePage($_SERVER['PHP_SELF'])){die();}
+
 $lore = [];
-if (isset($_GET['rejoin'])) {
+if (isset($_POST['re_join'])) {
     foreach ($_REQUEST as $key => $value) {
         $lore[$key] = strip_tags(stripslashes(str_replace(["'", '"'], '', $value)));
     }
 		$rejoinNick = $lore['re_join'];
   header("Location: https://client.hullseals.space:8443/repair.html?nick=". $rejoinNick);
 }
-
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta content="Welcome to the Hull Seals, Elite Dangerous's Premier Hull Repair Specialists!" name="description">
-	<title>Request a Repair | The Hull Seals</title><?php include '../assets/includes/headerCenter.php'; ?>
-</head>
-<body>
-	<div id="home">
-		<?php include '../assets/includes/menuCode.php';?>
-		<section class="introduction container">
-			<article id="intro3">
-				<h1>Request Repairs</h1>
+<h1>Request Repairs</h1>
 				<h2>Please choose an option below...</h2>
 				<p><strong>Do you see a countdown timer?</strong><br>
 				<em style="color:red;">If so, log out to the menu immediately</em><br>
@@ -52,7 +51,7 @@ if (isset($_GET['rejoin'])) {
 					<div class="modal-dialog modal-lg">
 						<div class="modal-content">
 							<div class="modal-header">
-								<h5 class="modal-title" id="coordsHelpLabel">How do Repair Modules?</h5><button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+								<h5 class="modal-title" id="coordsHelpLabel">How do Repair Modules?</h5><button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
 							</div>
 							<div class="modal-body">
 								<p>Unfortunately, we cannot repair module damage, other than cracked or broken canopies.<br>
@@ -69,13 +68,13 @@ if (isset($_GET['rejoin'])) {
 					<div class="modal-dialog modal-lg">
 						<div class="modal-content">
 							<div class="modal-header">
-								<h5 class="modal-title" id="rejoinRepairLabel">Rejoin an Ongoing Repair</h5><button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+								<h5 class="modal-title" id="rejoinRepairLabel">Rejoin an Ongoing Repair</h5><button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
 							</div>
 							<div class="modal-body">
 								<p>Got disconnected? Simply enter your name below and get reconnected!</p>
-								<form action="?rejoin" method="post">
+								<form action="?re_join" method="post">
 									<div class="input-group mb-3">
-                        <input type="text" name="re_join" value="<?= $lore['re_join'] ?? '' ?>" pattern="[^a-zA-Z0-9]" class="form-control" placeholder="CMDR Name" aria-label="CMDR Name" required>
+                        <input type="text" name="re_join" value="<?= $lore['re_join'] ?? '' ?>" pattern="[a-zA-Z0-9]+" class="form-control" placeholder="CMDR Name" aria-label="CMDR Name" required>
                     </div>
 							</div>
 							<div class="modal-footer">
@@ -84,9 +83,6 @@ if (isset($_GET['rejoin'])) {
 						</div>
 					</div>
 				</div>
-			</article>
-			<div class="clearfix"></div>
-		</section>
-	</div><?php include '../assets/includes/footer.php'; ?>
-</body>
-</html>
+
+<?php
+require_once $abs_us_root . $us_url_root . 'users/includes/html_footer.php';
