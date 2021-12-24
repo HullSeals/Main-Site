@@ -9,11 +9,10 @@ if (!isset($_SESSION["cmdr_name"]))
 }
 //Authenticaton Info
 $auth = require 'auth.php';
-$secret = $auth['auth'];
 $key = $auth['key'];
+$constant = $auth['constant'];
 $webhookurl = $auth['discord'];
 $url = $auth['url'];
-$auth = hash_hmac('sha256', $key, $secret);
 //Case Info
 $cdrn = $_SESSION["cmdr_name"];
 $truecdrn = $cdrn;
@@ -92,6 +91,9 @@ if (hasInvalidChars($cdrn) == 1)
           ]
 		    ];
         $postdata = json_encode($data);
+        $hmacdata = preg_replace("/\s+/", "", $postdata);
+        $auth = hash_hmac('sha256', $hmacdata, $key);
+        $keyCheck = hash_hmac('sha256', $constant, $key);
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $postdata);
@@ -99,7 +101,8 @@ if (hasInvalidChars($cdrn) == 1)
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
           'Content-Type: application/json',
-	        'hmac: '. $auth
+	        'hmac: '. $auth,
+          'keyCheck: '. $keyCheck
         ));
         $result = curl_exec($ch);
         curl_close($ch);
@@ -115,6 +118,9 @@ if (hasInvalidChars($cdrn) == 1)
           ]
 		    ];
         $postdata = json_encode($data);
+        $hmacdata = preg_replace("/\s+/", "", $postdata);
+        $auth = hash_hmac('sha256', $hmacdata, $key);
+        $keyCheck = hash_hmac('sha256', $constant, $key);
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $postdata);
@@ -122,7 +128,8 @@ if (hasInvalidChars($cdrn) == 1)
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
           'Content-Type: application/json',
-	        'hmac: '. $auth
+          'hmac: '. $auth,
+          'keyCheck: '. $keyCheck
         ));
         $result = curl_exec($ch);
         curl_close($ch);    }

@@ -32,7 +32,7 @@ while ($row = $res->fetch_assoc()) {
 
 $validationErrors = [];
 $data = [];
-if (isset($_GET['send'])) {
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['formtype'] == "sendCase") {
     foreach ($_REQUEST as $key => $value) {
         $data[$key] = strip_tags(stripslashes(str_replace(["'", '"'], '', $value)));
     }
@@ -89,6 +89,7 @@ if (isset($_GET['send'])) {
         ?>
         <div class="mx-auto" style="max-width:85%;">
         <form action="?send" method="post" id="rrForm">
+          <input hidden type="text" name="formtype" value="sendCase">
             <div class="input-group mb-3">
                 <input type="text" name="cmdr_name" value="<?= $data['cmdr_name'] ?? '' ?>" class="form-control" placeholder="Commander Name" aria-label="Commander Name" required>
             </div>
