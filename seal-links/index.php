@@ -40,7 +40,7 @@ if (!securePage($_SERVER['PHP_SELF'])){die();}
                 <p>
                   <ul class="list-group list-group-horizontal-sm">
                     <a href="https://hullseals.space/cmdr-management/" class="list-group-item list-group-item-action">IRC and CMDR Management</a>
-                    <a href="https://hullseals.space/vessel-registry/ships/" class="list-group-item list-group-item-action">Vessel Registry</a>
+                    <a href="https://hullseals.space/vessel-registry/" class="list-group-item list-group-item-action">Vessel Registry</a>
                     <a href="https://hullseals.space/paperwork/" class="list-group-item list-group-item-action">Paperwork</a>
                     <a href="https://hullseals.space/dispatch-tools/my-cases.php" class="list-group-item list-group-item-action">My Past Cases</a>
                     <a href="https://hullseals.space/trainings/scheduling/" class="list-group-item list-group-item-action">Training Requests</a>
