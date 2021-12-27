@@ -10,7 +10,7 @@ $useIP = 0; //1 if Yes, 0 if No.
 $activePage = 'home';
 //If you have any custom scripts, CSS, etc, you MUST declare them here.
 //They will be inserted at the bottom of the <head> section.
-$customContent = '<script src="analytics.js" integrity="sQ5iQ+pZL1pA+HmogA5zwKv1PlVO655lwRotWmio44OT8EogxXkT9nxKLtPXgFuN" crossorigin="anonymous"></script>
+$customContent = '<script src="analytics.js" integrity="tUmtZA6JAnP2bdPMeRqiljHV5WrtLJlQ4F/fTdNI0/ZxyqhzMqWEkmmJUcZ+chlw" crossorigin="anonymous"></script>
 <script>
 $(function () {
   $(\'[data-toggle="popover"]\').popover()
