@@ -88,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['formtype'] == "sendCase") {
         }
         ?>
         <div class="mx-auto" style="max-width:85%;">
-        <form action="?send" method="post" id="rrForm">
+        <form action="?send" method="post" id="rrForm" onsubmit="Processing()">
           <input hidden type="text" name="formtype" value="sendCase">
             <div class="input-group mb-3">
                 <input type="text" name="cmdr_name" value="<?= $data['cmdr_name'] ?? '' ?>" class="form-control" placeholder="Commander Name" aria-label="Commander Name" required>
@@ -125,6 +125,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['formtype'] == "sendCase") {
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
+        <div class="modal fade" id="processing" tabindex="-1" style="color:#323232">
+             <div class="modal-dialog modal-lg">
+               <div class="modal-content">
+                 <div class="modal-header">
+                   <h5 class="modal-title" id="processing">Processing your Case</h5>
+                   <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                 </div>
+                 <div class="modal-body">
+                   <p style="text-align: center;">Please stand by while you are redirected...</p>
+                   <img alt="SRV HUD" src="../images/EDLoader1.svg" class="centerMyImages">
+                 </div>
+                 <div class="modal-footer">
+                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                 </div>
+               </div>
+             </div>
+           </div>
       </div>
 <?php
 require_once $abs_us_root . $us_url_root . 'users/includes/html_footer.php';
@@ -156,4 +173,10 @@ ifBreachedBlock3.hide();
       }
     })
   })
+</script>
+<script type='text/javascript'>
+function Processing() {
+$(document).ready(function(){
+$('#processing').modal('show');
+});}
 </script>
