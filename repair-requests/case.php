@@ -108,9 +108,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['formtype'] == "sendCase") {
             <div id="ifBreached2" class="input-group mb-3">
               <input type="text" name="o2_timer" value="<?= $data['o2_timer'] ?? '' ?>" class="form-control" pattern="[0-9]{1,2}:[0-9]{1,2}" placeholder="O2 Timer (nn:nn)" aria-label="O2 Timer (nn:nn)">
             </div>
-            <div class="alert alert-danger" id="ifBreached3" role="alert">
-              LOG OUT IMMEDIATELY if you have not already done so.
-            </div>
+            <div id="ifBreached3">
+              <img src="/images/logout.png" width="100%" />
+            <br /> <br /></div>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text">Platform</span>
