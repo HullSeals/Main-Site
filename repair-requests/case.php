@@ -138,7 +138,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['formtype'] == "sendCase") {
                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
              </div>
              <div class="modal-body">
-               <p style="text-align: center;">Life Support Synthesis, is a way to temporarily refill your life support timer. <br /> They cost 2 Iron and 1 Nickel per refill, and can be found in your right-hand panel. <hr /></p>
+               <p style="text-align: center;">Life Support Synthesis is a way to temporarily refill your life support timer. <br /> They cost 2 Iron and 1 Nickel per refill, and can be found in your right-hand panel. <hr /></p>
 
                <p style="text-align: center;">Don't know if you have any? That's Okay! Just choose "O<sub>2</sub> Synths Not Available".</p>
                <p style="text-align: center;"><em>Do <strong>NOT</strong> log in to check if you don't know!</em></p>
