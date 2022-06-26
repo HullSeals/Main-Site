@@ -103,7 +103,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['formtype'] == "sendCase") {
             		<label id="canopy_breached" class="input-group-text text-primary"><input type="checkbox" id="canopy_breached2" value="1" name="canopy_breached" data-toggle="toggle" data-on="Canopy Breached" data-off="Canopy Not Breached" data-onstyle="danger" data-offstyle="success">  </label>
               </div>
             <div id="ifBreached" class="input-group mb-3">
-              <label class="input-group-text text-primary"><input type="checkbox" name="can_synth" value="1" data-toggle="toggle" data-on="Synths Not Available" data-off="Synths Available" data-onstyle="danger" data-offstyle="success"></label>
+              <label class="input-group-text text-primary"><input type="checkbox" name="can_synth" value="1" data-toggle="toggle" data-on="O<sub>2</sub> Synths Not Available" data-off="O<sub>2</sub> Synths Available" data-onstyle="danger" data-offstyle="success"></label>
+              <div class="input-group-append">
+	               <button type="button" class="btn btn-secondary" data-toggle="modal" id="coord-help-button" data-target="#coordsHelp">
+		                 What's This?
+	               </button>
+              </div>
             </div>
             <div id="ifBreached2" class="input-group mb-3">
               <input type="text" name="o2_timer" value="<?= $data['o2_timer'] ?? '' ?>" class="form-control" pattern="[0-9]{1,2}:[0-9]{1,2}" placeholder="O2 Timer (nn:nn)" aria-label="O2 Timer (nn:nn)">
@@ -125,6 +130,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['formtype'] == "sendCase") {
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
+        <div class="modal fade" id="coordsHelp" tabindex="-1" style="color:#323232">
+         <div class="modal-dialog modal-lg">
+           <div class="modal-content">
+             <div class="modal-header">
+               <h5 class="modal-title" id="coordsHelpLabel">What is this?</h5>
+               <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+             </div>
+             <div class="modal-body">
+               <p style="text-align: center;">Life Support Synthesis, is a way to temporarily refill your life support timer. <br /> They cost 2 Iron and 1 Nickel per refill, and can be found in your right-hand panel. <hr /></p>
+
+               <p style="text-align: center;">Don't know if you have any? That's Okay! Just choose "O<sub>2</sub> Synths Not Available".</p>
+               <p style="text-align: center;"><em>Do <strong>NOT</strong> log in to check if you don't know!</em></p>
+             </div>
+             <div class="modal-footer">
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+             </div>
+           </div>
+         </div>
+       </div>
         <div class="modal fade" id="processing" tabindex="-1" style="color:#323232">
              <div class="modal-dialog modal-lg">
                <div class="modal-content">
