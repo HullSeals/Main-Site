@@ -111,7 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['formtype'] == "sendCase") {
               </div>
             </div>
             <div id="ifBreached2" class="input-group mb-3">
-              <input type="text" name="o2_timer" value="<?= $data['o2_timer'] ?? '' ?>" class="form-control" pattern="[0-9]{1,2}:[0-9]{1,2}" placeholder="O2 Timer (nn:nn)" aria-label="O2 Timer (nn:nn)">
+              <input type="text" id="o2_timer" name="o2_timer" value="<?= $data['o2_timer'] ?? '' ?>" class="form-control" pattern="[0-9]{1,2}:[0-9]{1,2}" placeholder="O2 Timer (nn:nn)" aria-label="O2 Timer (nn:nn)">
             </div>
             <div id="ifBreached3">
               <img src="/images/logout.png" width="100%" />
@@ -174,6 +174,7 @@ require_once $abs_us_root . $us_url_root . 'users/includes/html_footer.php';
 var ifBreachedBlock = $('#ifBreached');
 var ifBreachedBlock2 = $('#ifBreached2');
 var ifBreachedBlock3 = $('#ifBreached3');
+var o2_timer = document.getElementById('o2_timer');
 
 ifBreachedBlock.hide();
 ifBreachedBlock2.hide();
@@ -186,12 +187,14 @@ ifBreachedBlock3.hide();
         ifBreachedBlock.show();
         ifBreachedBlock2.show();
         ifBreachedBlock3.show();
+        o2_timer.setAttribute('required', '');
         $("[data-toggle='toggle']").bootstrapToggle('destroy')
         $("[data-toggle='toggle']").bootstrapToggle();
       } else {
         ifBreachedBlock.hide();
         ifBreachedBlock2.hide();
         ifBreachedBlock3.hide();
+        o2_timer.removeAttribute('required');
         $("[data-toggle='toggle']").bootstrapToggle('destroy')
         $("[data-toggle='toggle']").bootstrapToggle();
       }
