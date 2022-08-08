@@ -180,6 +180,20 @@ ifBreachedBlock.hide();
 ifBreachedBlock2.hide();
 ifBreachedBlock3.hide();
 
+let searchParams = new URLSearchParams(window.location.search)
+searchParams.has('code')
+let code = searchParams.get('code')
+if (code == "black") {
+  $("#canopy_breached2").attr("checked",code.indexOf("black") !== -1);
+  ifBreachedBlock.show();
+  ifBreachedBlock2.show();
+  ifBreachedBlock3.show();
+  o2_timer.setAttribute('required', '');
+  $("[data-toggle='toggle']").bootstrapToggle('destroy')
+  $("[data-toggle='toggle']").bootstrapToggle();
+}
+
+
 
   $(function() {
     $('#canopy_breached2').change(function() {
