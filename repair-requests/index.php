@@ -33,29 +33,19 @@ if (isset($_POST['chatting'])) {
 				<h2>Please choose an option below...</h2>
 				<p><strong>Do you see a countdown timer?</strong><br>
 				<em style="color:red;">If so, log out to the menu immediately</em><br>
+        <hr>
         <div class="row">
-  <div class="col-4">
-    <div class="list-group" id="list-tab" role="tablist">
-      <a class="list-group-item list-group-item-secondary list-group-item-action active" id="list-case-list" data-toggle="list" href="#list-case" role="tab">Need Repairs or Broken Canopy?</a>
-      <a class="list-group-item list-group-item-secondary list-group-item-action" id="list-kf-list" data-toggle="list" href="#list-kf" role="tab">Stuck SRV?</a>
-      <a class="list-group-item list-group-item-secondary list-group-item-action" id="list-module-list" data-toggle="list" href="#list-module" role="tab">Module Repairs?</a>
-      <a class="list-group-item list-group-item-secondary list-group-item-action" id="list-disco-list" data-toggle="list" href="#list-disco" role="tab">Disconnected from a Case?</a>
-      <a class="list-group-item list-group-item-secondary list-group-item-action" id="list-chat-list" data-toggle="list" href="#list-chat" role="tab">Just Chatting?</a>
-    </div>
-  </div>
-  <div class="col-8">
+  <div class="col-7">
     <div class="tab-content" id="nav-tabContent">
       <div class="tab-pane fade show active" id="list-case" role="tabpanel">
         <h2>Hull Damage? We can help!</h2>
-        <p>Please fill out the form below and remain connected.</p>
-        <p>We'll be with you as soon as possible!</p>
+        <p>Please fill out the form below and stay connected.</p>
         <a class="btn btn-lg btn-success" href="case.php">Yes, I Need Repairs</a>
         <hr>
         <h2>Broken Canopy?</h2>
-        <p>Please ensure you have LOGGED OUT TO THE MAIN MENU IMMEDIATELY.</p>
+        <p style="color:red">LOG OUT TO THE MAIN MENU IMMEDIATELY.</p>
         <p>Do not log in until directed to by our Dispatchers.</p>
-        <p>Do not log in to validate any information on the next page. If you do not know, take your best guess and inform our Dispatchers on connection.</p>
-        <a class="btn btn-lg btn-danger" href="case.php?code=black">My Canopy is Breached</a>
+        <a class="btn btn-lg btn-danger" href="case.php?code=black">My Canopy is Broken</a>
       </div>
       <div class="tab-pane fade" id="list-kf" role="tabpanel">
         <p>Stuck in your SRV? We can help!</p>
@@ -65,7 +55,7 @@ if (isset($_POST['chatting'])) {
       <div class="tab-pane fade" id="list-module" role="tabpanel">
         <p>Unfortunately, we cannot repair module damage, other than cracked or broken canopies.</p>
         <p>Only stations, Fleet Carriers, or AFMU modules can repair module damage.</p>
-        <p>A reboot and repair cycle may help get damaged modules to working order long enough to get to an advanced repair facility.</p>
+        <p>A <a href="https://elite-dangerous.fandom.com/wiki/Reboot_and_Repair" target="_blank">reboot and repair</a> cycle may help get damaged modules to working order long enough to get to an advanced repair facility.</p>
       </div>
       <div class="tab-pane fade" id="list-disco" role="tabpanel">
         <p>Lost connection to chat? That's okay! Just click here to get back in the action.</p>
@@ -86,6 +76,15 @@ if (isset($_POST['chatting'])) {
           <button class="btn btn-primary" type="submit">Chat with our Seals</button>
         </form>
       </div>
+    </div>
+  </div>
+  <div class="col-5">
+    <div class="list-group" id="list-tab" role="tablist">
+      <a class="list-group-item list-group-item-dark list-group-item-action active" id="list-case-list" data-toggle="list" href="#list-case" role="tab">Need Repairs or Broken Canopy?</a>
+      <a class="list-group-item list-group-item-dark list-group-item-action" id="list-kf-list" data-toggle="list" href="#list-kf" role="tab">Stuck SRV?</a>
+      <a class="list-group-item list-group-item-dark list-group-item-action" id="list-module-list" data-toggle="list" href="#list-module" role="tab">Module Repairs?</a>
+      <a class="list-group-item list-group-item-dark list-group-item-action" id="list-disco-list" data-toggle="list" href="#list-disco" role="tab">Disconnected from a Case?</a>
+      <a class="list-group-item list-group-item-dark list-group-item-action" id="list-chat-list" data-toggle="list" href="#list-chat" role="tab">Just Chatting?</a>
     </div>
   </div>
 </div>
