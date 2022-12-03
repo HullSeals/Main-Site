@@ -29,19 +29,21 @@ if ($synth == 1) {
 else {
   $synthTrans = "Yes";
 }
-//Platform Logic - TODO: replace with API.
-if ($platform == 1) {
-  $platformNew = "PC - Odyssey";
+
+//DB stuff
+$db = include 'db.php';
+$mysqli = new mysqli($db['server'], $db['user'], $db['pass'], $db['db'], $db['port']);
+$platformList = [];
+$res = $mysqli->query('SELECT * FROM lookups.platform_lu ORDER BY platform_id');
+while ($row = $res->fetch_assoc()) {
+    if ($row['platform_name'] == 'ERR') {
+        continue;
+    }
+    $platformList[$row['platform_id']] = $row['platform_name'];
 }
-elseif ($platform == 2) {
-  $platformNew = "Xbox";
-}
-elseif ($platform == 3) {
-  $platformNew = "PlayStation";
-}
-elseif ($platform == 4) {
-  $platformNew = "PC - Horizons";
-}
+
+$platformNew = $platformList[$platform];
+
 //Canopy Status
 if ($canopy_breached == 1) {
 	$image = "https://hullseals.space/images/CodeBlack.png";
