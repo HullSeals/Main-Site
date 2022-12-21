@@ -100,13 +100,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['formtype'] == "sendCase") {
   <form action="?send" method="post" id="rrForm" onsubmit="Processing()">
     <input hidden type="text" name="formtype" value="sendCase">
     <div class="input-group mb-3">
-      <input type="text" name="cmdr_name" pattern="[\x20-\x7A]+" minlength="3" value="<?= $data['cmdr_name'] ?? '' ?>" class="form-control" placeholder="Commander Name" aria-label="Commander Name" title="Your CMDR name in standard characters" required>
+      <input type="text" name="cmdr_name" pattern="[\x20-\x7A]+" minlength="3" value="<?= $data['cmdr_name'] ?? '' ?>" class="form-control" placeholder="Commander Name" title="Your CMDR name in standard characters" required>
     </div>
     <div class="input-group mb-3">
-      <input type="text" name="system" pattern="[\x20-\x7A]+" minlength="3" value="<?= $data['system'] ?? '' ?>" class="form-control" placeholder="System" aria-label="System" title="The System name in standard characters" required>
+      <input type="text" name="system" pattern="[\x20-\x7A]+" minlength="3" value="<?= $data['system'] ?? '' ?>" class="form-control" placeholder="System" title="The System name in standard characters" required>
     </div>
     <div class="input-group mb-3">
-      <input type="number" min="0" max="100" pattern="[0-9]" name="hull" value="<?= $data['hull'] ?? '' ?>" class="form-control" placeholder="Hull %" aria-label="Hull %" required>
+      <input type="number" min="0" max="100" pattern="[0-9]" name="hull" value="<?= $data['hull'] ?? '' ?>" class="form-control" placeholder="Hull %" required>
     </div>
     <div class="input-group mb-3">
       <label id="canopy_breached" class="input-group-text text-primary"><input type="checkbox" id="canopy_breached2" value="1" name="canopy_breached" data-toggle="toggle" data-on="Canopy Breached" data-off="Canopy Not Breached" data-onstyle="danger" data-offstyle="success"> </label>
@@ -120,7 +120,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['formtype'] == "sendCase") {
       </div>
     </div>
     <div id="ifBreached2" class="input-group mb-3">
-      <input type="text" id="o2_timer" name="o2_timer" value="<?= $data['o2_timer'] ?? '' ?>" class="form-control" pattern="[0-9]{1,2}:[0-9]{1,2}" placeholder="O2 Timer (nn:nn)" aria-label="O2 Timer (nn:nn)" title="nn:nn, ex 12:34">
+      <input type="text" id="o2_timer" name="o2_timer" value="<?= $data['o2_timer'] ?? '' ?>" class="form-control" pattern="[0-9]{1,2}:[0-9]{1,2}" placeholder="O2 Timer (nn:nn)" title="nn:nn, ex 12:34">
     </div>
     <div id="ifBreached3">
       <img src="/images/logout.png" width="100%" />
@@ -145,7 +145,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['formtype'] == "sendCase") {
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="coordsHelpLabel">What is this?</h5>
-          <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+          <button type="button" class="btn-close" data-dismiss="modal"></button>
         </div>
         <div class="modal-body">
           <p style="text-align: center;">Life Support Synthesis is a way to temporarily refill your life support timer. <br /> They cost 2 Iron and 1 Nickel per refill, and can be found in your right-hand panel.
@@ -166,7 +166,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['formtype'] == "sendCase") {
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="processing">Processing your Case</h5>
-          <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+          <button type="button" class="btn-close" data-dismiss="modal"></button>
         </div>
         <div class="modal-body">
           <p style="text-align: center;">Please stand by while you are redirected...</p>
