@@ -8,10 +8,6 @@ $pgAuthor = "David Sangrey";
 $pgContent = "502 Error";
 $useIP = 0; //1 if Yes, 0 if No.
 
-//If you have any custom scripts, CSS, etc, you MUST declare them here.
-//They will be inserted at the bottom of the <head> section.
-$customContent = '';
-
 //UserSpice Required
 require_once '../users/init.php';  //make sure this path is correct!
 require_once $abs_us_root . $us_url_root . 'users/includes/template/prep.php';

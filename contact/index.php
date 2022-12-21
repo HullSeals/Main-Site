@@ -9,10 +9,6 @@ $pgContent = "Contact the Hull Seals";
 $useIP = 0; //1 if Yes, 0 if No.
 $activePage = 'contact'; //Used only for Menu Bar Sites
 
-//If you have any custom scripts, CSS, etc, you MUST declare them here.
-//They will be inserted at the bottom of the <head> section.
-//$customContent = '<!-- Test Comment mid US -->';
-
 //UserSpice Required
 require_once '../users/init.php';  //make sure this path is correct!
 require_once $abs_us_root . $us_url_root . 'users/includes/template/prep.php';
