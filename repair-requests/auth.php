@@ -1,5 +1,5 @@
 <?php return [
-    'secret' => '',
+    'constant' => '',
     'key' => '',
     'discord' => '',
     'url' => 'http://halpybot.hullseals.space:3141/announce',

@@ -39,28 +39,33 @@ while ($trow = $res->fetch_assoc()) {
   $typeList[$trow['color_id']] = $trow['color_desc'];
 }
 
-$validationErrors = [];
 $data = [];
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['formtype'] == "sendCase") {
   foreach ($_REQUEST as $key => $value) {
     $data[$key] = strip_tags(stripslashes(str_replace(["'", '"'], '', $value)));
   }
+  $validationErrors = 0;
   if (strlen($data['cmdr_name']) > 50) {
-    $validationErrors[] = 'commander name too long';
+    sessionValMessages("CMDR Name too long. Please try again.");
+    $validationErrors += 1;
   }
   if (strlen($data['system']) > 100) {
-    $validationErrors[] = 'system too long';
+    sessionValMessages("System name too long. Please try again.");
+    $validationErrors += 1;
   }
-  if (strlen($data['planet']) > 100) {
-    $validationErrors[] = 'planet too long';
+  if (strlen($data['planet']) > 10) {
+    sessionValMessages("Planet name too long. Please try again.");
+    $validationErrors += 1;
   }
   if (strlen($data['curr_coord']) > 20) {
-    $validationErrors[] = 'coordinates too long';
+    sessionValMessages("Invalid Coordinates. Please try again.");
+    $validationErrors += 1;
   }
   if (!isset($platformList[$data['platform']])) {
-    $validationErrors[] = 'invalid platform';
+    sessionValMessages("Invalid Platform. Please try again.");
+    $validationErrors += 1;
   }
-  if (!count($validationErrors)) {
+  if ($validationErrors == 0) {
     $_SESSION['cmdr_name'] = $_POST['cmdr_name'];
     $_SESSION['system'] = $_POST['system'];
     $_SESSION['planet'] = $_POST['planet'];
@@ -74,14 +79,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['formtype'] == "sendCase") {
 <h1>Request Repairs</h1>
 <br>
 <p>Welcome, CMDR. Please enter your details below...</p>
-<?php
-if (count($validationErrors)) {
-  foreach ($validationErrors as $error) {
-    echo '<div class="alert alert-danger">' . $error . '</div>';
-  }
-  echo '<br>';
-}
-?>
 <div class="mx-auto" style="max-width:85%;">
   <div class="alert alert-danger" role="alert">
     Unfortunately, the Seals are experiencing a CMDR shortage on all platforms. Please bear with us as we attempt to respond to as many cases as possible!
@@ -89,16 +86,16 @@ if (count($validationErrors)) {
   <form action="?send" method="post" id="rrForm" onsubmit="Processing()">
     <input hidden type="text" name="formtype" value="sendCase">
     <div class="input-group mb-3">
-      <input type="text" name="cmdr_name" value="<?= $data['cmdr_name'] ?? '' ?>" class="form-control" placeholder="Commander Name" aria-label="Commander Name" required>
+      <input type="text" name="cmdr_name" pattern="[\x20-\x7A]+" minlength="3" value="<?= $data['cmdr_name'] ?? '' ?>" class="form-control" placeholder="Commander Name" title="Your CMDR name in standard characters." required>
     </div>
     <div class="input-group mb-3">
-      <input type="text" name="system" value="<?= $data['system'] ?? '' ?>" class="form-control" placeholder="System" aria-label="System" required>
+      <input type="text" name="system" pattern="[\x20-\x7A]+" minlength="3" value="<?= $data['system'] ?? '' ?>" class="form-control" placeholder="System" title="The System name in standard characters." required>
     </div>
     <div class="input-group mb-3">
-      <input type="text" name="planet" value="<?= $data['planet'] ?? '' ?>" class="form-control" placeholder="Planet" aria-label="Planet" required>
+      <input type="text" name="planet" pattern="[\x20-\x7A]+" minlength="1" value="<?= $data['planet'] ?? '' ?>" class="form-control" placeholder="Planet (ex, '3', 'A', '3 A 2', etc.)" required>
     </div>
     <div class="input-group mb-3">
-      <input type="text" name="curr_coord" value="<?= $data['curr_coord'] ?? '' ?>" class="form-control" placeholder="Coordinates (+/-000.000, +/-000.000)" aria-label="Coordinates" pattern="(\+?|-)\d{1,3}\.\d{3}\,(\+?|-)\d{1,3}\.\d{3}" aria-describedby="coord-help-button" required>
+      <input type="text" name="curr_coord" value="<?= $data['curr_coord'] ?? '' ?>" class="form-control" placeholder="Coordinates (+/-000.000, +/-000.000)" pattern="(\+?|-)\d{1,3}\.\d{3}\,(\+?|-)\d{1,3}\.\d{3}" title="+/-000.000, +/-000.000" required>
       <div class="input-group-append">
         <button type="button" class="btn btn-outline-secondary" data-toggle="modal" id="coord-help-button" data-target="#coordsHelp">
           How do I find this?
@@ -109,10 +106,10 @@ if (count($validationErrors)) {
       <div class="input-group-prepend">
         <span class="input-group-text">Platform</span>
       </div>
-      <select name="platform" class="custom-select" id="inputGroupSelect01" placeholder="Test" required>
+      <select name="platform" class="custom-select" id="inputGroupSelect01" placeholder="Platform" required>
         <?php
         foreach ($platformList as $platformId => $platformName) {
-          echo '<option value="' . $platformId . '"' . ($data['platform'] == $platformId ? ' checked' : '') . '>' . $platformName . '</option>';
+          echo '<option value="' . $platformId . '"' . '>' . $platformName . '</option>';
         }
         ?>
       </select>
@@ -124,7 +121,7 @@ if (count($validationErrors)) {
       <select name="case_type" class="custom-select" id="inputGroupSelect01" placeholder="Test" required>
         <?php
         foreach ($typeList as $typeId => $typeName) {
-          echo '<option value="' . $typeId . '"' . ($trow['case_type'] == $typeId ? ' checked' : '') . '>' . $typeName . '</option>';
+          echo '<option value="' . $typeId . '"' . '>' . $typeName . '</option>';
         }
         ?>
       </select>
@@ -136,7 +133,7 @@ if (count($validationErrors)) {
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="coordsHelpLabel">How do I find my coordinates?</h5>
-          <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+          <button type="button" class="btn-close" data-dismiss="modal"></button>
         </div>
         <div class="modal-body">
           <p style="text-align: center;">Coordinates are found in the bottom right of your SRV's HUD.</p>
@@ -153,7 +150,7 @@ if (count($validationErrors)) {
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="processing">Processing your Case</h5>
-          <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+          <button type="button" class="btn-close" data-dismiss="modal"></button>
         </div>
         <div class="modal-body">
           <p style="text-align: center;">Please stand by while you are redirected...</p>

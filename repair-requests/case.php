@@ -32,33 +32,45 @@ while ($row = $res->fetch_assoc()) {
   $platformList[$row['platform_id']] = $row['platform_name'];
 }
 
-$validationErrors = [];
 $data = [];
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['formtype'] == "sendCase") {
   foreach ($_REQUEST as $key => $value) {
     $data[$key] = strip_tags(stripslashes(str_replace(["'", '"'], '', $value)));
   }
+  $validationErrors = 0;
+  if (!isset($data["platform"])) {
+    sessionValMessages("Error! No platform set! Please try again.");
+    $validationErrors += 1;
+  }
+  if ($data['hull'] > 100 || $data['hull'] < 0) {
+    sessionValMessages("Error! Invalid hull set! Please try again.");
+    $validationErrors += 1;
+  }
   if (strlen($data['cmdr_name']) > 50) {
-    $validationErrors[] = 'commander name too long';
+    sessionValMessages("CMDR Name too long. Please try again.");
+    $validationErrors += 1;
   }
   if (strlen($data['system']) > 100) {
-    $validationErrors[] = 'system too long';
+    sessionValMessages("System name too long. Please try again.");
+    $validationErrors += 1;
   }
-
+  if (!isset($data['o2_timer'])) {
+    sessionValMessages("Error! No O2 set! Please try again.");
+    $validationErrors += 1;
+  }
+  if (!isset($data['canopy_breached'])) {
+    $data['can_synth'] = 0;
+  }
+  if (!isset($data['can_synth'])) {
+    $data['can_synth'] = 0;
+  }
   $data['hull'] = (int) $data['hull'];
-  if ($data['hull'] > 100 || $data['hull'] < 0) {
-    $validationErrors[] = 'invalid hull';
-  }
   $data['canopy_breached'] = isset($data['canopy_breached']);
-  $data['can_synth'] = isset($data['can_synth']);
   if ($data['o2_timer'] != '' && !preg_match('~[0-9]{1,2}:[0-9]{1,2}~i', $data['o2_timer'])) {
-    $validationErrors[] = 'invalid O2 timer';
+    sessionValMessages("Error! invalid O2 Timer Set! status set! Please try again.");
+    $validationErrors += 1;
   }
-
-  if (!isset($platformList[$data['platform']])) {
-    $validationErrors[] = 'invalid platform';
-  }
-  if (!count($validationErrors)) {
+  if ($validationErrors == 0) {
     $_SESSION['cmdr_name'] = $_POST['cmdr_name'];
     $_SESSION['canopy_breached'] = $_POST['canopy_breached'];
     $_SESSION['o2_timer'] = $_POST['o2_timer'];
@@ -81,25 +93,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['formtype'] == "sendCase") {
 <h1>Request Repairs</h1>
 <br>
 <p>Welcome, CMDR. Please enter your details below...</p>
-<?php
-if (count($validationErrors)) {
-  foreach ($validationErrors as $error) {
-    echo '<div class="alert alert-danger">' . $error . '</div>';
-  }
-  echo '<br>';
-}
-?>
 <div class="mx-auto" style="max-width:85%;">
+  <div class="alert alert-danger" role="alert">
+    Unfortunately, the Seals are experiencing a CMDR shortage on all platforms. Please bear with us as we attempt to respond to as many cases as possible!
+  </div>
   <form action="?send" method="post" id="rrForm" onsubmit="Processing()">
     <input hidden type="text" name="formtype" value="sendCase">
     <div class="input-group mb-3">
-      <input type="text" name="cmdr_name" value="<?= $data['cmdr_name'] ?? '' ?>" class="form-control" placeholder="Commander Name" aria-label="Commander Name" required>
+      <input type="text" name="cmdr_name" pattern="[\x20-\x7A]+" minlength="3" value="<?= $data['cmdr_name'] ?? '' ?>" class="form-control" placeholder="Commander Name" aria-label="Commander Name" title="Your CMDR name in standard characters" required>
     </div>
     <div class="input-group mb-3">
-      <input type="text" name="system" value="<?= $data['system'] ?? '' ?>" class="form-control" placeholder="System" aria-label="System" required>
+      <input type="text" name="system" pattern="[\x20-\x7A]+" minlength="3" value="<?= $data['system'] ?? '' ?>" class="form-control" placeholder="System" aria-label="System" title="The System name in standard characters" required>
     </div>
     <div class="input-group mb-3">
-      <input type="number" min="0" max="100" name="hull" value="<?= $data['hull'] ?? '' ?>" class="form-control" placeholder="Hull %" aria-label="Hull %" required>
+      <input type="number" min="0" max="100" pattern="[0-9]" name="hull" value="<?= $data['hull'] ?? '' ?>" class="form-control" placeholder="Hull %" aria-label="Hull %" required>
     </div>
     <div class="input-group mb-3">
       <label id="canopy_breached" class="input-group-text text-primary"><input type="checkbox" id="canopy_breached2" value="1" name="canopy_breached" data-toggle="toggle" data-on="Canopy Breached" data-off="Canopy Not Breached" data-onstyle="danger" data-offstyle="success"> </label>
@@ -113,7 +120,7 @@ if (count($validationErrors)) {
       </div>
     </div>
     <div id="ifBreached2" class="input-group mb-3">
-      <input type="text" id="o2_timer" name="o2_timer" value="<?= $data['o2_timer'] ?? '' ?>" class="form-control" pattern="[0-9]{1,2}:[0-9]{1,2}" placeholder="O2 Timer (nn:nn)" aria-label="O2 Timer (nn:nn)">
+      <input type="text" id="o2_timer" name="o2_timer" value="<?= $data['o2_timer'] ?? '' ?>" class="form-control" pattern="[0-9]{1,2}:[0-9]{1,2}" placeholder="O2 Timer (nn:nn)" aria-label="O2 Timer (nn:nn)" title="nn:nn, ex 12:34">
     </div>
     <div id="ifBreached3">
       <img src="/images/logout.png" width="100%" />
@@ -123,10 +130,10 @@ if (count($validationErrors)) {
       <div class="input-group-prepend">
         <span class="input-group-text">Platform</span>
       </div>
-      <select name="platform" class="custom-select" id="inputGroupSelect01" placeholder="Test" required>
+      <select name="platform" class="custom-select" id="inputGroupSelect01" placeholder="Platform" required>
         <?php
         foreach ($platformList as $platformId => $platformName) {
-          echo '<option value="' . $platformId . '"' . ($data['platform'] == $platformId ? ' checked' : '') . '>' . $platformName . '</option>';
+          echo '<option value="' . $platformId . '"' . '>' . $platformName . '</option>';
         }
         ?>
       </select>
