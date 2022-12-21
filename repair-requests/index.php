@@ -10,31 +10,33 @@ $useIP = 1; //1 if Yes, 0 if No.
 
 //UserSpice Required
 require_once '../users/init.php';  //make sure this path is correct!
-require_once $abs_us_root.$us_url_root.'users/includes/template/prep.php';
-if (!securePage($_SERVER['PHP_SELF'])){die();}
+require_once $abs_us_root . $us_url_root . 'users/includes/template/prep.php';
+if (!securePage($_SERVER['PHP_SELF'])) {
+  die();
+}
 
 $lore = [];
 if (isset($_POST['re_join'])) {
-    foreach ($_REQUEST as $key => $value) {
-        $lore[$key] = strip_tags(stripslashes(str_replace(["'", '"'], '', $value)));
-    }
-		$rejoinNick = $lore['re_join'];
-  header("Location: https://client.hullseals.space:8443/repair.html?nick=". $rejoinNick);
+  foreach ($_REQUEST as $key => $value) {
+    $lore[$key] = strip_tags(stripslashes(str_replace(["'", '"'], '', $value)));
+  }
+  $rejoinNick = $lore['re_join'];
+  header("Location: https://client.hullseals.space:8443/repair.html?nick=" . $rejoinNick);
 }
 if (isset($_POST['chatting'])) {
-    foreach ($_REQUEST as $key => $value) {
-        $lore[$key] = strip_tags(stripslashes(str_replace(["'", '"'], '', $value)));
-    }
-		$chatNick = $lore['chatting'];
-  header("Location: https://client.hullseals.space:8443/?nick=". $chatNick);
+  foreach ($_REQUEST as $key => $value) {
+    $lore[$key] = strip_tags(stripslashes(str_replace(["'", '"'], '', $value)));
+  }
+  $chatNick = $lore['chatting'];
+  header("Location: https://client.hullseals.space:8443/?nick=" . $chatNick);
 }
 ?>
-  <h1>Request Repairs</h1>
-				<h2>Please choose an option below...</h2>
-				<p><strong>Do you see a countdown timer?</strong><br>
-				<em style="color:red;">If so, log out to the menu immediately</em><br>
-        <hr>
-        <div class="row">
+<h1>Request Repairs</h1>
+<h2>Please choose an option below...</h2>
+<p><strong>Do you see a countdown timer?</strong><br>
+  <em style="color:red;">If so, log out to the menu immediately</em><br>
+  <hr>
+<div class="row">
   <div class="col-7">
     <div class="tab-content" id="nav-tabContent">
       <div class="tab-pane fade show active" id="list-case" role="tabpanel">
@@ -62,7 +64,7 @@ if (isset($_POST['chatting'])) {
         <p>Simply enter your name below and get reconnected!</p>
         <form action="?re_join" method="post">
           <div class="input-group mb-3">
-                <input type="text" name="re_join" value="<?= $lore['re_join'] ?? '' ?>" pattern="[a-zA-Z0-9]+" class="form-control" placeholder="CMDR Name" required>
+            <input type="text" name="re_join" value="<?= $lore['re_join'] ?? '' ?>" pattern="[a-zA-Z0-9]+" class="form-control" placeholder="CMDR Name" required>
           </div>
           <button class="btn btn-primary" type="submit">Rejoin the Case</button>
         </form>
@@ -71,7 +73,7 @@ if (isset($_POST['chatting'])) {
         <p>Want to swing by and talk to our Seals? You're always welcome.</p>
         <form action="?chatting" method="post">
           <div class="input-group mb-3">
-                <input type="text" name="chatting" value="<?= $lore['chatting'] ?? '' ?>" pattern="[a-zA-Z0-9]+" class="form-control" placeholder="CMDR Name" required>
+            <input type="text" name="chatting" value="<?= $lore['chatting'] ?? '' ?>" pattern="[a-zA-Z0-9]+" class="form-control" placeholder="CMDR Name" required>
           </div>
           <button class="btn btn-primary" type="submit">Chat with our Seals</button>
         </form>

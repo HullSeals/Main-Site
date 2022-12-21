@@ -105,7 +105,7 @@ if (hasInvalidChars($cdrn) == 1)
 //Discord Notif
     $timestamp = date("c", strtotime("now"));
     $json_data = json_encode([
-        "content" => "New Incoming Case - <@&744998165714829334>",
+        "content" => "New Incoming Case - <@&591822215238909966>",
         "username" => "HalpyBOT",
         "avatar_url" => "https://hullseals.space/images/emblem_mid.png",
         "tts" => false,
@@ -181,4 +181,3 @@ if (hasInvalidChars($cdrn) == 1)
     echo "ERROR! Please contact the CyberSeals.";
     exit();
   }
-  ?>
