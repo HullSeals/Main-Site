@@ -109,7 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['formtype'] == "sendCase") {
       <select name="platform" class="custom-select" id="inputGroupSelect01" placeholder="Platform" required>
         <?php
         foreach ($platformList as $platformId => $platformName) {
-          echo '<option value="' . $platformId . '"' . '>' . $platformName . '</option>';
+          echo '<option value="' . $platformId . '">' . $platformName . '</option>';
         }
         ?>
       </select>
@@ -121,7 +121,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['formtype'] == "sendCase") {
       <select name="case_type" class="custom-select" id="inputGroupSelect01" placeholder="Test" required>
         <?php
         foreach ($typeList as $typeId => $typeName) {
-          echo '<option value="' . $typeId . '"' . '>' . $typeName . '</option>';
+          echo '<option value="' . $typeId . '">' . $typeName . '</option>';
         }
         ?>
       </select>

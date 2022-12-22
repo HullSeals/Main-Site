@@ -133,7 +133,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['formtype'] == "sendCase") {
       <select name="platform" class="custom-select" id="inputGroupSelect01" placeholder="Platform" required>
         <?php
         foreach ($platformList as $platformId => $platformName) {
-          echo '<option value="' . $platformId . '"' . '>' . $platformName . '</option>';
+          echo '<option value="' . $platformId . '">' . $platformName . '</option>';
         }
         ?>
       </select>
