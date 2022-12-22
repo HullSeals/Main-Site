@@ -21,19 +21,21 @@ $planet = $_SESSION['planet'];
 $platform = $_SESSION['platform'];
 $curr_cord = $_SESSION['curr_coord'];
 $case_type = $_SESSION['case_type'];
-//Platform Logic - TODO: replace with API.
-if ($platform == 1) {
-  $platformNew = "PC - Odyssey";
+
+//DB stuff
+$db = include 'db.php';
+$mysqli = new mysqli($db['server'], $db['user'], $db['pass'], $db['db'], $db['port']);
+$platformList = [];
+$res = $mysqli->query('SELECT * FROM lookups.platform_lu ORDER BY platform_id');
+while ($row = $res->fetch_assoc()) {
+    if ($row['platform_name'] == 'ERR') {
+        continue;
+    }
+    $platformList[$row['platform_id']] = $row['platform_name'];
 }
-elseif ($platform == 2) {
-  $platformNew = "Xbox";
-}
-elseif ($platform == 3) {
-  $platformNew = "PlayStation";
-}
-elseif ($platform == 4) {
-  $platformNew = "PC - Horizons";
-}
+
+$platformNew = $platformList[$platform];
+
 //Case Type
 if ($case_type == 8) {
   $typeNew = "Lift";
@@ -103,7 +105,7 @@ if (hasInvalidChars($cdrn) == 1)
 //Discord Notif
     $timestamp = date("c", strtotime("now"));
     $json_data = json_encode([
-        "content" => "New Incoming Case - <@&744998165714829334>",
+        "content" => "New Incoming Case - <@&591822215238909966>",
         "username" => "HalpyBOT",
         "avatar_url" => "https://hullseals.space/images/emblem_mid.png",
         "tts" => false,
@@ -179,4 +181,3 @@ if (hasInvalidChars($cdrn) == 1)
     echo "ERROR! Please contact the CyberSeals.";
     exit();
   }
-  ?>

@@ -106,13 +106,15 @@ body {
 
 //UserSpice Required
 require_once 'users/init.php';  //make sure this path is correct!
-require_once $abs_us_root.$us_url_root.'users/includes/template/prep.php';
-if (!securePage($_SERVER['PHP_SELF'])){die();}
+require_once $abs_us_root . $us_url_root . 'users/includes/template/prep.php';
+if (!securePage($_SERVER['PHP_SELF'])) {
+    die();
+}
 ?>
-                <h1>Welcome to the <em>Hull Seals</em><span class="hidden-xs">, your premier hull repair specialists</span>.</h1>
-                <br /><br />
-		<a href="repair-requests" class="btn btn-success btn-lg" >Request a Repair</a> <button type="button" class="btn btn-lg btn-secondary" data-container="body" data-toggle="popover" data-placement="top" data-content="The Hull Seals are a group of players dedicated to Hull Repairs, Broken Canopy rescues, or SRV strandings.">
-  Who are the Hull Seals?
+<h1>Welcome to the <em>Hull Seals</em><span class="hidden-xs">, your premier hull repair specialists</span>.</h1>
+<br /><br />
+<a href="repair-requests" class="btn btn-success btn-lg">Request a Repair</a> <button type="button" class="btn btn-lg btn-secondary" data-container="body" data-toggle="popover" data-placement="top" data-content="The Hull Seals are a group of players dedicated to Hull Repairs, Broken Canopy rescues, or SRV strandings.">
+    Who are the Hull Seals?
 </button>
 
 <?php
