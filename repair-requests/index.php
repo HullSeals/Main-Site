@@ -22,6 +22,7 @@ if (isset($_POST['re_join'])) {
   }
   $rejoinNick = $lore['re_join'];
   header("Location: https://client.hullseals.space:8443/repair.html?nick=" . $rejoinNick);
+  die();
 }
 if (isset($_POST['chatting'])) {
   foreach ($_REQUEST as $key => $value) {
@@ -29,6 +30,7 @@ if (isset($_POST['chatting'])) {
   }
   $chatNick = $lore['chatting'];
   header("Location: https://client.hullseals.space:8443/?nick=" . $chatNick);
+  die();
 }
 ?>
 <h1>Request Repairs</h1>
