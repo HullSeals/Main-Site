@@ -6,6 +6,7 @@ session_start();
 if (!isset($_SESSION["cmdr_name"]))
 {
   header("Location: https://hullseals.space/repair-requests/case.php");
+  die();
 }
 //Authenticaton Info
 $auth = require 'auth.php';

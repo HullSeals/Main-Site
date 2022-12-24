@@ -46,23 +46,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['formtype'] == "sendCase") {
   }
   $validationErrors = 0;
   if (strlen($data['cmdr_name']) > 50) {
-    sessionValMessages("CMDR Name too long. Please try again.");
+    usError("CMDR Name too long. Please try again.");
     $validationErrors += 1;
   }
   if (strlen($data['system']) > 100) {
-    sessionValMessages("System name too long. Please try again.");
+    usError("System name too long. Please try again.");
     $validationErrors += 1;
   }
   if (strlen($data['planet']) > 10) {
-    sessionValMessages("Planet name too long. Please try again.");
+    usError("Planet name too long. Please try again.");
     $validationErrors += 1;
   }
   if (strlen($data['curr_coord']) > 20) {
-    sessionValMessages("Invalid Coordinates. Please try again.");
+    usError("Invalid Coordinates. Please try again.");
     $validationErrors += 1;
   }
   if (!isset($platformList[$data['platform']])) {
-    sessionValMessages("Invalid Platform. Please try again.");
+    usError("Invalid Platform. Please try again.");
     $validationErrors += 1;
   }
   if ($validationErrors == 0) {
@@ -73,6 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['formtype'] == "sendCase") {
     $_SESSION['curr_coord'] = $_POST['curr_coord'];
     $_SESSION['case_type'] = $_POST['case_type'];
     header("Location: fisherirc.php");
+    exit();
   }
 }
 ?>

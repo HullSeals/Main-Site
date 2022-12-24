@@ -39,23 +39,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['formtype'] == "sendCase") {
   }
   $validationErrors = 0;
   if (!isset($data["platform"])) {
-    sessionValMessages("Error! No platform set! Please try again.");
+    usError("Error! No platform set! Please try again.");
     $validationErrors += 1;
   }
   if ($data['hull'] > 100 || $data['hull'] < 0) {
-    sessionValMessages("Error! Invalid hull set! Please try again.");
+    usError("Error! Invalid hull set! Please try again.");
     $validationErrors += 1;
   }
   if (strlen($data['cmdr_name']) > 50) {
-    sessionValMessages("CMDR Name too long. Please try again.");
+    usError("CMDR Name too long. Please try again.");
     $validationErrors += 1;
   }
   if (strlen($data['system']) > 100) {
-    sessionValMessages("System name too long. Please try again.");
+    usError("System name too long. Please try again.");
     $validationErrors += 1;
   }
   if (!isset($data['o2_timer'])) {
-    sessionValMessages("Error! No O2 set! Please try again.");
+    usError("Error! No O2 set! Please try again.");
     $validationErrors += 1;
   }
   if (!isset($data['canopy_breached'])) {
@@ -67,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['formtype'] == "sendCase") {
   $data['hull'] = (int) $data['hull'];
   $data['canopy_breached'] = isset($data['canopy_breached']);
   if ($data['o2_timer'] != '' && !preg_match('~[0-9]{1,2}:[0-9]{1,2}~i', $data['o2_timer'])) {
-    sessionValMessages("Error! invalid O2 Timer Set! status set! Please try again.");
+    usError("Error! invalid O2 Timer Set! status set! Please try again.");
     $validationErrors += 1;
   }
   if ($validationErrors == 0) {
@@ -82,11 +82,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['formtype'] == "sendCase") {
     //$stmt = $mysqli->prepare('CALL spCreateHSCaseCleaner(?,?,?,?,?,?,?,?)');
     //$stmt->bind_param('sissiiis', $data['cmdr_name'], $data['canopy_breached'], $data['o2_timer'], $data['system'], $data['platform'], $data['hull'], $data['can_synth'], $lgd_ip);
     //$stmt->execute();
-    //foreach ($stmt->error_list as $error) {
-    //    $validationErrors[] = 'DB: ' . $error['error'];
-    //}
     //$stmt->close();
     header("Location: irc.php");
+    exit();
   }
 }
 ?>
