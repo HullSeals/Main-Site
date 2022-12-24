@@ -20,7 +20,7 @@ if (!securePage($_SERVER['PHP_SELF'])) {
     Seal Links
   </h1>
   <div style="text-align: left">
-    <h2>Hello, <?php echo echousername($user->data()->id); ?>!</h2>
+    <h2>Hello, <?= echousername($user->data()->id); ?>!</h2>
     <p>This section contains several Seal internal links. <br />
       Please do not share private links with non-seals.</p>
   </div>
