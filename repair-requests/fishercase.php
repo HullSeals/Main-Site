@@ -128,7 +128,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['formtype'] == "sendCase") {
       </select>
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
-  </form>
+  </form> <br> <br>
+  <p>On Odyssey or LIVE Horizons? You might be able to self-rescue. Click <a href="https://hullseals.space/knowledge/books/guides-and-terms/page/recovery-to-orbit" target="_blank">here</a> for instructions.</p>
   <div class="modal fade" id="coordsHelp" tabindex="-1" style="color:#323232">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">

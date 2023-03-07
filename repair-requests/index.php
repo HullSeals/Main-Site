@@ -54,7 +54,8 @@ if (isset($_POST['chatting'])) {
       <div class="tab-pane fade" id="list-kf" role="tabpanel">
         <p>Stuck in your SRV? We can help!</p>
         <p>Call our expert KingFishers today!</p>
-        <a class="btn btn-lg btn-success" href="fishercase.php">Yes, I Need SRV Help</a>
+        <a class="btn btn-lg btn-success" href="fishercase.php">Yes, I Need SRV Help</a> <br /><br />
+        <p>Note: CMDRs on Odyssey or LIVE Horizons might be able to self-rescue. Click <a href="https://hullseals.space/knowledge/books/guides-and-terms/page/recovery-to-orbit" target="_blank">here</a> for instructions.</p>
       </div>
       <div class="tab-pane fade" id="list-module" role="tabpanel">
         <p>Unfortunately, we cannot repair module damage, other than cracked or broken canopies.</p>
